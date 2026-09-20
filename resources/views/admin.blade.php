@@ -345,9 +345,22 @@
 
           <!-- Ubicación de la cancha -->
           <div>
-            <label class="block text-gray-300 font-semibold mb-1">Ubicación / Sector *</label>
-            <input type="text" id="canchaUbicacion" required placeholder="Ej: Sector Norte, ingreso por portón 3, Av. Libertador 4500"
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-gray-300 font-semibold">Ubicación / Dirección *</label>
+              <span class="text-[10px] text-brand-cyan font-bold flex items-center space-x-1">
+                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                <span>Google Maps Preview</span>
+              </span>
+            </div>
+            <input type="text" id="canchaUbicacion" required placeholder="Ej: Sector Norte, ingreso por portón 3, Av. Libertador 4500, CABA"
+              oninput="actualizarMapaCanchaAdminPreview()" onchange="actualizarMapaCanchaAdminPreview()"
               class="w-full bg-brand-dark border border-brand-border rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-brand-cyan">
+            
+            <div class="mt-2 rounded-xl overflow-hidden border border-brand-border/60 bg-brand-dark h-32">
+              <iframe id="canchaMapIframeAdmin" class="w-full h-full border-0" loading="lazy" allowfullscreen
+                src="https://maps.google.com/maps?q=Av.%20Libertador%204500,%20Palermo,%20CABA&t=&z=15&ie=UTF8&iwloc=&output=embed">
+              </iframe>
+            </div>
           </div>
 
           <!-- Descripción -->
@@ -884,7 +897,9 @@
                 <div class="space-y-1.5">
                   <div class="flex items-start space-x-1 text-gray-300">
                     <i data-lucide="map-pin" class="w-3.5 h-3.5 text-brand-cyan flex-shrink-0 mt-0.5"></i>
-                    <span class="text-[11px]">${c.ubicacion || (c.sede ? c.sede.direccion : 'Av. Libertador 4500')}</span>
+                    <a href="https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.ubicacion || (c.sede ? c.sede.direccion : 'Av. Libertador 4500'))}" target="_blank" class="text-[11px] text-brand-cyan hover:underline flex items-center space-x-1 truncate">
+                      <span class="truncate">${c.ubicacion || (c.sede ? c.sede.direccion : 'Av. Libertador 4500')} 📍</span>
+                    </a>
                   </div>
                   <p class="text-gray-400 text-[11px] leading-relaxed line-clamp-2">
                     ${c.descripcion || 'Cancha equipada para partidos oficiales de liga.'}
@@ -1062,6 +1077,14 @@
         lucide.createIcons();
       }
     });
+
+    function actualizarMapaCanchaAdminPreview() {
+      const ubica = document.getElementById('canchaUbicacion').value || 'Av. Libertador 4500, Palermo, CABA';
+      const iframe = document.getElementById('canchaMapIframeAdmin');
+      if (iframe) {
+        iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(ubica)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      }
+    }
 
     // 7. CREAR SPONSOR (POST /api/admin/sponsors)
     document.getElementById('formCrearSponsor').addEventListener('submit', async (e) => {
