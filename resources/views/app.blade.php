@@ -250,7 +250,7 @@
               <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/40 to-transparent"></div>
               <div class="absolute top-2.5 left-3 flex items-center space-x-2">
                 <span class="text-[9px] font-black text-black bg-brand-green px-2 py-0.5 rounded-full uppercase tracking-wider">
-                  Próximo Partido Oficial
+                  Tu Próximo Partido del Torneo
                 </span>
               </div>
               <div class="absolute bottom-2 left-3 right-3 flex justify-between items-end">
@@ -1007,13 +1007,13 @@
           document.getElementById('partidoCanchaNombre').innerText = 'Sin Partido Programado';
           document.getElementById('partidoUbicacionText').innerHTML = `
             <i data-lucide="map-pin" class="w-3 h-3 text-brand-cyan flex-shrink-0"></i>
-            <span class="truncate">Complejo Deportivo</span>
+            <span class="truncate">Tu Equipo</span>
           `;
           document.getElementById('partidoHoraBadge').innerText = '--:-- hs';
 
           enf.innerHTML = `
             <div class="text-xs text-gray-400 py-3">
-              No tienes partidos programados.<br>
+              No tienes partidos oficiales programados con tu equipo.<br>
               <span class="text-brand-yellow font-semibold">¡Anota tu equipo en un torneo para que se sortee el fixture!</span>
             </div>
           `;

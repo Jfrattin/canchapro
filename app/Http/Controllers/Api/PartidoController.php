@@ -24,8 +24,14 @@ class PartidoController extends Controller
             return response()->json(['mensaje' => 'No hay ficha de persona asociada'], 404);
         }
 
-        // Buscar equipos donde juega o es capitán
-        $equiposIds = $persona->listaFeInscripciones()->with('listaBuenaFe')->get()->pluck('listaBuenaFe.equipo_id')->unique();
+        // Buscar equipos donde juega en Lista de Fe o es Capitán
+        $equiposInscriptosIds = $persona->listaFeInscripciones()->with('listaBuenaFe')->get()->pluck('listaBuenaFe.equipo_id');
+        $equiposCapitanIds = $persona->equiposCapitan()->pluck('id');
+        $equiposIds = $equiposInscriptosIds->concat($equiposCapitanIds)->filter()->unique();
+
+        if ($equiposIds->isEmpty()) {
+            return response()->json(['mensaje' => 'No estás inscripto en ningún equipo de torneo aún.'], 404);
+        }
 
         $partido = Partido::where(function ($q) use ($equiposIds) {
                 $q->whereIn('equipo_local_id', $equiposIds)
