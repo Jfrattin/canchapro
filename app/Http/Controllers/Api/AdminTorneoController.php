@@ -23,19 +23,49 @@ class AdminTorneoController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string',
-            'sede_id' => 'required|uuid|exists:sedes,id',
+            'sede_id' => 'nullable|uuid|exists:sedes,id',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
             'ubicacion' => 'nullable|string',
             'foto_url' => 'nullable|string',
             'formato_juego' => 'required|in:F5,F7,F8,F11',
             'max_equipos' => 'required|integer|min:2',
-            'canchas_ids' => 'required|array',
-            'canchas_ids.*' => 'uuid|exists:canchas,id',
+            'canchas_ids' => 'nullable|array',
         ]);
 
+        if (empty($validated['sede_id'])) {
+            $sede = Sede::firstOrCreate(
+                ['nombre' => 'Complejo Deportivo Palermo Central'],
+                [
+                    'direccion' => 'Av. del Libertador 4500',
+                    'ciudad' => 'Palermo, CABA',
+                ]
+            );
+            $validated['sede_id'] = $sede->id;
+        }
+
+        $canchasIds = array_filter($validated['canchas_ids'] ?? []);
+
+        if (empty($canchasIds)) {
+            $canchaDefault = Cancha::firstOrCreate(
+                ['nombre' => 'Cancha 1 - Principal (' . $validated['formato_juego'] . ')'],
+                [
+                    'sede_id' => $validated['sede_id'],
+                    'tipo_formato' => $validated['formato_juego'],
+                    'superficie' => 'Sintetico',
+                    'tiene_iluminacion' => true,
+                    'es_techada' => false,
+                    'precio_por_hora' => 25000.00,
+                    'activa' => true,
+                ]
+            );
+            $canchasIds = [$canchaDefault->id];
+        }
+
+        unset($validated['canchas_ids']);
+
         $torneo = Torneo::create($validated);
-        $torneo->canchas()->sync($validated['canchas_ids']);
+        $torneo->canchas()->sync($canchasIds);
 
         return response()->json([
             'torneo' => $torneo->load('canchas'),

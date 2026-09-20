@@ -911,12 +911,6 @@
       btn.innerText = 'Guardando en PostgreSQL...';
 
       const canchasChecked = Array.from(document.querySelectorAll('input[name="canchas"]:checked')).map(c => c.value);
-      if (canchasChecked.length === 0) {
-        notify('❌ Debes seleccionar al menos una cancha para el torneo', 'error');
-        btn.disabled = false;
-        btn.innerHTML = '<i data-lucide="sparkles" class="w-4 h-4"></i><span>Publicar Torneo en BD</span>';
-        return;
-      }
 
       const payload = {
         nombre: document.getElementById('torneoNombre').value,
