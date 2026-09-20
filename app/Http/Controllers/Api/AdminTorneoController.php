@@ -225,4 +225,27 @@ class AdminTorneoController extends Controller
             'partido' => $partido->load(['arbitro', 'equipoLocal', 'equipoVisitante', 'cancha']),
         ]);
     }
+
+    /**
+     * Eliminar un torneo (sólo si no tiene equipos inscriptos)
+     */
+    public function destroy(Torneo $torneo): JsonResponse
+    {
+        $numEquipos = $torneo->listasBuenaFe()->count();
+        if ($numEquipos > 0) {
+            return response()->json([
+                'error' => "No se puede eliminar el torneo '{$torneo->nombre}' porque ya cuenta con {$numEquipos} equipo(s) inscripto(s)."
+            ], 400);
+        }
+
+        $torneo->canchas()->detach();
+        $torneo->franjasHorarias()->delete();
+        $torneo->delete();
+
+        \Illuminate\Support\Facades\Cache::forget("torneo:{$torneo->id}:tabla");
+
+        return response()->json([
+            'mensaje' => "Torneo '{$torneo->nombre}' eliminado correctamente por el Super Admin."
+        ]);
+    }
 }

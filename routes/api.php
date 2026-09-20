@@ -60,6 +60,7 @@ Route::prefix('arbitro')->middleware('auth.api')->group(function () {
 // 6. Super Admin & Backoffice
 Route::prefix('admin')->middleware('auth.api')->group(function () {
     Route::post('/torneos', [AdminTorneoController::class, 'store']);
+    Route::delete('/torneos/{torneo}', [AdminTorneoController::class, 'destroy']);
     Route::post('/canchas', [AdminTorneoController::class, 'storeCancha']);
     Route::delete('/canchas/{cancha}', [AdminTorneoController::class, 'destroyCancha']);
     Route::post('/sponsors', [AdminTorneoController::class, 'storeSponsor']);

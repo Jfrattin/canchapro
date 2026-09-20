@@ -786,16 +786,25 @@
                     </span>
                   </div>
 
-                  <div>
+                  <div class="flex items-center space-x-2">
                     ${t.estado === 'EN_JUEGO'
                       ? `<span class="text-xs font-bold text-emerald-400 bg-emerald-950/40 border border-emerald-500/40 px-3 py-1.5 rounded-xl flex items-center space-x-1.5">
                           <i data-lucide="check-check" class="w-4 h-4"></i>
                           <span>Fixture en Juego</span>
                          </span>`
-                      : `<button onclick="sortearFixture('${t.id}', '${t.nombre}')" class="text-xs bg-gradient-to-r from-brand-purple to-purple-600 hover:from-purple-600 hover:to-brand-purple text-white font-extrabold px-3.5 py-1.5 rounded-xl transition shadow-lg shadow-brand-purple/20 flex items-center space-x-1.5">
+                      : `<button onclick="sortearFixture('${t.id}', '${t.nombre.replace(/'/g, "\\'")}')" class="text-xs bg-gradient-to-r from-brand-purple to-purple-600 hover:from-purple-600 hover:to-brand-purple text-white font-extrabold px-3.5 py-1.5 rounded-xl transition shadow-lg shadow-brand-purple/20 flex items-center space-x-1.5">
                           <i data-lucide="shuffle" class="w-3.5 h-3.5"></i>
                           <span>Sortear Fixture</span>
                          </button>`
+                    }
+                    ${numEquipos === 0
+                      ? `<button onclick="eliminarTorneo('${t.id}', '${t.nombre.replace(/'/g, "\\'")}')" class="text-xs text-brand-red hover:text-white bg-brand-red/10 hover:bg-brand-red border border-brand-red/30 px-2.5 py-1.5 rounded-xl font-bold transition flex items-center space-x-1" title="Eliminar Torneo sin equipos">
+                          <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                          <span>Eliminar</span>
+                         </button>`
+                      : `<span title="No se puede eliminar: tiene ${numEquipos} equipo(s) inscripto(s)" class="text-[10px] text-gray-500 bg-brand-dark px-2 py-1 rounded-lg border border-brand-border cursor-not-allowed">
+                          🔒 Inscripto (${numEquipos})
+                         </span>`
                     }
                   </div>
                 </div>
@@ -808,6 +817,29 @@
         lucide.createIcons();
       } catch (err) {
         console.error('Error cargando torneos:', err);
+      }
+    }
+
+    // ELIMINAR TORNEO
+    async function eliminarTorneo(id, nombre) {
+      if (!confirm(`¿Estás seguro de que deseas eliminar el torneo "${nombre}"?`)) return;
+
+      try {
+        const res = await fetch(`/api/admin/torneos/${id}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${ADMIN_TOKEN}`
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          notify(`🗑️ ${data.mensaje || 'Torneo eliminado correctamente'}`);
+          cargarTorneos();
+        } else {
+          notify(`❌ ${data.error || data.message || 'Error al eliminar el torneo'}`, 'error');
+        }
+      } catch (err) {
+        notify('Error de comunicación con el servidor', 'error');
       }
     }
 
