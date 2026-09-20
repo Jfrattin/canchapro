@@ -21,11 +21,17 @@ class TorneoController extends Controller
 
     public function index(Request $request): JsonResponse
     {
+        $query = Torneo::with(['sede', 'canchas', 'equipos']);
+
+        if ($request->has('deporte') && !empty($request->deporte) && $request->deporte !== 'TODOS') {
+            $query->where('deporte', $request->deporte);
+        }
+
         if ($request->has('paginate') || $request->has('per_page')) {
             $perPage = (int) $request->get('per_page', 15);
-            $torneos = Torneo::with(['sede', 'canchas', 'equipos'])->paginate($perPage);
+            $torneos = $query->paginate($perPage);
         } else {
-            $torneos = Torneo::with(['sede', 'canchas', 'equipos'])->get();
+            $torneos = $query->get();
         }
 
         return response()->json($torneos);

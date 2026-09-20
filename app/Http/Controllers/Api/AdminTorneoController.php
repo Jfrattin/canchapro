@@ -23,15 +23,18 @@ class AdminTorneoController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string',
+            'deporte' => 'nullable|string',
             'sede_id' => 'nullable|uuid|exists:sedes,id',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
             'ubicacion' => 'nullable|string',
             'foto_url' => 'nullable|string',
-            'formato_juego' => 'required|in:F5,F7,F8,F11',
+            'formato_juego' => 'required|string',
             'max_equipos' => 'required|integer|min:2',
             'canchas_ids' => 'nullable|array',
         ]);
+
+        $validated['deporte'] = strtoupper($validated['deporte'] ?? 'FUTBOL');
 
         if (empty($validated['sede_id'])) {
             $sede = Sede::firstOrCreate(
@@ -48,9 +51,10 @@ class AdminTorneoController extends Controller
 
         if (empty($canchasIds)) {
             $canchaDefault = Cancha::firstOrCreate(
-                ['nombre' => 'Cancha 1 - Principal (' . $validated['formato_juego'] . ')'],
+                ['nombre' => 'Cancha 1 - Principal (' . $validated['deporte'] . ' ' . $validated['formato_juego'] . ')'],
                 [
                     'sede_id' => $validated['sede_id'],
+                    'deporte' => $validated['deporte'],
                     'tipo_formato' => $validated['formato_juego'],
                     'superficie' => 'Sintetico',
                     'tiene_iluminacion' => true,
@@ -77,16 +81,19 @@ class AdminTorneoController extends Controller
     {
         $validated = $request->validate([
             'nombre' => 'required|string',
+            'deporte' => 'nullable|string',
             'sede_id' => 'nullable|uuid|exists:sedes,id',
             'descripcion' => 'nullable|string',
             'ubicacion' => 'nullable|string',
             'foto_url' => 'nullable|string',
-            'tipo_formato' => 'required|in:F5,F7,F8,F11',
+            'tipo_formato' => 'required|string',
             'superficie' => 'required|string',
             'precio_por_hora' => 'nullable|numeric',
             'tiene_iluminacion' => 'nullable|boolean',
             'es_techada' => 'nullable|boolean',
         ]);
+
+        $validated['deporte'] = strtoupper($validated['deporte'] ?? 'FUTBOL');
 
         if (empty($validated['sede_id'])) {
             $sede = Sede::first();

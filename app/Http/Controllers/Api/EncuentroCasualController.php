@@ -12,12 +12,16 @@ use Illuminate\Support\Str;
 
 class EncuentroCasualController extends Controller
 {
-    public function index(): JsonResponse
+    public function index(Request $request): JsonResponse
     {
-        $encuentros = EncuentroCasual::with(['creador', 'equipoRival', 'jugadores.persona'])
-            ->where('estado', '!=', 'CANCELADO')
-            ->orderBy('fecha_hora', 'asc')
-            ->get();
+        $query = EncuentroCasual::with(['creador', 'equipoRival', 'jugadores.persona'])
+            ->where('estado', '!=', 'CANCELADO');
+
+        if ($request->has('deporte') && !empty($request->deporte) && $request->deporte !== 'TODOS') {
+            $query->where('deporte', $request->deporte);
+        }
+
+        $encuentros = $query->orderBy('fecha_hora', 'asc')->get();
 
         return response()->json($encuentros);
     }
@@ -31,10 +35,11 @@ class EncuentroCasualController extends Controller
 
         $validated = $request->validate([
             'titulo' => 'required|string',
+            'deporte' => 'nullable|string',
             'cancha_nombre' => 'required|string',
             'ubicacion' => 'required|string',
             'fecha_hora' => 'required|date',
-            'formato' => 'required|in:F5,F7,F8,F11',
+            'formato' => 'required|string',
             'modalidad' => 'required|in:JUGADORES_SUELTOS,DESAFIO_EQUIPOS',
             'max_jugadores' => 'nullable|integer|min:2',
             'precio_total' => 'nullable|numeric|min:0',
@@ -42,10 +47,17 @@ class EncuentroCasualController extends Controller
             'observaciones' => 'nullable|string',
         ]);
 
+        $deporte = strtoupper($validated['deporte'] ?? 'FUTBOL');
+        $formato = strtoupper($validated['formato']);
+
         $defaultMax = 10;
-        if ($validated['formato'] === 'F7') $defaultMax = 14;
-        if ($validated['formato'] === 'F8') $defaultMax = 16;
-        if ($validated['formato'] === 'F11') $defaultMax = 22;
+        if (in_array($formato, ['DOBLES', 'BEACH 2X2'])) $defaultMax = 4;
+        elseif ($formato === 'SINGLES') $defaultMax = 2;
+        elseif ($formato === '3X3') $defaultMax = 6;
+        elseif ($formato === 'F7' || $formato === 'H7') $defaultMax = 14;
+        elseif ($formato === 'F8') $defaultMax = 16;
+        elseif ($formato === 'F11' || $formato === 'H11') $defaultMax = 22;
+        elseif ($formato === '6X6') $defaultMax = 12;
 
         $maxJugadores = $validated['max_jugadores'] ?? $defaultMax;
         $precioTotal = $validated['precio_total'] ?? 0;
@@ -54,10 +66,11 @@ class EncuentroCasualController extends Controller
         $encuentro = EncuentroCasual::create([
             'creador_persona_id' => $persona->id,
             'titulo' => $validated['titulo'],
+            'deporte' => $deporte,
             'cancha_nombre' => $validated['cancha_nombre'],
             'ubicacion' => $validated['ubicacion'],
             'fecha_hora' => $validated['fecha_hora'],
-            'formato' => $validated['formato'],
+            'formato' => $formato,
             'modalidad' => $validated['modalidad'],
             'max_jugadores' => $maxJugadores,
             'precio_total' => $precioTotal,

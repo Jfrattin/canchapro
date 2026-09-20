@@ -14,6 +14,7 @@ class Torneo extends Model
 
     protected $fillable = [
         'nombre',
+        'deporte',
         'sede_id',
         'categoria',
         'descripcion',

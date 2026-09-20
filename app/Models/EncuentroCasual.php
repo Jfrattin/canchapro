@@ -15,6 +15,7 @@ class EncuentroCasual extends Model
     protected $fillable = [
         'creador_persona_id',
         'titulo',
+        'deporte',
         'cancha_nombre',
         'ubicacion',
         'fecha_hora',

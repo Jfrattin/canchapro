@@ -171,20 +171,28 @@
               class="w-full bg-brand-dark border border-brand-border rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-brand-purple transition">
           </div>
 
-          <!-- Categoría & Formato -->
-          <div class="grid grid-cols-2 gap-2.5">
+          <!-- Categoría, Deporte & Formato -->
+          <div class="grid grid-cols-3 gap-2">
+            <div>
+              <label class="block text-gray-300 font-semibold mb-1">Deporte *</label>
+              <select id="torneoDeporte" class="w-full bg-brand-dark border border-brand-border rounded-xl px-2 py-2 text-white focus:outline-none focus:border-brand-purple">
+                <option value="FUTBOL">⚽ Fútbol</option>
+                <option value="PADEL">🎾 Padel</option>
+                <option value="TENIS">🎾 Tenis</option>
+                <option value="BASQUET">🏀 Básquet</option>
+                <option value="VOLEY">🏐 Vóley</option>
+                <option value="HOCKEY">🏑 Hockey</option>
+              </select>
+            </div>
             <div>
               <label class="block text-gray-300 font-semibold mb-1">Categoría *</label>
-              <input type="text" id="torneoCategoria" required value="Libre A" placeholder="Ej: Senior +35, Femenino A"
-                class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-purple">
+              <input type="text" id="torneoCategoria" required value="Libre A" placeholder="Ej: Senior +35"
+                class="w-full bg-brand-dark border border-brand-border rounded-xl px-2 py-2 text-white focus:outline-none focus:border-brand-purple">
             </div>
             <div>
               <label class="block text-gray-300 font-semibold mb-1">Formato *</label>
-              <select id="torneoFormato" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white focus:outline-none focus:border-brand-purple">
-                <option value="F11">Fútbol 11</option>
-                <option value="F7">Fútbol 7</option>
-                <option value="F5">Fútbol 5</option>
-              </select>
+              <input type="text" id="torneoFormato" required value="F11" placeholder="Ej: F11, Dobles, 3x3"
+                class="w-full bg-brand-dark border border-brand-border rounded-xl px-2 py-2 text-white focus:outline-none focus:border-brand-purple">
             </div>
           </div>
 
@@ -969,6 +977,7 @@
 
       const payload = {
         nombre: document.getElementById('torneoNombre').value,
+        deporte: document.getElementById('torneoDeporte').value,
         sede_id: document.getElementById('torneoSede').value,
         categoria: document.getElementById('torneoCategoria').value,
         formato_juego: document.getElementById('torneoFormato').value,

@@ -195,6 +195,31 @@
           </button>
         </div>
 
+        <!-- 🏆 BARRA DE FILTRO MULTI-DEPORTE -->
+        <div class="flex items-center space-x-1.5 overflow-x-auto no-scrollbar py-1 text-[11px]">
+          <button onclick="filtrarDeporteApp('TODOS')" id="btnDeporteTODOS" class="px-3 py-1 rounded-xl font-bold bg-brand-green text-black flex-shrink-0 transition">
+            🏆 Todos
+          </button>
+          <button onclick="filtrarDeporteApp('FUTBOL')" id="btnDeporteFUTBOL" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            ⚽ Fútbol
+          </button>
+          <button onclick="filtrarDeporteApp('PADEL')" id="btnDeportePADEL" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            🎾 Padel
+          </button>
+          <button onclick="filtrarDeporteApp('TENIS')" id="btnDeporteTENIS" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            🎾 Tenis
+          </button>
+          <button onclick="filtrarDeporteApp('BASQUET')" id="btnDeporteBASQUET" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            🏀 Básquet
+          </button>
+          <button onclick="filtrarDeporteApp('VOLEY')" id="btnDeporteVOLEY" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            🏐 Vóley
+          </button>
+          <button onclick="filtrarDeporteApp('HOCKEY')" id="btnDeporteHOCKEY" class="px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition">
+            🏑 Hockey
+          </button>
+        </div>
+
         <!-- ⚖️ BANNER MODO ÁRBITRO (SOLO SE MUESTRA SI ES ÁRBITRO) -->
         <div id="arbitroCalloutBanner" class="hidden bg-gradient-to-r from-red-950/80 via-brand-card to-brand-dark border-2 border-brand-red/50 rounded-2xl p-3.5 shadow-xl space-y-2">
           <div class="flex items-center justify-between">
@@ -485,8 +510,15 @@
 
               <div class="grid grid-cols-2 gap-2">
                 <div>
-                  <label class="block text-gray-300 mb-0.5">Cancha *</label>
-                  <input type="text" id="partiditoCancha" required placeholder="Ej: Cancha 1 / Canchita Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                  <label class="block text-gray-300 mb-0.5">Deporte *</label>
+                  <select id="partiditoDeporte" onchange="actualizarFormatosSegunDeporte()" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                    <option value="FUTBOL">⚽ Fútbol</option>
+                    <option value="PADEL">🎾 Padel</option>
+                    <option value="TENIS">🎾 Tenis</option>
+                    <option value="BASQUET">🏀 Básquet</option>
+                    <option value="VOLEY">🏐 Vóley</option>
+                    <option value="HOCKEY">🏑 Hockey</option>
+                  </select>
                 </div>
                 <div>
                   <label class="block text-gray-300 mb-0.5">Formato *</label>
@@ -497,6 +529,11 @@
                     <option value="F11">Fútbol 11 (22 jug)</option>
                   </select>
                 </div>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 mb-0.5">Cancha *</label>
+                <input type="text" id="partiditoCancha" required placeholder="Ej: Cancha 1 / Canchita Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
               </div>
 
               <div>
@@ -1374,18 +1411,75 @@
       lucide.createIcons();
     }
 
+    let currentSportFilter = 'TODOS';
+
+    function getSportBadge(deporte) {
+      const dep = (deporte || 'FUTBOL').toUpperCase();
+      if (dep === 'PADEL') return '🎾 Padel';
+      if (dep === 'TENIS') return '🎾 Tenis';
+      if (dep === 'BASQUET') return '🏀 Básquet';
+      if (dep === 'VOLEY') return '🏐 Vóley';
+      if (dep === 'HOCKEY') return '🏑 Hockey';
+      return '⚽ Fútbol';
+    }
+
+    function filtrarDeporteApp(deporte) {
+      currentSportFilter = deporte;
+      const sports = ['TODOS', 'FUTBOL', 'PADEL', 'TENIS', 'BASQUET', 'VOLEY', 'HOCKEY'];
+      sports.forEach(s => {
+        const btn = document.getElementById(`btnDeporte${s}`);
+        if (btn) {
+          if (s === deporte) {
+            btn.className = 'px-3 py-1 rounded-xl font-bold bg-brand-green text-black flex-shrink-0 transition';
+          } else {
+            btn.className = 'px-3 py-1 rounded-xl font-bold bg-brand-dark hover:bg-brand-card text-gray-300 border border-brand-border flex-shrink-0 transition';
+          }
+        }
+      });
+      cargarPartiditosApp();
+      cargarTorneosApp();
+    }
+
     function toggleFormPartidito() {
       const c = document.getElementById('formCrearPartiditoContainer');
       c.classList.toggle('hidden');
     }
 
+    function actualizarFormatosSegunDeporte() {
+      const dep = document.getElementById('partiditoDeporte').value;
+      const selectFormato = document.getElementById('partiditoFormato');
+      
+      let options = '';
+      if (dep === 'PADEL') {
+        options = '<option value="DOBLES">Padel Dobles (4 jug)</option><option value="SINGLES">Padel Singles (2 jug)</option>';
+      } else if (dep === 'TENIS') {
+        options = '<option value="SINGLES">Tenis Singles (2 jug)</option><option value="DOBLES">Tenis Dobles (4 jug)</option>';
+      } else if (dep === 'BASQUET') {
+        options = '<option value="3X3">Básquet 3x3 (6 jug)</option><option value="5X5">Básquet 5x5 (10 jug)</option>';
+      } else if (dep === 'VOLEY') {
+        options = '<option value="6X6">Vóley 6x6 (12 jug)</option><option value="BEACH 2X2">Vóley Playa 2x2 (4 jug)</option>';
+      } else if (dep === 'HOCKEY') {
+        options = '<option value="H7">Hockey 7 (14 jug)</option><option value="H11">Hockey 11 (22 jug)</option>';
+      } else {
+        options = '<option value="F5">Fútbol 5 (10 jug)</option><option value="F7">Fútbol 7 (14 jug)</option><option value="F8">Fútbol 8 (16 jug)</option><option value="F11">Fútbol 11 (22 jug)</option>';
+      }
+
+      selectFormato.innerHTML = options;
+      actualizarMaxJugadoresSegunFormato();
+    }
+
     function actualizarMaxJugadoresSegunFormato() {
       const fmt = document.getElementById('partiditoFormato').value;
       const inputMax = document.getElementById('partiditoMaxJugadores');
-      if (fmt === 'F5') inputMax.value = 10;
-      else if (fmt === 'F7') inputMax.value = 14;
+      if (fmt === 'SINGLES') inputMax.value = 2;
+      else if (fmt === 'DOBLES' || fmt === 'BEACH 2X2') inputMax.value = 4;
+      else if (fmt === '3X3') inputMax.value = 6;
+      else if (fmt === 'F5' || fmt === '5X5') inputMax.value = 10;
+      else if (fmt === '6X6') inputMax.value = 12;
+      else if (fmt === 'F7' || fmt === 'H7') inputMax.value = 14;
       else if (fmt === 'F8') inputMax.value = 16;
-      else if (fmt === 'F11') inputMax.value = 22;
+      else if (fmt === 'F11' || fmt === 'H11') inputMax.value = 22;
+      else inputMax.value = 10;
     }
 
     async function cargarPartiditosApp() {
@@ -1393,15 +1487,16 @@
       container.innerHTML = '<div class="text-center py-6 text-gray-500">Cargando partiditos disponibles...</div>';
 
       try {
-        const res = await fetch('/api/encuentros-casuales');
+        const url = currentSportFilter === 'TODOS' ? '/api/encuentros-casuales' : `/api/encuentros-casuales?deporte=${currentSportFilter}`;
+        const res = await fetch(url);
         const encuentros = await res.json();
 
         if (!encuentros || encuentros.length === 0) {
           container.innerHTML = `
             <div class="bg-brand-card border border-brand-border rounded-2xl p-4 text-center space-y-2">
-              <span class="text-2xl">⚽</span>
-              <h4 class="font-bold text-white text-xs">No hay partiditos casuales creados todavía.</h4>
-              <p class="text-[11px] text-gray-400">¡Sé el primero en armar un partidito y compartir el link!</p>
+              <span class="text-2xl">🏆</span>
+              <h4 class="font-bold text-white text-xs">No hay encuentros casuales para esta disciplina todavía.</h4>
+              <p class="text-[11px] text-gray-400">¡Sé el primero en armar un partido y compartir el link!</p>
             </div>
           `;
           return;
@@ -1412,6 +1507,7 @@
           const creadorNombre = e.creador ? `${e.creador.nombre} ${e.creador.apellido}` : 'Organizador';
           const fechaStr = new Date(e.fecha_hora).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' });
           const shareUrl = e.share_url || `${window.location.origin}/app?casual_invite=${e.share_token}`;
+          const sportBadge = getSportBadge(e.deporte);
 
           const yaAnotado = e.jugadores && currentUser && currentUser.persona && e.jugadores.some(j => j.persona_id === currentUser.persona.id);
 
@@ -1420,8 +1516,9 @@
               <div class="flex justify-between items-start">
                 <div>
                   <div class="flex items-center space-x-2">
+                    <span class="text-[10px] bg-brand-purple/20 text-brand-purple font-bold px-2 py-0.5 rounded-full uppercase">${sportBadge}</span>
                     <span class="text-[10px] bg-brand-green/20 text-brand-green font-bold px-2 py-0.5 rounded-full uppercase">${e.formato}</span>
-                    <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '⚽ Jugadores'}</span>
+                    <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '👥 Abierto'}</span>
                   </div>
                   <h4 class="font-outfit font-black text-sm text-white mt-1">${e.titulo}</h4>
                   <div class="text-[11px] text-gray-300 flex items-center space-x-1 mt-0.5">
@@ -1457,7 +1554,7 @@
                   </span>
                 ` : `
                   <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition shadow-md shadow-brand-green/20">
-                    Unirme ⚽
+                    Unirme 🏆
                   </button>
                   ${e.modalidad === 'DESAFIO_EQUIPOS' ? `
                     <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition">
@@ -1486,6 +1583,7 @@
 
       const payload = {
         titulo: document.getElementById('partiditoTitulo').value,
+        deporte: document.getElementById('partiditoDeporte').value,
         cancha_nombre: document.getElementById('partiditoCancha').value,
         ubicacion: document.getElementById('partiditoUbicacion').value,
         fecha_hora: document.getElementById('partiditoFechaHora').value,
@@ -1507,7 +1605,7 @@
         const data = await res.json();
 
         if (res.ok && data.encuentro) {
-          showToast(data.mensaje || '¡Partidito publicado!');
+          showToast(data.mensaje || '¡Partido publicado!');
           toggleFormPartidito();
           document.getElementById('formCrearPartidito').reset();
           cargarPartiditosApp();
@@ -1515,7 +1613,7 @@
             copiarLinkPartidito(data.encuentro.share_url);
           }
         } else {
-          showToast(data.error || 'Error al publicar partidito', 'error');
+          showToast(data.error || 'Error al publicar partido', 'error');
         }
       } catch (err) {
         showToast('Error de comunicación con el servidor', 'error');
