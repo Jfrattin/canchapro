@@ -248,4 +248,31 @@ class AdminTorneoController extends Controller
             'mensaje' => "Torneo '{$torneo->nombre}' eliminado correctamente por el Super Admin."
         ]);
     }
+
+    /**
+     * Aprobar o Rechazar Apto Médico de un Jugador
+     */
+    public function aprobarAptoMedico(Request $request, Persona $persona): JsonResponse
+    {
+        $validated = $request->validate([
+            'aprobado' => 'required|boolean',
+        ]);
+
+        $ficha = FichaMedica::firstOrCreate(
+            ['persona_id' => $persona->id],
+            ['contacto_emergencia' => 'No especificado']
+        );
+
+        $ficha->update([
+            'apto_fisico_aprobado' => $validated['aprobado'],
+            'fecha_vencimiento' => $validated['aprobado'] ? \Carbon\Carbon::now()->addYear() : null,
+        ]);
+
+        return response()->json([
+            'mensaje' => $validated['aprobado']
+                ? "Apto Médico de {$persona->nombre} {$persona->apellido} APROBADO correctamente."
+                : "Apto Médico de {$persona->nombre} {$persona->apellido} RECHAZADO.",
+            'persona' => $persona->load('fichaMedica'),
+        ]);
+    }
 }

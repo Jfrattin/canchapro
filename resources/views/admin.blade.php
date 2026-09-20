@@ -1196,8 +1196,15 @@
           const p = u.persona || {};
           const nombreCompleto = p.nombre ? `${p.nombre} ${p.apellido}` : (u.email.split('@')[0]);
           const dni = p.dni || '-';
-          const apto = p.ficha_medica ? (p.ficha_medica.apto_fisico_aprobado ? '✅ Aprobado' : '⏳ Pendiente') : 'Sin ficha';
+          const estaAprobado = p.ficha_medica ? p.ficha_medica.apto_fisico_aprobado : false;
           
+          let aptoBadge = '<span class="text-red-400">Sin Ficha</span>';
+          if (p.ficha_medica) {
+            aptoBadge = estaAprobado 
+              ? '<span class="bg-green-900/40 text-brand-green border border-brand-green/30 px-2 py-0.5 rounded-full font-bold text-[10px]">✅ Aprobado</span>'
+              : '<span class="bg-yellow-900/40 text-yellow-400 border border-yellow-500/30 px-2 py-0.5 rounded-full font-bold text-[10px]">⏳ Pendiente</span>';
+          }
+
           let rolBadge = '';
           if (u.role === 'super_admin') {
             rolBadge = '<span class="bg-purple-900/40 text-brand-purple border border-brand-purple/40 px-2.5 py-0.5 rounded-full font-bold text-[10px]">👑 Super Admin</span>';
@@ -1209,6 +1216,15 @@
             rolBadge = '<span class="bg-green-900/40 text-brand-green border border-brand-green/40 px-2.5 py-0.5 rounded-full font-bold text-[10px]">⚽ Jugador</span>';
           }
 
+          let aptoActions = '';
+          if (p.id) {
+            if (estaAprobado) {
+              aptoActions = `<button onclick="aprobarAptoMedicoAdmin('${p.id}', false)" class="px-2 py-1 rounded-lg bg-brand-red/20 hover:bg-brand-red/30 text-brand-red text-[10px] font-bold border border-brand-red/40 transition">Rechazar Apto</button>`;
+            } else {
+              aptoActions = `<button onclick="aprobarAptoMedicoAdmin('${p.id}', true)" class="px-2 py-1 rounded-lg bg-brand-green/20 hover:bg-brand-green/30 text-brand-green text-[10px] font-bold border border-brand-green/40 transition">Aprobar Apto</button>`;
+            }
+          }
+
           return `
             <tr class="hover:bg-brand-dark/40 transition">
               <td class="py-3 px-3">
@@ -1218,7 +1234,12 @@
               <td class="py-3 px-3 font-mono text-gray-300">${dni}</td>
               <td class="py-3 px-3 text-gray-300">${u.email}</td>
               <td class="py-3 px-3">${rolBadge}</td>
-              <td class="py-3 px-3 text-gray-400 text-[11px]">${apto}</td>
+              <td class="py-3 px-3">
+                <div class="flex items-center space-x-1.5">
+                  ${aptoBadge}
+                  ${aptoActions}
+                </div>
+              </td>
               <td class="py-3 px-3 text-right">
                 <div class="inline-flex items-center space-x-1.5">
                   <select onchange="cambiarRolUsuario('${u.id}', this.value)" class="bg-brand-dark border border-brand-border rounded-xl px-2.5 py-1.5 text-[11px] text-gray-200 focus:outline-none focus:border-brand-purple">
@@ -1234,6 +1255,29 @@
         }).join('');
       } catch (err) {
         tbody.innerHTML = '<tr><td colspan="6" class="py-4 text-center text-red-400">Error cargando usuarios.</td></tr>';
+      }
+    }
+
+    async function aprobarAptoMedicoAdmin(personaId, aprobado) {
+      if (!ADMIN_TOKEN) return;
+      try {
+        const res = await fetch(`/api/admin/personas/${personaId}/apto-medico`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${ADMIN_TOKEN}`
+          },
+          body: JSON.stringify({ aprobado })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          notify(data.mensaje || 'Estado de apto médico actualizado correctamente.');
+          cargarUsuariosAdmin();
+        } else {
+          notify(`❌ Error: ${data.message || data.error}`, 'error');
+        }
+      } catch (err) {
+        notify('❌ Error de comunicación con el servidor', 'error');
       }
     }
 

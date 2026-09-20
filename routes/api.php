@@ -14,11 +14,14 @@ use App\Http\Controllers\Api\ArbitroController;
 |--------------------------------------------------------------------------
 */
 
-// 1. Autenticación & Patrón Trinidad
+// 1. Autenticación
 Route::prefix('auth')->group(function () {
     Route::post('/register', [AuthController::class, 'register']);
     Route::post('/login', [AuthController::class, 'login']);
-    Route::middleware('auth.api')->get('/me', [AuthController::class, 'me']);
+    Route::middleware('auth.api')->group(function () {
+        Route::get('/me', [AuthController::class, 'me']);
+        Route::post('/apto-medico', [AuthController::class, 'subirAptoMedico']);
+    });
 });
 
 // 2. Torneos (Público & Jugadores)
@@ -70,6 +73,7 @@ Route::prefix('admin')->middleware('auth.api')->group(function () {
     // Gestión de Usuarios, Roles & Designación Arbitral
     Route::get('/usuarios', [AdminTorneoController::class, 'usuariosIndex']);
     Route::put('/usuarios/{user}/rol', [AdminTorneoController::class, 'actualizarRol']);
+    Route::post('/personas/{persona}/apto-medico', [AdminTorneoController::class, 'aprobarAptoMedico']);
     Route::get('/partidos-programados', [AdminTorneoController::class, 'partidosProgramados']);
     Route::post('/partidos/{partido}/asignar-arbitro', [AdminTorneoController::class, 'asignarArbitroPartido']);
 });

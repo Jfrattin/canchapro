@@ -47,4 +47,32 @@ class AuthController extends Controller
             'persona' => $user->persona ? $user->persona->load('fichaMedica') : null,
         ]);
     }
+
+    public function subirAptoMedico(Request $request): JsonResponse
+    {
+        $persona = $request->user()->persona;
+        if (!$persona) {
+            return response()->json(['error' => 'Perfil no encontrado.'], 404);
+        }
+
+        $validated = $request->validate([
+            'observaciones_medicas' => 'nullable|string',
+            'obra_social_prepaga' => 'nullable|string',
+        ]);
+
+        $ficha = \App\Models\FichaMedica::firstOrCreate(
+            ['persona_id' => $persona->id],
+            ['contacto_emergencia' => 'No especificado']
+        );
+
+        $ficha->update([
+            'observaciones_medicas' => $validated['observaciones_medicas'] ?? 'Certificado presentado por el usuario.',
+            'obra_social_prepaga' => $validated['obra_social_prepaga'] ?? $ficha->obra_social_prepaga,
+        ]);
+
+        return response()->json([
+            'mensaje' => 'Certificado médico enviado. Pendiente de revisión por la Organización.',
+            'persona' => $persona->load('fichaMedica'),
+        ]);
+    }
 }

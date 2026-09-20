@@ -37,13 +37,13 @@ class AuthService
                 'telefono' => $data['telefono'] ?? null,
             ]);
 
-            // 3. Crear Ficha Médica
+            // 3. Crear Ficha Médica (Pendiente de Aprobación por Admin)
             $ficha = FichaMedica::create([
                 'persona_id' => $persona->id,
                 'grupo_sanguineo' => $data['grupo_sanguineo'] ?? 'O+',
-                'apto_fisico_aprobado' => $data['apto_fisico_aprobado'] ?? true,
+                'apto_fisico_aprobado' => $data['apto_fisico_aprobado'] ?? false,
                 'fecha_vencimiento' => Carbon::now()->addYear(),
-                'contacto_emergencia' => $data['contacto_emergencia'] ?? '+54 9 11 4455-6677',
+                'contacto_emergencia' => $data['contacto_emergencia'] ?? 'No especificado',
                 'obra_social_prepaga' => $data['obra_social_prepaga'] ?? 'Particular',
             ]);
 

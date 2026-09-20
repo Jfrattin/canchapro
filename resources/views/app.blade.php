@@ -74,7 +74,7 @@
       <div id="authScreen" class="space-y-6 pt-4">
         <div class="text-center space-y-1.5">
           <div class="inline-flex items-center space-x-1.5 bg-brand-green/10 border border-brand-green/30 px-3 py-1 rounded-full text-[10px] font-bold text-brand-green uppercase">
-            <span>Patrón Trinidad · DNI & Salud</span>
+            <span>Pase Digital · CanchaPro</span>
           </div>
           <h2 class="font-outfit font-black text-3xl text-white">Cancha<span class="text-brand-green">Pro</span></h2>
           <p class="text-xs text-gray-400">Inicia sesión o regístrate para jugar.</p>
@@ -116,25 +116,29 @@
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-gray-400 mb-0.5">Nombre</label>
-              <input type="text" id="regNombre" required placeholder="Joaquín" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+              <input type="text" id="regNombre" required placeholder="Nombre" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
             </div>
             <div>
               <label class="block text-gray-400 mb-0.5">Apellido</label>
-              <input type="text" id="regApellido" required placeholder="Frattin" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+              <input type="text" id="regApellido" required placeholder="Apellido" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
             <div>
               <label class="block text-gray-400 mb-0.5">DNI *</label>
-              <input type="text" id="regDni" required placeholder="39569071" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+              <input type="text" id="regDni" required placeholder="12345678" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
             </div>
             <div>
               <label class="block text-gray-400 mb-0.5">Grupo Sangre</label>
               <select id="regSangre" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
                 <option value="O+">O+</option>
+                <option value="O-">O-</option>
                 <option value="A+">A+</option>
+                <option value="A-">A-</option>
                 <option value="B+">B+</option>
+                <option value="B-">B-</option>
                 <option value="AB+">AB+</option>
+                <option value="AB-">AB-</option>
               </select>
             </div>
           </div>
@@ -318,6 +322,42 @@
                 <span>✅ Confirmados: <strong id="statJugadorAsistSi" class="text-brand-green">0</strong></span>
                 <span>❌ Faltas informadas: <strong id="statJugadorAsistNo" class="text-brand-red">0</strong></span>
               </div>
+            </div>
+
+            <!-- 📄 FICHA DE APTO MÉDICO DIGITAL -->
+            <div class="bg-brand-dark/90 p-4 rounded-2xl border border-brand-border space-y-3">
+              <div class="flex justify-between items-center border-b border-brand-border/60 pb-2">
+                <div class="flex items-center space-x-2">
+                  <i data-lucide="file-check" class="w-4 h-4 text-brand-green"></i>
+                  <h4 class="font-outfit font-extrabold text-xs text-white">Estado de Apto Médico</h4>
+                </div>
+                <span id="aptoMedicoBadge" class="text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">⏳ Pendiente</span>
+              </div>
+
+              <div id="aptoMedicoInfoText" class="text-[11px] text-gray-300 space-y-1">
+                <p>Para estar habilitado a jugar, debes presentar tu apto médico y ser verificado por la Organización.</p>
+                <div class="text-[10px] text-gray-400">
+                  <span>Obra Social / Prepaga: <strong id="aptoObraSocialLabel" class="text-gray-200">No especificada</strong></span> | 
+                  <span>Obs: <strong id="aptoObsLabel" class="text-gray-200">Sin observaciones</strong></span>
+                </div>
+              </div>
+
+              <!-- FORMULARIO DE ENVÍO / ACTUALIZACIÓN -->
+              <form id="formAptoMedico" onsubmit="subirAptoMedico(event)" class="space-y-2.5 pt-1 text-xs">
+                <div class="grid grid-cols-2 gap-2">
+                  <div>
+                    <label class="block text-[10px] text-gray-400 mb-0.5">Obra Social / Prepaga</label>
+                    <input type="text" id="aptoInputObraSocial" placeholder="Ej: OSDE / Swiss Medical" class="w-full bg-brand-dark border border-brand-border rounded-xl px-2.5 py-1.5 text-white text-[11px]">
+                  </div>
+                  <div>
+                    <label class="block text-[10px] text-gray-400 mb-0.5">Nota / Observación</label>
+                    <input type="text" id="aptoInputObs" placeholder="Ej: Certificado adjunto" class="w-full bg-brand-dark border border-brand-border rounded-xl px-2.5 py-1.5 text-white text-[11px]">
+                  </div>
+                </div>
+                <button type="submit" id="btnSubirApto" class="w-full bg-brand-cyan hover:bg-cyan-400 text-black font-extrabold py-2 rounded-xl text-xs uppercase tracking-wider transition shadow-lg shadow-brand-cyan/20">
+                  Subir / Actualizar Ficha Médica
+                </button>
+              </form>
             </div>
           </div>
         </div>
@@ -1225,7 +1265,7 @@
       lucide.createIcons();
     }
 
-    // CARGAR ESTADÍSTICAS DEL JUGADOR
+    // CARGAR ESTADÍSTICAS DEL JUGADOR & APTO MÉDICO
     async function cargarMisEstadisticas() {
       if (!authToken) return;
       try {
@@ -1248,9 +1288,74 @@
           const totalResp = (s.asistencias_si || 0) + (s.asistencias_no || 0);
           const pct = totalResp > 0 ? Math.round((s.asistencias_si / totalResp) * 100) : 100;
           document.getElementById('statJugadorAsistenciaTasa').innerText = `${pct}%`;
+
+          // Apto Médico rendering
+          const ficha = data.persona.ficha_medica;
+          const badge = document.getElementById('aptoMedicoBadge');
+          const lblObra = document.getElementById('aptoObraSocialLabel');
+          const lblObs = document.getElementById('aptoObsLabel');
+
+          if (ficha) {
+            if (ficha.apto_fisico_aprobado) {
+              badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-green-500/20 text-brand-green border border-green-500/30';
+              badge.innerText = '✅ Habilitado para Jugar';
+            } else {
+              badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30';
+              badge.innerText = '⏳ Pendiente de Aprobación Admin';
+            }
+            lblObra.innerText = ficha.obra_social_prepaga || 'No especificada';
+            lblObs.innerText = ficha.observaciones_medicas || 'Sin observaciones';
+            if (document.getElementById('aptoInputObraSocial')) {
+              document.getElementById('aptoInputObraSocial').value = ficha.obra_social_prepaga || '';
+              document.getElementById('aptoInputObs').value = ficha.observaciones_medicas || '';
+            }
+          } else {
+            badge.className = 'text-[10px] px-2.5 py-0.5 rounded-full font-bold bg-red-500/20 text-brand-red border border-red-500/30';
+            badge.innerText = '⚠️ Sin Ficha Presentada';
+            lblObra.innerText = 'No especificada';
+            lblObs.innerText = 'Ficha no presentada';
+          }
         }
       } catch (err) {
         console.error('Error cargando mis estadísticas:', err);
+      }
+    }
+
+    // SUBIR / ACTUALIZAR APTO MÉDICO
+    async function subirAptoMedico(e) {
+      e.preventDefault();
+      if (!authToken) return;
+      const btn = document.getElementById('btnSubirApto');
+      btn.disabled = true;
+      btn.innerText = 'Guardando...';
+
+      const obraSocial = document.getElementById('aptoInputObraSocial').value;
+      const obs = document.getElementById('aptoInputObs').value;
+
+      try {
+        const res = await fetch('/api/auth/apto-medico', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({
+            obra_social_prepaga: obraSocial,
+            observaciones_medicas: obs
+          })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(data.mensaje || 'Ficha de apto médico guardada con éxito.');
+          cargarMisEstadisticas();
+        } else {
+          showToast(data.error || 'Error al guardar apto médico.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de conexión al enviar el apto médico.', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Subir / Actualizar Ficha Médica';
       }
     }
 
