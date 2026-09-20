@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('cancha_nombre');
             $table->string('ubicacion');
             $table->dateTime('fecha_hora');
-            $table->enum('formato', ['F5', 'F7', 'F8', 'F11'])->default('F5');
+            $table->string('formato')->default('F5');
             $table->enum('modalidad', ['JUGADORES_SUELTOS', 'DESAFIO_EQUIPOS'])->default('JUGADORES_SUELTOS');
             $table->integer('max_jugadores')->default(10);
             $table->decimal('precio_total', 10, 2)->default(0);

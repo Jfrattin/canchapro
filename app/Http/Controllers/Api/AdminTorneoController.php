@@ -10,6 +10,7 @@ use App\Models\Sponsor;
 use App\Models\FranjaHoraria;
 use App\Models\User;
 use App\Models\Persona;
+use App\Models\FichaMedica;
 use App\Models\Partido;
 use App\Services\FixtureGeneratorService;
 use Illuminate\Http\Request;

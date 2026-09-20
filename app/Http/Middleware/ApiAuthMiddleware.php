@@ -11,6 +11,21 @@ class ApiAuthMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $request->setUserResolver(fn () => $user);
+
+            if (($request->is('api/admin/*') || $request->is('admin/*')) && !in_array($user->role, ['super_admin', 'organizador'])) {
+                return response()->json(['error' => 'Acceso denegado. Se requieren permisos de Administrador.'], 403);
+            }
+
+            if (($request->is('api/arbitro/*') || $request->is('arbitro/*')) && !in_array($user->role, ['arbitro', 'super_admin'])) {
+                return response()->json(['error' => 'Acceso denegado. Se requieren permisos de Árbitro.'], 403);
+            }
+
+            return $next($request);
+        }
+
         $token = $request->bearerToken() ?? $request->header('X-User-Id') ?? $request->header('Authorization');
 
         if ($token) {
@@ -22,12 +37,10 @@ class ApiAuthMiddleware
                 Auth::login($user);
                 $request->setUserResolver(fn () => $user);
 
-                // Si intenta acceder a rutas admin, verificar que sea super_admin u organizador
                 if (($request->is('api/admin/*') || $request->is('admin/*')) && !in_array($user->role, ['super_admin', 'organizador'])) {
                     return response()->json(['error' => 'Acceso denegado. Se requieren permisos de Administrador.'], 403);
                 }
 
-                // Si intenta acceder a rutas de arbitraje, verificar que sea arbitro o super_admin
                 if (($request->is('api/arbitro/*') || $request->is('arbitro/*')) && !in_array($user->role, ['arbitro', 'super_admin'])) {
                     return response()->json(['error' => 'Acceso denegado. Se requieren permisos de Árbitro.'], 403);
                 }

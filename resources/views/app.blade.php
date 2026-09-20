@@ -654,8 +654,8 @@
 
     </div>
 
-    <!-- BOTTOM ANDROID NAV BAR -->
-    <div class="px-4 py-2.5 bg-brand-dark/95 border-t border-brand-border/60 flex justify-around items-center text-gray-400 z-20">
+    <!-- BOTTOM ANDROID NAV BAR (ALWAYS VISIBLE & STICKY AT BOTTOM) -->
+    <div class="sticky bottom-0 bg-brand-dark/95 backdrop-blur-md px-4 py-2.5 border-t border-brand-border/60 flex justify-around items-center text-gray-400 z-30 shadow-2xl">
       <button onclick="setAppTab('inicio')" id="btnTabInicio" class="flex flex-col items-center text-brand-green transition">
         <i data-lucide="home" class="w-5 h-5"></i>
         <span class="text-[9px] font-bold mt-0.5">Inicio</span>
@@ -823,9 +823,14 @@
         apellido: document.getElementById('regApellido').value,
         dni: document.getElementById('regDni').value,
         grupo_sanguineo: document.getElementById('regSangre').value,
-        email: document.getElementById('regEmail').value,
+        email: document.getElementById('regEmail').value.trim(),
         password: document.getElementById('regPass').value,
       };
+
+      const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+      if (!emailRegex.test(payload.email)) {
+        return toast('Por favor ingresa un email válido (ejemplo: usuario@dominio.com)', true);
+      }
 
       try {
         const res = await fetch('/api/auth/register', {
@@ -1558,12 +1563,21 @@
       const container = document.getElementById('partiditosListContainer');
       if (!list || list.length === 0) {
         container.innerHTML = `
-          <div class="bg-brand-card border border-brand-border rounded-2xl p-4 text-center space-y-2">
-            <span class="text-2xl">🏆</span>
-            <h4 class="font-bold text-white text-xs">No hay partidos que coincidan con la búsqueda.</h4>
-            <p class="text-[11px] text-gray-400">¡Prueba con otro filtro o crea tu propio partidito!</p>
+          <div class="bg-brand-card/90 border border-brand-border/80 rounded-3xl p-6 text-center space-y-3 shadow-xl">
+            <div class="w-14 h-14 mx-auto rounded-3xl bg-brand-green/10 border border-brand-green/30 text-brand-green flex items-center justify-center text-3xl font-bold">
+              ⚽
+            </div>
+            <div class="space-y-1">
+              <h4 class="font-outfit font-extrabold text-white text-sm">No hay partidos que coincidan</h4>
+              <p class="text-[11px] text-gray-400">¡Sé el primero en armar un partidito en tu cancha favorita y compartir el link!</p>
+            </div>
+            <button onclick="toggleFormPartidito()" class="inline-flex items-center space-x-1.5 bg-brand-green hover:bg-brand-green/90 text-black font-extrabold px-4 py-2 rounded-xl text-xs uppercase tracking-wider transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-lg shadow-brand-green/20">
+              <i data-lucide="plus-circle" class="w-4 h-4"></i>
+              <span>+ Crear Partidito Ahora</span>
+            </button>
           </div>
         `;
+        lucide.createIcons();
         return;
       }
 
@@ -1571,7 +1585,7 @@
         const jugAnotados = e.jugadores ? e.jugadores.length : 0;
         const creadorNombre = e.creador ? `${e.creador.nombre} ${e.creador.apellido}` : 'Organizador';
         const fechaObj = new Date(e.fecha_hora);
-        const fechaStr = fechaObj.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const fechaStr = fechaObj.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit' });
         const horaStr = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
         const shareUrl = e.share_url || `${window.location.origin}/app?casual_invite=${e.share_token}`;
         const sportBadge = getSportBadge(e.deporte);
@@ -1583,23 +1597,26 @@
 
         return `
           <div class="bg-brand-card border border-brand-border hover:border-brand-green/50 rounded-2xl p-3.5 space-y-2.5 transition shadow-lg">
-            <div class="flex justify-between items-start">
-              <div>
+            <div class="flex flex-col sm:flex-row justify-between items-start gap-2">
+              <div class="space-y-1 min-w-0 flex-1">
                 <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
                   <span class="text-[10px] bg-brand-purple/20 text-brand-purple font-bold px-2 py-0.5 rounded-full uppercase">${sportBadge}</span>
                   <span class="text-[10px] bg-brand-green/20 text-brand-green font-bold px-2 py-0.5 rounded-full uppercase">${e.formato}</span>
                   <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '👥 Abierto'}</span>
                 </div>
-                <h4 class="font-outfit font-black text-sm text-white mt-1">${e.titulo}</h4>
-                <a href="${mapsUrl}" target="_blank" class="text-[11px] text-brand-green hover:underline flex items-center space-x-1 mt-0.5">
+                <h4 class="font-outfit font-black text-sm text-white break-words">${e.titulo}</h4>
+                <a href="${mapsUrl}" target="_blank" class="text-[11px] text-brand-green hover:underline flex items-center space-x-1">
                   <i data-lucide="map-pin" class="w-3 h-3 flex-shrink-0"></i>
                   <span class="truncate">${e.cancha_nombre} - ${e.ubicacion} 📍</span>
                 </a>
               </div>
-              <div class="text-right flex-shrink-0">
-                <div class="font-mono font-bold text-brand-yellow text-xs">📅 ${fechaStr}</div>
-                <div class="font-mono font-bold text-brand-cyan text-xs">⏰ ${horaStr} hs</div>
-                <div class="text-[10px] text-gray-400 mt-0.5">Por: <strong>${creadorNombre}</strong></div>
+              
+              <div class="flex sm:flex-col justify-between items-end w-full sm:w-auto pt-1 sm:pt-0 border-t sm:border-0 border-brand-border/40 text-right">
+                <div class="flex items-center space-x-2 sm:space-x-0 sm:flex-col text-right">
+                  <span class="font-mono font-bold text-brand-yellow text-xs">📅 ${fechaStr}</span>
+                  <span class="font-mono font-bold text-brand-cyan text-xs">⏰ ${horaStr} hs</span>
+                </div>
+                <div class="text-[10px] text-gray-400">Por: <strong>${creadorNombre}</strong></div>
               </div>
             </div>
 
@@ -1615,13 +1632,13 @@
             </div>
 
             <div class="flex justify-between items-center pt-1 border-t border-brand-border/40 gap-1.5 flex-wrap">
-              <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition flex items-center justify-center space-x-1">
+              <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center space-x-1">
                 <i data-lucide="share-2" class="w-3 h-3 text-brand-cyan"></i>
                 <span>Copiar Link 🔗</span>
               </button>
               
               ${(esCreador || esAdmin) ? `
-                <button onclick="eliminarPartidito('${e.id}')" class="bg-brand-red/20 hover:bg-brand-red/30 text-brand-red border border-brand-red/40 px-2.5 py-1.5 rounded-xl font-bold text-[10px] transition" title="Eliminar este partido">
+                <button onclick="eliminarPartidito('${e.id}')" class="bg-brand-red/20 hover:bg-brand-red/30 text-brand-red border border-brand-red/40 px-2.5 py-1.5 rounded-xl font-bold text-[10px] transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer" title="Eliminar este partido">
                   🗑️ Borrar
                 </button>
               ` : ''}
@@ -1631,11 +1648,11 @@
                   ✅ Ya estás anotado
                 </span>
               ` : `
-                <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition shadow-md shadow-brand-green/20">
+                <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer shadow-md shadow-brand-green/20">
                   Unirme 🏆
                 </button>
                 ${e.modalidad === 'DESAFIO_EQUIPOS' ? `
-                  <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition">
+                  <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer">
                     Desafiar ⚔️
                   </button>
                 ` : ''}
