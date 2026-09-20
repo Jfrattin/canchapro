@@ -1338,7 +1338,8 @@
           const foto = t.foto_url || 'https://images.unsplash.com/photo-1508098682722-e99c43a406b2?auto=format&fit=crop&w=800&q=80';
           const ubicacion = t.ubicacion || (t.sede ? `${t.sede.nombre}, ${t.sede.direccion}` : 'Palermo Central');
           const descripcion = t.descripcion || 'Torneo oficial de fútbol amateur.';
-          const numEquipos = t.equipos ? t.equipos.length : 0;
+          const listas = t.listas_buena_fe || t.listasBuenaFe || [];
+          const numEquipos = (t.equipos && t.equipos.length > 0) ? t.equipos.length : listas.length;
 
           container.innerHTML += `
             <div class="bg-brand-dark border border-brand-border rounded-2xl overflow-hidden shadow-lg">
@@ -1367,22 +1368,26 @@
                 <div class="bg-brand-dark/90 p-2.5 rounded-xl border border-brand-border/40 space-y-1.5">
                   <span class="text-[10px] font-bold text-gray-300 flex items-center space-x-1">
                     <i data-lucide="shield" class="w-3 h-3 text-brand-cyan"></i>
-                    <span>Equipos & Planteles Inscriptos (${numEquipos}):</span>
+                    <span>Equipos Inscriptos (${numEquipos}):</span>
                   </span>
                   <div class="space-y-1 max-h-32 overflow-y-auto no-scrollbar">
-                    ${(t.equipos && t.equipos.length > 0) ? t.equipos.map(eq => `
-                      <div class="bg-brand-dark px-2.5 py-1.5 rounded-lg border border-brand-border/30 text-[10px] space-y-0.5">
-                        <div class="flex justify-between items-center text-white font-bold">
-                          <span>🛡️ ${eq.nombre}</span>
-                          <span class="text-[9px] text-gray-400 font-normal">${eq.personas ? eq.personas.length : 0} jug.</span>
-                        </div>
-                        ${(eq.personas && eq.personas.length > 0) ? `
-                          <div class="text-[9.5px] text-gray-300 pl-2 border-l border-brand-cyan/40 space-y-0.5 mt-1">
-                            ${eq.personas.map(p => `<div>• ${p.nombre} ${p.apellido}</div>`).join('')}
+                    ${(t.equipos && t.equipos.length > 0) ? t.equipos.map(eq => {
+                      const lMatch = listas.find(l => l.equipo_id === eq.id);
+                      const jugList = (lMatch && lMatch.jugadores) ? lMatch.jugadores.map(j => j.persona).filter(Boolean) : [];
+                      return `
+                        <div class="bg-brand-dark px-2.5 py-1.5 rounded-lg border border-brand-border/30 text-[10px] space-y-0.5">
+                          <div class="flex justify-between items-center text-white font-bold">
+                            <span>🛡️ ${eq.nombre}</span>
+                            <span class="text-[9px] text-gray-400 font-normal">${jugList.length} jug.</span>
                           </div>
-                        ` : ''}
-                      </div>
-                    `).join('') : '<div class="text-[10px] text-gray-500 italic py-0.5">No hay equipos inscriptos aún.</div>'}
+                          ${(jugList.length > 0) ? `
+                            <div class="text-[9.5px] text-gray-300 pl-2 border-l border-brand-cyan/40 space-y-0.5 mt-1">
+                              ${jugList.map(p => `<div>• ${p.nombre} ${p.apellido}</div>`).join('')}
+                            </div>
+                          ` : ''}
+                        </div>
+                      `;
+                    }).join('') : '<div class="text-[10px] text-gray-500 italic py-0.5">No hay equipos inscriptos aún.</div>'}
                   </div>
                 </div>
 

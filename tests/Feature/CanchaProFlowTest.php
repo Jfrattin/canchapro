@@ -187,4 +187,26 @@ class CanchaProFlowTest extends TestCase
             'persona_id' => $personaPlayer->id,
         ]);
     }
+
+    public function test_creacion_y_listado_de_torneo_por_admin(): void
+    {
+        $adminUser = User::factory()->create(['role' => 'super_admin']);
+
+        $createResponse = $this->actingAs($adminUser)
+            ->postJson('/api/admin/torneos', [
+                'nombre' => 'Copa Padel Primavera 2026',
+                'deporte' => 'PADEL',
+                'categoria' => 'Apertura Dobles',
+                'formato_juego' => 'DOBLES',
+                'max_equipos' => 8,
+                'descripcion' => 'Torneo oficial de Padel Dobles',
+            ]);
+
+        $createResponse->assertStatus(201)
+            ->assertJsonPath('torneo.nombre', 'Copa Padel Primavera 2026');
+
+        $listResponse = $this->getJson('/api/torneos');
+        $listResponse->assertStatus(200)
+            ->assertJsonCount(1);
+    }
 }

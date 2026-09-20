@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('nombre'); // Ej: Torneo Apertura 2026
             $table->uuid('sede_id');
             $table->string('categoria'); // Ej: Libre A, Libre B, Senior +35, Femenino
-            $table->enum('formato_juego', ['F5', 'F7', 'F8', 'F11'])->default('F11');
+            $table->string('formato_juego')->default('F11');
             $table->enum('sistema_torneo', ['LIGA_ROUND_ROBIN', 'GRUPOS_Y_PLAYOFFS', 'ELIMINACION_DIRECTA'])->default('LIGA_ROUND_ROBIN');
             $table->integer('max_equipos')->default(16);
             $table->integer('max_jugadores_lista_fe')->default(20);

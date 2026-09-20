@@ -21,7 +21,7 @@ class TorneoController extends Controller
 
     public function index(Request $request): JsonResponse
     {
-        $query = Torneo::with(['sede', 'canchas', 'equipos.personas']);
+        $query = Torneo::with(['sede', 'canchas', 'equipos', 'listasBuenaFe.jugadores.persona']);
 
         if ($request->has('deporte') && !empty($request->deporte) && $request->deporte !== 'TODOS') {
             $query->where('deporte', $request->deporte);

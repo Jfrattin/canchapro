@@ -23,7 +23,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('sede_id');
             $table->string('nombre'); // Ej: Cancha 1, Cancha Techada 2
-            $table->enum('tipo_formato', ['F5', 'F7', 'F8', 'F11'])->default('F7');
+            $table->string('tipo_formato')->default('F7');
             $table->enum('superficie', ['Sintetico', 'Cesped Natural', 'Parquet', 'Cemento'])->default('Sintetico');
             $table->boolean('tiene_iluminacion')->default(true);
             $table->boolean('es_techada')->default(false);
