@@ -211,14 +211,15 @@ class EncuentroCasualController extends Controller
 
     public function destroy(Request $request, EncuentroCasual $encuentro): JsonResponse
     {
-        $persona = $request->user()->persona;
-        if (!$persona || $encuentro->creador_persona_id !== $persona->id) {
-            return response()->json(['error' => 'Solo el creador del encuentro puede cancelarlo.'], 403);
+        $user = $request->user();
+        $persona = $user->persona;
+        $esAdmin = in_array($user->role, ['super_admin', 'organizador']);
+
+        if (!$esAdmin && (!$persona || $encuentro->creador_persona_id !== $persona->id)) {
+            return response()->json(['error' => 'Solo el creador del encuentro o un administrador puede eliminarlo.'], 403);
         }
 
-        $encuentro->update(['estado' => 'CANCELADO']);
         $encuentro->delete();
-
-        return response()->json(['mensaje' => 'Partidito casual cancelado correctamente.']);
+        return response()->json(['mensaje' => 'Partidito casual eliminado correctamente.']);
     }
 }

@@ -486,13 +486,21 @@
             </div>
           </div>
 
-          <!-- BOTÓN MOSTRAR/OCULTAR FORMULARIO -->
-          <div class="flex justify-between items-center px-1">
-            <h4 class="font-outfit font-extrabold text-xs text-white">Encuentros Disponibles</h4>
-            <button onclick="toggleFormPartidito()" class="text-[10px] bg-brand-green hover:bg-brand-green/90 text-black px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1">
-              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
-              <span>+ Crear Partidito</span>
-            </button>
+          <!-- BUSCADOR RÁPIDO & BOTÓN CREAR -->
+          <div class="space-y-2.5">
+            <div class="flex justify-between items-center px-1">
+              <h4 class="font-outfit font-extrabold text-xs text-white">Encuentros Disponibles</h4>
+              <button onclick="toggleFormPartidito()" class="text-[10px] bg-brand-green hover:bg-brand-green/90 text-black px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1">
+                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                <span>+ Crear Partidito</span>
+              </button>
+            </div>
+
+            <!-- 🔍 INPUT BUSCADOR -->
+            <div class="relative">
+              <input type="text" id="busquedaPartiditoInput" oninput="filtrarPartiditosPorTexto()" placeholder="🔍 Buscar por título, cancha, dirección..."
+                class="w-full bg-brand-dark border border-brand-border rounded-xl px-3.5 py-2 text-xs text-white focus:outline-none focus:border-brand-green transition">
+            </div>
           </div>
 
           <!-- FORMULARIO DE CREACIÓN DE PARTIDITO -->
@@ -536,23 +544,44 @@
                 <input type="text" id="partiditoCancha" required placeholder="Ej: Cancha 1 / Canchita Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
               </div>
 
+              <!-- UBICACIÓN & PREVISUALIZACIÓN DE GOOGLE MAPS -->
               <div>
-                <label class="block text-gray-300 mb-0.5">Ubicación / Dirección *</label>
-                <input type="text" id="partiditoUbicacion" required placeholder="Ej: Av. Córdoba 3500, Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                <div class="flex justify-between items-center mb-0.5">
+                  <label class="block text-gray-300">Ubicación / Dirección *</label>
+                  <span class="text-[9px] text-brand-green font-bold flex items-center space-x-1">
+                    <i data-lucide="map-pin" class="w-2.5 h-2.5"></i>
+                    <span>Google Maps</span>
+                  </span>
+                </div>
+                <input type="text" id="partiditoUbicacion" required placeholder="Ej: Av. Córdoba 3500, Palermo, CABA"
+                  oninput="actualizarMapaPartiditoPreview()" onchange="actualizarMapaPartiditoPreview()"
+                  class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                
+                <div class="mt-1.5 rounded-xl overflow-hidden border border-brand-border/60 bg-brand-dark h-28">
+                  <iframe id="partiditoMapIframe" class="w-full h-full border-0" loading="lazy" allowfullscreen
+                    src="https://maps.google.com/maps?q=Av.%20Cordoba%203500,%20Palermo&t=&z=15&ie=UTF8&iwloc=&output=embed">
+                  </iframe>
+                </div>
               </div>
 
+              <!-- FECHA Y HORA SEPARADAS EN 2 INPUTS -->
               <div class="grid grid-cols-2 gap-2">
                 <div>
-                  <label class="block text-gray-300 mb-0.5">Fecha y Hora *</label>
-                  <input type="datetime-local" id="partiditoFechaHora" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-2 text-white">
+                  <label class="block text-gray-300 mb-0.5">Fecha del Partido *</label>
+                  <input type="date" id="partiditoFecha" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-2.5 py-2 text-white">
                 </div>
                 <div>
-                  <label class="block text-gray-300 mb-0.5">Modalidad *</label>
-                  <select id="partiditoModalidad" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
-                    <option value="JUGADORES_SUELTOS">Sumar Jugadores Sueltos</option>
-                    <option value="DESAFIO_EQUIPOS">Desafío Equipo vs Equipo</option>
-                  </select>
+                  <label class="block text-gray-300 mb-0.5">Hora de Inicio *</label>
+                  <input type="time" id="partiditoHora" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-2.5 py-2 text-white">
                 </div>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 mb-0.5">Modalidad *</label>
+                <select id="partiditoModalidad" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                  <option value="JUGADORES_SUELTOS">Sumar Jugadores Sueltos</option>
+                  <option value="DESAFIO_EQUIPOS">Desafío Equipo vs Equipo</option>
+                </select>
               </div>
 
               <div class="grid grid-cols-2 gap-2">
@@ -568,7 +597,6 @@
 
               <button type="submit" id="btnGuardarPartidito" class="w-full bg-brand-green hover:bg-brand-green/90 text-black font-extrabold py-2.5 rounded-xl uppercase tracking-wider transition shadow-lg shadow-brand-green/20">
                 Publicar Partidito & Generar Link
-              </button>
             </form>
           </div>
 
@@ -1482,6 +1510,34 @@
       else inputMax.value = 10;
     }
 
+    let partiditosDataArr = [];
+
+    function actualizarMapaPartiditoPreview() {
+      const ubicacion = document.getElementById('partiditoUbicacion').value;
+      const iframe = document.getElementById('partiditoMapIframe');
+      if (ubicacion && iframe) {
+        iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(ubicacion)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      }
+    }
+
+    function filtrarPartiditosPorTexto() {
+      const query = (document.getElementById('busquedaPartiditoInput').value || '').toLowerCase().trim();
+      if (!query) {
+        renderPartiditosCards(partiditosDataArr);
+        return;
+      }
+
+      const filtrados = partiditosDataArr.filter(e => {
+        const titulo = (e.titulo || '').toLowerCase();
+        const cancha = (e.cancha_nombre || '').toLowerCase();
+        const ubica = (e.ubicacion || '').toLowerCase();
+        const creador = e.creador ? `${e.creador.nombre} ${e.creador.apellido}`.toLowerCase() : '';
+        return titulo.includes(query) || cancha.includes(query) || ubica.includes(query) || creador.includes(query);
+      });
+
+      renderPartiditosCards(filtrados);
+    }
+
     async function cargarPartiditosApp() {
       const container = document.getElementById('partiditosListContainer');
       container.innerHTML = '<div class="text-center py-6 text-gray-500">Cargando partiditos disponibles...</div>';
@@ -1489,87 +1545,128 @@
       try {
         const url = currentSportFilter === 'TODOS' ? '/api/encuentros-casuales' : `/api/encuentros-casuales?deporte=${currentSportFilter}`;
         const res = await fetch(url);
-        const encuentros = await res.json();
+        partiditosDataArr = await res.json();
 
-        if (!encuentros || encuentros.length === 0) {
-          container.innerHTML = `
-            <div class="bg-brand-card border border-brand-border rounded-2xl p-4 text-center space-y-2">
-              <span class="text-2xl">🏆</span>
-              <h4 class="font-bold text-white text-xs">No hay encuentros casuales para esta disciplina todavía.</h4>
-              <p class="text-[11px] text-gray-400">¡Sé el primero en armar un partido y compartir el link!</p>
-            </div>
-          `;
-          return;
-        }
-
-        container.innerHTML = encuentros.map(e => {
-          const jugAnotados = e.jugadores ? e.jugadores.length : 0;
-          const creadorNombre = e.creador ? `${e.creador.nombre} ${e.creador.apellido}` : 'Organizador';
-          const fechaStr = new Date(e.fecha_hora).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' });
-          const shareUrl = e.share_url || `${window.location.origin}/app?casual_invite=${e.share_token}`;
-          const sportBadge = getSportBadge(e.deporte);
-
-          const yaAnotado = e.jugadores && currentUser && currentUser.persona && e.jugadores.some(j => j.persona_id === currentUser.persona.id);
-
-          return `
-            <div class="bg-brand-card border border-brand-border hover:border-brand-green/50 rounded-2xl p-3.5 space-y-2.5 transition shadow-lg">
-              <div class="flex justify-between items-start">
-                <div>
-                  <div class="flex items-center space-x-2">
-                    <span class="text-[10px] bg-brand-purple/20 text-brand-purple font-bold px-2 py-0.5 rounded-full uppercase">${sportBadge}</span>
-                    <span class="text-[10px] bg-brand-green/20 text-brand-green font-bold px-2 py-0.5 rounded-full uppercase">${e.formato}</span>
-                    <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '👥 Abierto'}</span>
-                  </div>
-                  <h4 class="font-outfit font-black text-sm text-white mt-1">${e.titulo}</h4>
-                  <div class="text-[11px] text-gray-300 flex items-center space-x-1 mt-0.5">
-                    <i data-lucide="map-pin" class="w-3 h-3 text-brand-green"></i>
-                    <span>${e.cancha_nombre} - ${e.ubicacion}</span>
-                  </div>
-                </div>
-                <div class="text-right">
-                  <span class="font-mono font-bold text-brand-yellow text-xs">${fechaStr} hs</span>
-                  <div class="text-[10px] text-gray-400 mt-0.5">Por: <strong>${creadorNombre}</strong></div>
-                </div>
-              </div>
-
-              <div class="bg-brand-dark p-2 rounded-xl border border-brand-border/60 flex justify-between items-center text-[11px]">
-                <div>
-                  <span class="text-gray-400">Cupos: </span>
-                  <strong class="${jugAnotados >= e.max_jugadores ? 'text-brand-red' : 'text-brand-green'}">${jugAnotados} / ${e.max_jugadores}</strong>
-                </div>
-                <div>
-                  <span class="text-gray-400">Precio / jug: </span>
-                  <strong class="text-brand-cyan">$${e.precio_por_jugador || 0}</strong>
-                </div>
-              </div>
-
-              <div class="flex justify-between items-center pt-1 border-t border-brand-border/40 gap-2">
-                <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2.5 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition flex items-center justify-center space-x-1">
-                  <i data-lucide="share-2" class="w-3 h-3 text-brand-cyan"></i>
-                  <span>Copiar Link 🔗</span>
-                </button>
-                ${yaAnotado ? `
-                  <span class="bg-green-900/40 text-brand-green border border-brand-green/40 px-3 py-1.5 rounded-xl font-extrabold text-[10px]">
-                    ✅ Ya estás anotado
-                  </span>
-                ` : `
-                  <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition shadow-md shadow-brand-green/20">
-                    Unirme 🏆
-                  </button>
-                  ${e.modalidad === 'DESAFIO_EQUIPOS' ? `
-                    <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition">
-                      Desafiar ⚔️
-                    </button>
-                  ` : ''}
-                `}
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        lucide.createIcons();
+        if (!Array.isArray(partiditosDataArr)) partiditosDataArr = [];
+        renderPartiditosCards(partiditosDataArr);
       } catch (err) {
         container.innerHTML = '<div class="text-center py-6 text-red-400">Error al cargar encuentros casuales.</div>';
+      }
+    }
+
+    function renderPartiditosCards(list) {
+      const container = document.getElementById('partiditosListContainer');
+      if (!list || list.length === 0) {
+        container.innerHTML = `
+          <div class="bg-brand-card border border-brand-border rounded-2xl p-4 text-center space-y-2">
+            <span class="text-2xl">🏆</span>
+            <h4 class="font-bold text-white text-xs">No hay partidos que coincidan con la búsqueda.</h4>
+            <p class="text-[11px] text-gray-400">¡Prueba con otro filtro o crea tu propio partidito!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = list.map(e => {
+        const jugAnotados = e.jugadores ? e.jugadores.length : 0;
+        const creadorNombre = e.creador ? `${e.creador.nombre} ${e.creador.apellido}` : 'Organizador';
+        const fechaObj = new Date(e.fecha_hora);
+        const fechaStr = fechaObj.toLocaleDateString('es-AR', { day: '2-digit', month: '2-digit', year: 'numeric' });
+        const horaStr = fechaObj.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+        const shareUrl = e.share_url || `${window.location.origin}/app?casual_invite=${e.share_token}`;
+        const sportBadge = getSportBadge(e.deporte);
+
+        const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(e.ubicacion || e.cancha_nombre)}`;
+        const yaAnotado = e.jugadores && currentUser && currentUser.persona && e.jugadores.some(j => j.persona_id === currentUser.persona.id);
+        const esCreador = currentUser && currentUser.persona && e.creador_persona_id === currentUser.persona.id;
+        const esAdmin = currentUser && currentUser.user && (currentUser.user.role === 'super_admin' || currentUser.user.role === 'organizador');
+
+        return `
+          <div class="bg-brand-card border border-brand-border hover:border-brand-green/50 rounded-2xl p-3.5 space-y-2.5 transition shadow-lg">
+            <div class="flex justify-between items-start">
+              <div>
+                <div class="flex items-center space-x-1.5 flex-wrap gap-y-1">
+                  <span class="text-[10px] bg-brand-purple/20 text-brand-purple font-bold px-2 py-0.5 rounded-full uppercase">${sportBadge}</span>
+                  <span class="text-[10px] bg-brand-green/20 text-brand-green font-bold px-2 py-0.5 rounded-full uppercase">${e.formato}</span>
+                  <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '👥 Abierto'}</span>
+                </div>
+                <h4 class="font-outfit font-black text-sm text-white mt-1">${e.titulo}</h4>
+                <a href="${mapsUrl}" target="_blank" class="text-[11px] text-brand-green hover:underline flex items-center space-x-1 mt-0.5">
+                  <i data-lucide="map-pin" class="w-3 h-3 flex-shrink-0"></i>
+                  <span class="truncate">${e.cancha_nombre} - ${e.ubicacion} 📍</span>
+                </a>
+              </div>
+              <div class="text-right flex-shrink-0">
+                <div class="font-mono font-bold text-brand-yellow text-xs">📅 ${fechaStr}</div>
+                <div class="font-mono font-bold text-brand-cyan text-xs">⏰ ${horaStr} hs</div>
+                <div class="text-[10px] text-gray-400 mt-0.5">Por: <strong>${creadorNombre}</strong></div>
+              </div>
+            </div>
+
+            <div class="bg-brand-dark p-2 rounded-xl border border-brand-border/60 flex justify-between items-center text-[11px]">
+              <div>
+                <span class="text-gray-400">Cupos: </span>
+                <strong class="${jugAnotados >= e.max_jugadores ? 'text-brand-red' : 'text-brand-green'}">${jugAnotados} / ${e.max_jugadores}</strong>
+              </div>
+              <div>
+                <span class="text-gray-400">Precio / jug: </span>
+                <strong class="text-brand-cyan">$${e.precio_por_jugador || 0}</strong>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center pt-1 border-t border-brand-border/40 gap-1.5 flex-wrap">
+              <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition flex items-center justify-center space-x-1">
+                <i data-lucide="share-2" class="w-3 h-3 text-brand-cyan"></i>
+                <span>Copiar Link 🔗</span>
+              </button>
+              
+              ${(esCreador || esAdmin) ? `
+                <button onclick="eliminarPartidito('${e.id}')" class="bg-brand-red/20 hover:bg-brand-red/30 text-brand-red border border-brand-red/40 px-2.5 py-1.5 rounded-xl font-bold text-[10px] transition" title="Eliminar este partido">
+                  🗑️ Borrar
+                </button>
+              ` : ''}
+
+              ${yaAnotado ? `
+                <span class="bg-green-900/40 text-brand-green border border-brand-green/40 px-3 py-1.5 rounded-xl font-extrabold text-[10px]">
+                  ✅ Ya estás anotado
+                </span>
+              ` : `
+                <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition shadow-md shadow-brand-green/20">
+                  Unirme 🏆
+                </button>
+                ${e.modalidad === 'DESAFIO_EQUIPOS' ? `
+                  <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition">
+                    Desafiar ⚔️
+                  </button>
+                ` : ''}
+              `}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    async function eliminarPartidito(encuentroId) {
+      if (!confirm('¿Estás seguro de que deseas eliminar este partidito casual?')) return;
+
+      try {
+        const res = await fetch(`/api/encuentros-casuales/${encuentroId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(data.mensaje || 'Partido eliminado correctamente.');
+          cargarPartiditosApp();
+        } else {
+          showToast(data.error || 'No se pudo eliminar el partido.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de comunicación con el servidor', 'error');
       }
     }
 
@@ -1581,12 +1678,16 @@
       btn.disabled = true;
       btn.innerText = 'Publicando...';
 
+      const fecha = document.getElementById('partiditoFecha').value;
+      const hora = document.getElementById('partiditoHora').value;
+      const fechaHoraCombined = `${fecha} ${hora}:00`;
+
       const payload = {
         titulo: document.getElementById('partiditoTitulo').value,
         deporte: document.getElementById('partiditoDeporte').value,
         cancha_nombre: document.getElementById('partiditoCancha').value,
         ubicacion: document.getElementById('partiditoUbicacion').value,
-        fecha_hora: document.getElementById('partiditoFechaHora').value,
+        fecha_hora: fechaHoraCombined,
         formato: document.getElementById('partiditoFormato').value,
         modalidad: document.getElementById('partiditoModalidad').value,
         precio_total: parseFloat(document.getElementById('partiditoPrecioTotal').value || 0),
