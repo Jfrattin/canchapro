@@ -188,12 +188,26 @@
             </div>
           </div>
 
-          <!-- Ubicación del Torneo -->
+          <!-- Ubicación del Torneo con Google Maps Embed Preview -->
           <div>
-            <label class="block text-gray-300 font-semibold mb-1">Ubicación / Predio *</label>
-            <input type="text" id="torneoUbicacion" required value="Complejo Palermo Central - Av. Libertador 4500, CABA"
-              placeholder="Dirección o referencia del predio"
+            <div class="flex justify-between items-center mb-1">
+              <label class="block text-gray-300 font-semibold">Ubicación / Predio (Google Maps) *</label>
+              <button type="button" onclick="actualizarMapaPreview()" class="text-[10px] text-brand-purple hover:underline flex items-center space-x-1 font-bold">
+                <i data-lucide="map-pin" class="w-3 h-3"></i>
+                <span>Previsualizar Mapa</span>
+              </button>
+            </div>
+            <input type="text" id="torneoUbicacion" required value="Av. del Libertador 4500, Palermo, CABA"
+              placeholder="Escribe la dirección o nombre del predio..."
+              onchange="actualizarMapaPreview()" oninput="actualizarMapaPreview()"
               class="w-full bg-brand-dark border border-brand-border rounded-xl px-3.5 py-2 text-white focus:outline-none focus:border-brand-purple">
+            
+            <!-- MAP PREVIEW IFRAME -->
+            <div class="mt-2 rounded-xl overflow-hidden border border-brand-border/60 bg-brand-dark h-32">
+              <iframe id="googleMapIframe" class="w-full h-full border-0" loading="lazy" allowfullscreen
+                src="https://maps.google.com/maps?q=Av.%20del%20Libertador%204500,%20Palermo,%20CABA&t=&z=15&ie=UTF8&iwloc=&output=embed">
+              </iframe>
+            </div>
           </div>
 
           <!-- Descripción -->
@@ -700,11 +714,20 @@
       }
     }
 
+    function actualizarMapaPreview() {
+      const ubicacion = document.getElementById('torneoUbicacion').value;
+      const iframe = document.getElementById('googleMapIframe');
+      if (ubicacion && iframe) {
+        iframe.src = `https://maps.google.com/maps?q=${encodeURIComponent(ubicacion)}&t=&z=15&ie=UTF8&iwloc=&output=embed`;
+      }
+    }
+
     // 2. CARGAR TORNEOS
     async function cargarTorneos() {
       try {
         const res = await fetch('/api/torneos');
-        const torneos = await res.json();
+        const raw = await res.json();
+        const torneos = Array.isArray(raw) ? raw : (raw.data?.data || raw.data || []);
         
         document.getElementById('statTorneos').innerText = torneos.length;
         let totalEquipos = 0;

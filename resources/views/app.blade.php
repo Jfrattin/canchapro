@@ -1103,7 +1103,8 @@
     async function cargarTorneosApp() {
       try {
         const res = await fetch('/api/torneos');
-        const torneos = await res.json();
+        const raw = await res.json();
+        const torneos = Array.isArray(raw) ? raw : (raw.data?.data || raw.data || []);
         const container = document.getElementById('torneosAppList');
         
         if (torneos.length === 0) {
