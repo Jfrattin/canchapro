@@ -255,13 +255,13 @@
               </div>
               <div class="absolute bottom-2 left-3 right-3 flex justify-between items-end">
                 <div>
-                  <span id="partidoCanchaNombre" class="text-xs font-bold text-white">Cancha 1 - La Bombonerita</span>
+                  <span id="partidoCanchaNombre" class="text-xs font-bold text-white">Buscando próximo partido...</span>
                   <div id="partidoUbicacionText" class="text-[10px] text-gray-300 flex items-center space-x-1">
                     <i data-lucide="map-pin" class="w-3 h-3 text-brand-cyan flex-shrink-0"></i>
-                    <span class="truncate">Sector A - Av. Libertador 4500</span>
+                    <span class="truncate">Complejo Deportivo</span>
                   </div>
                 </div>
-                <span id="partidoHoraBadge" class="text-[11px] font-mono font-bold text-brand-green bg-black/60 px-2 py-0.5 rounded-lg border border-brand-green/30">19:30 hs</span>
+                <span id="partidoHoraBadge" class="text-[11px] font-mono font-bold text-brand-green bg-black/60 px-2 py-0.5 rounded-lg border border-brand-green/30">--:-- hs</span>
               </div>
             </div>
 
@@ -1004,6 +1004,13 @@
           }
 
         } else {
+          document.getElementById('partidoCanchaNombre').innerText = 'Sin Partido Programado';
+          document.getElementById('partidoUbicacionText').innerHTML = `
+            <i data-lucide="map-pin" class="w-3 h-3 text-brand-cyan flex-shrink-0"></i>
+            <span class="truncate">Complejo Deportivo</span>
+          `;
+          document.getElementById('partidoHoraBadge').innerText = '--:-- hs';
+
           enf.innerHTML = `
             <div class="text-xs text-gray-400 py-3">
               No tienes partidos programados.<br>
@@ -1356,6 +1363,29 @@
                   ${descripcion}
                 </p>
 
+                <!-- LISTA DE EQUIPOS E INSCRIPTOS DEL TORNEO -->
+                <div class="bg-brand-dark/90 p-2.5 rounded-xl border border-brand-border/40 space-y-1.5">
+                  <span class="text-[10px] font-bold text-gray-300 flex items-center space-x-1">
+                    <i data-lucide="shield" class="w-3 h-3 text-brand-cyan"></i>
+                    <span>Equipos & Planteles Inscriptos (${numEquipos}):</span>
+                  </span>
+                  <div class="space-y-1 max-h-32 overflow-y-auto no-scrollbar">
+                    ${(t.equipos && t.equipos.length > 0) ? t.equipos.map(eq => `
+                      <div class="bg-brand-dark px-2.5 py-1.5 rounded-lg border border-brand-border/30 text-[10px] space-y-0.5">
+                        <div class="flex justify-between items-center text-white font-bold">
+                          <span>🛡️ ${eq.nombre}</span>
+                          <span class="text-[9px] text-gray-400 font-normal">${eq.personas ? eq.personas.length : 0} jug.</span>
+                        </div>
+                        ${(eq.personas && eq.personas.length > 0) ? `
+                          <div class="text-[9.5px] text-gray-300 pl-2 border-l border-brand-cyan/40 space-y-0.5 mt-1">
+                            ${eq.personas.map(p => `<div>• ${p.nombre} ${p.apellido}</div>`).join('')}
+                          </div>
+                        ` : ''}
+                      </div>
+                    `).join('') : '<div class="text-[10px] text-gray-500 italic py-0.5">No hay equipos inscriptos aún.</div>'}
+                  </div>
+                </div>
+
                 <div class="pt-2 border-t border-brand-border/40 flex justify-between items-center">
                   <span class="text-[10px] text-gray-400">Cupos: <strong>${numEquipos} / ${t.max_equipos}</strong></span>
                   <button onclick="inscribirEquipoTorneo('${t.id}')" class="bg-brand-green/20 hover:bg-brand-green text-brand-green hover:text-black border border-brand-green/40 px-3 py-1.5 rounded-xl font-bold text-[10px] transition">
@@ -1631,6 +1661,39 @@
               </div>
             </div>
 
+            <!-- LISTA DE JUGADORES INSCRIPTOS EN EL PARTIDITO -->
+            <div class="bg-brand-dark/80 p-2.5 rounded-xl border border-brand-border/40 space-y-1.5">
+              <div class="flex justify-between items-center text-[10px] text-gray-400 border-b border-brand-border/30 pb-1">
+                <span class="font-bold text-gray-300 flex items-center space-x-1">
+                  <i data-lucide="users" class="w-3 h-3 text-brand-green"></i>
+                  <span>Jugadores Inscriptos (${jugAnotados} / ${e.max_jugadores})</span>
+                </span>
+                ${esCreador ? '<span class="text-[9px] text-brand-yellow font-bold bg-amber-950/40 border border-brand-yellow/30 px-1.5 py-0.2 rounded">Tú eres el Creador</span>' : ''}
+              </div>
+
+              <div class="space-y-1 max-h-36 overflow-y-auto no-scrollbar">
+                ${(e.jugadores && e.jugadores.length > 0) ? e.jugadores.map(j => {
+                  const pName = j.persona ? `${j.persona.nombre} ${j.persona.apellido}` : 'Jugador';
+                  const esCreadorDelMatch = e.creador_persona_id === j.persona_id;
+                  const puedeExpulsar = (esCreador || esAdmin) && !esCreadorDelMatch;
+                  return `
+                    <div class="flex justify-between items-center text-[11px] bg-brand-card/80 px-2.5 py-1 rounded-lg border border-brand-border/30">
+                      <div class="flex items-center space-x-1.5 truncate">
+                        <span class="text-xs flex-shrink-0">${esCreadorDelMatch ? '👑' : '⚽'}</span>
+                        <span class="text-gray-200 font-medium truncate">${pName}</span>
+                        ${j.equipo_num === 2 ? '<span class="text-[9px] bg-brand-red/20 text-brand-red px-1.5 py-0.2 rounded font-bold">Rival</span>' : ''}
+                      </div>
+                      ${puedeExpulsar ? `
+                        <button onclick="expulsarJugadorPartidito('${e.id}', '${j.persona_id}', '${pName}')" class="text-[9.5px] text-red-400 hover:text-red-200 font-bold bg-red-950/50 hover:bg-red-900 border border-red-500/40 px-2 py-0.5 rounded-md transition hover:scale-105 cursor-pointer flex-shrink-0 ml-1" title="Expulsar a ${pName} del partido">
+                          ✕ Expulsar
+                        </button>
+                      ` : ''}
+                    </div>
+                  `;
+                }).join('') : '<div class="text-[10px] text-gray-500 italic py-0.5">Aún no hay jugadores anotados.</div>'}
+              </div>
+            </div>
+
             <div class="flex justify-between items-center pt-1 border-t border-brand-border/40 gap-1.5 flex-wrap">
               <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition hover:scale-[1.02] active:scale-[0.98] cursor-pointer flex items-center justify-center space-x-1">
                 <i data-lucide="share-2" class="w-3 h-3 text-brand-cyan"></i>
@@ -1681,6 +1744,28 @@
           cargarPartiditosApp();
         } else {
           showToast(data.error || 'No se pudo eliminar el partido.', 'error');
+        }
+      } catch (err) {
+        showToast('Error de comunicación con el servidor', 'error');
+      }
+    }
+
+    async function expulsarJugadorPartidito(encuentroId, personaId, personaNombre) {
+      if (!confirm(`¿Estás seguro de que deseas expulsar a ${personaNombre} de este partidito?`)) return;
+
+      try {
+        const res = await fetch(`/api/encuentros-casuales/${encuentroId}/jugadores/${personaId}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        const data = await res.json();
+        if (res.ok) {
+          showToast(data.mensaje || 'Jugador expulsado del partidito.');
+          cargarPartiditosApp();
+        } else {
+          showToast(data.error || 'No se pudo expulsar al jugador.', 'error');
         }
       } catch (err) {
         showToast('Error de comunicación con el servidor', 'error');

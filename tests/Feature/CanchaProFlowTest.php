@@ -137,4 +137,54 @@ class CanchaProFlowTest extends TestCase
         $aprobacionResponse->assertStatus(200)
             ->assertJsonPath('persona.ficha_medica.apto_fisico_aprobado', true);
     }
+
+    public function test_expulsar_jugador_de_partidito_por_creador(): void
+    {
+        $creator = User::factory()->create();
+        $personaCreator = Persona::create([
+            'user_id' => $creator->id,
+            'nombre' => 'Creador',
+            'apellido' => 'Test',
+            'dni' => '55555555',
+        ]);
+
+        $encuentro = EncuentroCasual::create([
+            'creador_persona_id' => $personaCreator->id,
+            'titulo' => 'Partidito F7 Test',
+            'deporte' => 'FUTBOL',
+            'cancha_nombre' => 'Cancha 3',
+            'ubicacion' => 'Belgrano',
+            'fecha_hora' => now()->addDay(),
+            'formato' => 'F7',
+            'modalidad' => 'JUGADORES_SUELTOS',
+            'max_jugadores' => 14,
+            'share_token' => 'tokenexpulsar123',
+        ]);
+
+        $playerUser = User::factory()->create();
+        $personaPlayer = Persona::create([
+            'user_id' => $playerUser->id,
+            'nombre' => 'Jugador',
+            'apellido' => 'Expulsado',
+            'dni' => '66666666',
+        ]);
+
+        \App\Models\EncuentroCasualJugador::create([
+            'encuentro_casual_id' => $encuentro->id,
+            'persona_id' => $personaPlayer->id,
+            'equipo_num' => 1,
+            'asistencia_confirmada' => true,
+        ]);
+
+        $kickResponse = $this->actingAs($creator)
+            ->deleteJson("/api/encuentros-casuales/{$encuentro->id}/jugadores/{$personaPlayer->id}");
+
+        $kickResponse->assertStatus(200)
+            ->assertJsonPath('mensaje', 'Jugador eliminado del partidito.');
+
+        $this->assertDatabaseMissing('encuentro_casual_jugadores', [
+            'encuentro_casual_id' => $encuentro->id,
+            'persona_id' => $personaPlayer->id,
+        ]);
+    }
 }

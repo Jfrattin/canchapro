@@ -222,4 +222,35 @@ class EncuentroCasualController extends Controller
         $encuentro->delete();
         return response()->json(['mensaje' => 'Partidito casual eliminado correctamente.']);
     }
+
+    public function expulsarJugador(Request $request, EncuentroCasual $encuentro, string $personaId): JsonResponse
+    {
+        $user = $request->user();
+        $persona = $user->persona;
+        $esAdmin = in_array($user->role, ['super_admin', 'organizador']);
+
+        if (!$esAdmin && (!$persona || $encuentro->creador_persona_id !== $persona->id)) {
+            return response()->json(['error' => 'Solo el creador del encuentro o un administrador puede expulsar jugadores.'], 403);
+        }
+
+        $jugadorInscripto = EncuentroCasualJugador::where('encuentro_casual_id', $encuentro->id)
+            ->where('persona_id', $personaId)
+            ->first();
+
+        if (!$jugadorInscripto) {
+            return response()->json(['error' => 'El jugador no se encuentra inscripto en este partidito.'], 404);
+        }
+
+        $jugadorInscripto->delete();
+
+        $cantRestantes = $encuentro->jugadores()->count();
+        if ($cantRestantes < $encuentro->max_jugadores && $encuentro->estado === 'CONFIRMADO') {
+            $encuentro->update(['estado' => 'ABIERTO']);
+        }
+
+        return response()->json([
+            'mensaje' => 'Jugador eliminado del partidito.',
+            'encuentro' => $encuentro->load(['creador', 'equipoRival', 'jugadores.persona']),
+        ]);
+    }
 }

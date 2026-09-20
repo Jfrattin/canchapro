@@ -62,6 +62,7 @@ Route::prefix('encuentros-casuales')->group(function () {
         Route::post('/token/{token}/unirse', [EncuentroCasualController::class, 'unirse']);
         Route::post('/token/{token}/desafiar', [EncuentroCasualController::class, 'desafiar']);
         Route::delete('/{encuentro}', [EncuentroCasualController::class, 'destroy']);
+        Route::delete('/{encuentro}/jugadores/{personaId}', [EncuentroCasualController::class, 'expulsarJugador']);
     });
 });
 
