@@ -15,11 +15,11 @@ COPY . .
 # Instalar dependencias con Composer
 RUN composer install --no-dev --optimize-autoloader --no-scripts --ignore-platform-reqs
 
-# Permisos de almacenamiento y creación de archivo sqlite
-RUN mkdir -p database storage bootstrap/cache \
-    && touch database/database.sqlite \
-    && chown -R www-data:www-data storage bootstrap/cache database
+# Permisos de almacenamiento y creación de estructuras requeridas por Blade
+RUN mkdir -p storage/framework/views storage/framework/sessions storage/framework/cache storage/logs bootstrap/cache \
+    && chown -R www-data:www-data storage bootstrap/cache \
+    && chmod -R 777 storage bootstrap/cache
 
 EXPOSE 80
 
-CMD touch database/database.sqlite && php artisan migrate --force && php artisan config:cache && php artisan serve --host=0.0.0.0 --port=80
+CMD php artisan migrate --force && php artisan config:cache && php artisan view:cache && php artisan serve --host=0.0.0.0 --port=80
