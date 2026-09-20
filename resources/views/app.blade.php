@@ -442,6 +442,106 @@
         </div>
 
         <!-- ========================================== -->
+        <!-- TAB 6: PARTIDITOS (ENCUENTROS CASUALES) -->
+        <!-- ========================================== -->
+        <div id="tabContentPartiditos" class="hidden space-y-4">
+          <!-- HERO / BANNER PARTIDITOS -->
+          <div class="bg-gradient-to-r from-emerald-950/80 via-brand-card to-brand-dark border-2 border-brand-green/40 rounded-3xl p-4 space-y-2.5 shadow-xl">
+            <div class="flex justify-between items-center">
+              <div class="flex items-center space-x-2">
+                <div class="w-9 h-9 rounded-2xl bg-brand-green/20 text-brand-green flex items-center justify-center text-lg font-bold">
+                  ⚽
+                </div>
+                <div>
+                  <h3 class="font-outfit font-black text-sm text-white">Partiditos & Encuentros Casuales</h3>
+                  <p class="text-[10px] text-gray-400">Arma un partidito, invita amigos o desafía un rival</p>
+                </div>
+              </div>
+              <span class="text-[9px] bg-brand-green text-black font-extrabold px-2 py-0.5 rounded-full uppercase">Comunidad</span>
+            </div>
+          </div>
+
+          <!-- BOTÓN MOSTRAR/OCULTAR FORMULARIO -->
+          <div class="flex justify-between items-center px-1">
+            <h4 class="font-outfit font-extrabold text-xs text-white">Encuentros Disponibles</h4>
+            <button onclick="toggleFormPartidito()" class="text-[10px] bg-brand-green hover:bg-brand-green/90 text-black px-3 py-1.5 rounded-xl font-bold transition flex items-center space-x-1">
+              <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+              <span>+ Crear Partidito</span>
+            </button>
+          </div>
+
+          <!-- FORMULARIO DE CREACIÓN DE PARTIDITO -->
+          <div id="formCrearPartiditoContainer" class="hidden bg-brand-card border border-brand-green/50 rounded-3xl p-4 space-y-3 shadow-xl">
+            <div class="flex justify-between items-center border-b border-brand-border/60 pb-2">
+              <h4 class="font-outfit font-black text-xs text-brand-green uppercase tracking-wider">Crear Nuevo Partidito Casual</h4>
+              <button onclick="toggleFormPartidito()" class="text-xs text-gray-400 hover:text-white">✕</button>
+            </div>
+
+            <form id="formCrearPartidito" onsubmit="guardarPartidito(event)" class="space-y-2.5 text-xs">
+              <div>
+                <label class="block text-gray-300 mb-0.5">Título del Partido *</label>
+                <input type="text" id="partiditoTitulo" required placeholder="Ej: Partidito de los Miércoles / F5 Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Cancha *</label>
+                  <input type="text" id="partiditoCancha" required placeholder="Ej: Cancha 1 / Canchita Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                </div>
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Formato *</label>
+                  <select id="partiditoFormato" onchange="actualizarMaxJugadoresSegunFormato()" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                    <option value="F5">Fútbol 5 (10 jug)</option>
+                    <option value="F7">Fútbol 7 (14 jug)</option>
+                    <option value="F8">Fútbol 8 (16 jug)</option>
+                    <option value="F11">Fútbol 11 (22 jug)</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label class="block text-gray-300 mb-0.5">Ubicación / Dirección *</label>
+                <input type="text" id="partiditoUbicacion" required placeholder="Ej: Av. Córdoba 3500, Palermo" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Fecha y Hora *</label>
+                  <input type="datetime-local" id="partiditoFechaHora" required class="w-full bg-brand-dark border border-brand-border rounded-xl px-2 text-white">
+                </div>
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Modalidad *</label>
+                  <select id="partiditoModalidad" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                    <option value="JUGADORES_SUELTOS">Sumar Jugadores Sueltos</option>
+                    <option value="DESAFIO_EQUIPOS">Desafío Equipo vs Equipo</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2">
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Precio Total ($)</label>
+                  <input type="number" id="partiditoPrecioTotal" placeholder="25000" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                </div>
+                <div>
+                  <label class="block text-gray-300 mb-0.5">Max Jugadores</label>
+                  <input type="number" id="partiditoMaxJugadores" value="10" min="2" class="w-full bg-brand-dark border border-brand-border rounded-xl px-3 py-2 text-white">
+                </div>
+              </div>
+
+              <button type="submit" id="btnGuardarPartidito" class="w-full bg-brand-green hover:bg-brand-green/90 text-black font-extrabold py-2.5 rounded-xl uppercase tracking-wider transition shadow-lg shadow-brand-green/20">
+                Publicar Partidito & Generar Link
+              </button>
+            </form>
+          </div>
+
+          <!-- LISTA DE PARTIDITOS ABIERTOS -->
+          <div id="partiditosListContainer" class="space-y-3 text-xs">
+            <div class="text-center py-6 text-gray-500">Cargando partiditos disponibles...</div>
+          </div>
+        </div>
+
+        <!-- ========================================== -->
         <!-- TAB 5: ÁRBITRO (PARTIDOS ASIGNADOS & ACTAS) -->
         <!-- ========================================== -->
         <div id="tabContentArbitro" class="hidden space-y-4">
@@ -489,7 +589,7 @@
 
     </div>
 
-    <!-- BOTTOM ANDROID NAV BAR (INICIO, JUGADOR, EQUIPO, TORNEOS, Y ÁRBITRO SI APLICA) -->
+    <!-- BOTTOM ANDROID NAV BAR -->
     <div class="px-4 py-2.5 bg-brand-dark/95 border-t border-brand-border/60 flex justify-around items-center text-gray-400 z-20">
       <button onclick="setAppTab('inicio')" id="btnTabInicio" class="flex flex-col items-center text-brand-green transition">
         <i data-lucide="home" class="w-5 h-5"></i>
@@ -502,6 +602,10 @@
       <button onclick="setAppTab('equipo')" id="btnTabEquipo" class="flex flex-col items-center hover:text-white transition">
         <i data-lucide="shield" class="w-5 h-5"></i>
         <span class="text-[9px] font-bold mt-0.5">Equipo</span>
+      </button>
+      <button onclick="setAppTab('partiditos')" id="btnTabPartiditos" class="flex flex-col items-center hover:text-white transition">
+        <i data-lucide="dribbble" class="w-5 h-5"></i>
+        <span class="text-[9px] font-bold mt-0.5">Partiditos</span>
       </button>
       <button onclick="setAppTab('torneo')" id="btnTabTorneo" class="flex flex-col items-center hover:text-white transition">
         <i data-lucide="trophy" class="w-5 h-5"></i>
@@ -1223,15 +1327,16 @@
       }
     }
 
-    // NAVEGACIÓN ENTRE LAS SECCIONES DE LA APP: Inicio, Jugador, Equipo, Torneo, Árbitro
+    // NAVEGACIÓN ENTRE LAS SECCIONES DE LA APP: Inicio, Jugador, Equipo, Partiditos, Torneo, Árbitro
     function setAppTab(tab) {
       document.getElementById('tabContentInicio').classList.add('hidden');
       document.getElementById('tabContentJugador').classList.add('hidden');
       document.getElementById('tabContentEquipo').classList.add('hidden');
+      document.getElementById('tabContentPartiditos').classList.add('hidden');
       document.getElementById('tabContentTorneo').classList.add('hidden');
       document.getElementById('tabContentArbitro').classList.add('hidden');
 
-      const tabs = ['Inicio', 'Jugador', 'Equipo', 'Torneo', 'Arbitro'];
+      const tabs = ['Inicio', 'Jugador', 'Equipo', 'Partiditos', 'Torneo', 'Arbitro'];
       tabs.forEach(t => {
         const btn = document.getElementById(`btnTab${t}`);
         if (btn) btn.className = btn.id === 'btnTabArbitro' 
@@ -1252,6 +1357,10 @@
         document.getElementById('tabContentEquipo').classList.remove('hidden');
         document.getElementById('btnTabEquipo').className = 'flex flex-col items-center text-brand-cyan transition';
         cargarMiEquipo();
+      } else if (tab === 'partiditos') {
+        document.getElementById('tabContentPartiditos').classList.remove('hidden');
+        document.getElementById('btnTabPartiditos').className = 'flex flex-col items-center text-brand-green font-bold transition';
+        cargarPartiditosApp();
       } else if (tab === 'torneo') {
         document.getElementById('tabContentTorneo').classList.remove('hidden');
         document.getElementById('btnTabTorneo').className = 'flex flex-col items-center text-brand-yellow transition';
@@ -1263,6 +1372,223 @@
         cargarPartidosArbitro();
       }
       lucide.createIcons();
+    }
+
+    function toggleFormPartidito() {
+      const c = document.getElementById('formCrearPartiditoContainer');
+      c.classList.toggle('hidden');
+    }
+
+    function actualizarMaxJugadoresSegunFormato() {
+      const fmt = document.getElementById('partiditoFormato').value;
+      const inputMax = document.getElementById('partiditoMaxJugadores');
+      if (fmt === 'F5') inputMax.value = 10;
+      else if (fmt === 'F7') inputMax.value = 14;
+      else if (fmt === 'F8') inputMax.value = 16;
+      else if (fmt === 'F11') inputMax.value = 22;
+    }
+
+    async function cargarPartiditosApp() {
+      const container = document.getElementById('partiditosListContainer');
+      container.innerHTML = '<div class="text-center py-6 text-gray-500">Cargando partiditos disponibles...</div>';
+
+      try {
+        const res = await fetch('/api/encuentros-casuales');
+        const encuentros = await res.json();
+
+        if (!encuentros || encuentros.length === 0) {
+          container.innerHTML = `
+            <div class="bg-brand-card border border-brand-border rounded-2xl p-4 text-center space-y-2">
+              <span class="text-2xl">⚽</span>
+              <h4 class="font-bold text-white text-xs">No hay partiditos casuales creados todavía.</h4>
+              <p class="text-[11px] text-gray-400">¡Sé el primero en armar un partidito y compartir el link!</p>
+            </div>
+          `;
+          return;
+        }
+
+        container.innerHTML = encuentros.map(e => {
+          const jugAnotados = e.jugadores ? e.jugadores.length : 0;
+          const creadorNombre = e.creador ? `${e.creador.nombre} ${e.creador.apellido}` : 'Organizador';
+          const fechaStr = new Date(e.fecha_hora).toLocaleString('es-AR', { dateStyle: 'short', timeStyle: 'short' });
+          const shareUrl = e.share_url || `${window.location.origin}/app?casual_invite=${e.share_token}`;
+
+          const yaAnotado = e.jugadores && currentUser && currentUser.persona && e.jugadores.some(j => j.persona_id === currentUser.persona.id);
+
+          return `
+            <div class="bg-brand-card border border-brand-border hover:border-brand-green/50 rounded-2xl p-3.5 space-y-2.5 transition shadow-lg">
+              <div class="flex justify-between items-start">
+                <div>
+                  <div class="flex items-center space-x-2">
+                    <span class="text-[10px] bg-brand-green/20 text-brand-green font-bold px-2 py-0.5 rounded-full uppercase">${e.formato}</span>
+                    <span class="text-[10px] bg-brand-cyan/20 text-brand-cyan font-bold px-2 py-0.5 rounded-full uppercase">${e.modalidad === 'DESAFIO_EQUIPOS' ? '⚔️ Desafío' : '⚽ Jugadores'}</span>
+                  </div>
+                  <h4 class="font-outfit font-black text-sm text-white mt-1">${e.titulo}</h4>
+                  <div class="text-[11px] text-gray-300 flex items-center space-x-1 mt-0.5">
+                    <i data-lucide="map-pin" class="w-3 h-3 text-brand-green"></i>
+                    <span>${e.cancha_nombre} - ${e.ubicacion}</span>
+                  </div>
+                </div>
+                <div class="text-right">
+                  <span class="font-mono font-bold text-brand-yellow text-xs">${fechaStr} hs</span>
+                  <div class="text-[10px] text-gray-400 mt-0.5">Por: <strong>${creadorNombre}</strong></div>
+                </div>
+              </div>
+
+              <div class="bg-brand-dark p-2 rounded-xl border border-brand-border/60 flex justify-between items-center text-[11px]">
+                <div>
+                  <span class="text-gray-400">Cupos: </span>
+                  <strong class="${jugAnotados >= e.max_jugadores ? 'text-brand-red' : 'text-brand-green'}">${jugAnotados} / ${e.max_jugadores}</strong>
+                </div>
+                <div>
+                  <span class="text-gray-400">Precio / jug: </span>
+                  <strong class="text-brand-cyan">$${e.precio_por_jugador || 0}</strong>
+                </div>
+              </div>
+
+              <div class="flex justify-between items-center pt-1 border-t border-brand-border/40 gap-2">
+                <button onclick="copiarLinkPartidito('${shareUrl}')" class="flex-1 bg-brand-dark hover:bg-brand-border border border-brand-border px-2.5 py-1.5 rounded-xl text-gray-300 font-bold text-[10px] transition flex items-center justify-center space-x-1">
+                  <i data-lucide="share-2" class="w-3 h-3 text-brand-cyan"></i>
+                  <span>Copiar Link 🔗</span>
+                </button>
+                ${yaAnotado ? `
+                  <span class="bg-green-900/40 text-brand-green border border-brand-green/40 px-3 py-1.5 rounded-xl font-extrabold text-[10px]">
+                    ✅ Ya estás anotado
+                  </span>
+                ` : `
+                  <button onclick="unirseAPartidito('${e.share_token}', 1)" class="flex-1 bg-brand-green hover:bg-brand-green/90 text-black px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition shadow-md shadow-brand-green/20">
+                    Unirme ⚽
+                  </button>
+                  ${e.modalidad === 'DESAFIO_EQUIPOS' ? `
+                    <button onclick="desafiarPartidito('${e.share_token}')" class="flex-1 bg-brand-red hover:bg-red-600 text-white px-2.5 py-1.5 rounded-xl font-extrabold text-[10px] transition">
+                      Desafiar ⚔️
+                    </button>
+                  ` : ''}
+                `}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        lucide.createIcons();
+      } catch (err) {
+        container.innerHTML = '<div class="text-center py-6 text-red-400">Error al cargar encuentros casuales.</div>';
+      }
+    }
+
+    async function guardarPartidito(e) {
+      e.preventDefault();
+      if (!authToken) return showToast('Inicia sesión para crear un partidito', 'error');
+
+      const btn = document.getElementById('btnGuardarPartidito');
+      btn.disabled = true;
+      btn.innerText = 'Publicando...';
+
+      const payload = {
+        titulo: document.getElementById('partiditoTitulo').value,
+        cancha_nombre: document.getElementById('partiditoCancha').value,
+        ubicacion: document.getElementById('partiditoUbicacion').value,
+        fecha_hora: document.getElementById('partiditoFechaHora').value,
+        formato: document.getElementById('partiditoFormato').value,
+        modalidad: document.getElementById('partiditoModalidad').value,
+        precio_total: parseFloat(document.getElementById('partiditoPrecioTotal').value || 0),
+        max_jugadores: parseInt(document.getElementById('partiditoMaxJugadores').value || 10)
+      };
+
+      try {
+        const res = await fetch('/api/encuentros-casuales', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify(payload)
+        });
+        const data = await res.json();
+
+        if (res.ok && data.encuentro) {
+          showToast(data.mensaje || '¡Partidito publicado!');
+          toggleFormPartidito();
+          document.getElementById('formCrearPartidito').reset();
+          cargarPartiditosApp();
+          if (data.encuentro.share_url) {
+            copiarLinkPartidito(data.encuentro.share_url);
+          }
+        } else {
+          showToast(data.error || 'Error al publicar partidito', 'error');
+        }
+      } catch (err) {
+        showToast('Error de comunicación con el servidor', 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Publicar Partidito & Generar Link';
+      }
+    }
+
+    function copiarLinkPartidito(shareUrl) {
+      navigator.clipboard.writeText(shareUrl).then(() => {
+        showToast('🔗 ¡Link de invitación copiado al portapapeles! Envíalo por WhatsApp.');
+      }).catch(() => {
+        prompt('Copia este enlace de invitación:', shareUrl);
+      });
+    }
+
+    async function unirseAPartidito(token, equipoNum = 1) {
+      if (!authToken) return showToast('Debes iniciar sesión para unirte', 'error');
+
+      try {
+        const res = await fetch(`/api/encuentros-casuales/token/${token}/unirse`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ equipo_num: equipoNum })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showToast(data.mensaje || '¡Te has anotado en el partidito!');
+          cargarPartiditosApp();
+        } else {
+          showToast(data.error || 'No fue posible unirse', 'error');
+        }
+      } catch (err) {
+        showToast('Error conectando a la API', 'error');
+      }
+    }
+
+    async function desafiarPartidito(token) {
+      if (!authToken) return showToast('Inicia sesión para desafiar', 'error');
+
+      let equipoId = currentEquipoId || null;
+      let equipoNombre = null;
+
+      if (!equipoId) {
+        equipoNombre = prompt('Ingresa el nombre de tu equipo rival:');
+        if (!equipoNombre) return;
+      }
+
+      try {
+        const res = await fetch(`/api/encuentros-casuales/token/${token}/desafiar`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          },
+          body: JSON.stringify({ equipo_id: equipoId, equipo_nombre: equipoNombre })
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          showToast(data.mensaje || '⚔️ ¡Desafío aceptado!');
+          cargarPartiditosApp();
+        } else {
+          showToast(data.error || 'Error al desafiar', 'error');
+        }
+      } catch (err) {
+        showToast('Error de comunicación con el servidor', 'error');
+      }
     }
 
     // CARGAR ESTADÍSTICAS DEL JUGADOR & APTO MÉDICO
@@ -1785,6 +2111,12 @@
           if (badgeA) badgeA.classList.add('hidden');
           if (btnNavA) btnNavA.classList.add('hidden');
           if (iconPerfil) iconPerfil.innerText = '⚽';
+        }
+
+        const casualInviteToken = urlParams.get('casual_invite');
+        if (casualInviteToken) {
+          setAppTab('partiditos');
+          unirseAPartidito(casualInviteToken);
         }
 
         cargarProximoPartido();

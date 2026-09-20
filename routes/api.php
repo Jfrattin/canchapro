@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\TorneoController;
 use App\Http\Controllers\Api\AdminTorneoController;
 use App\Http\Controllers\Api\PartidoController;
 use App\Http\Controllers\Api\ArbitroController;
+use App\Http\Controllers\Api\EncuentroCasualController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,18 @@ Route::prefix('partidos')->middleware('auth.api')->group(function () {
     Route::post('/notificaciones/{notificacion}/leer', [PartidoController::class, 'marcarNotificacionLeida']);
     Route::post('/{partido}/asistencia', [PartidoController::class, 'marcarAsistencia']);
     Route::post('/{partido}/convocatoria-11', [PartidoController::class, 'confirmarConvocatoria11']);
+});
+
+// 4.5 Encuentros Casuales / Partiditos entre Amigos
+Route::prefix('encuentros-casuales')->group(function () {
+    Route::get('/', [EncuentroCasualController::class, 'index']);
+    Route::get('/token/{token}', [EncuentroCasualController::class, 'showByToken']);
+    Route::middleware('auth.api')->group(function () {
+        Route::post('/', [EncuentroCasualController::class, 'store']);
+        Route::post('/token/{token}/unirse', [EncuentroCasualController::class, 'unirse']);
+        Route::post('/token/{token}/desafiar', [EncuentroCasualController::class, 'desafiar']);
+        Route::delete('/{encuentro}', [EncuentroCasualController::class, 'destroy']);
+    });
 });
 
 // 5. Arbitraje, Cierre de Actas & Disputas de Goles (Fair Play)
