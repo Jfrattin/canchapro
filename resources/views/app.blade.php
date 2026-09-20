@@ -80,6 +80,14 @@
           <p class="text-xs text-gray-400">Inicia sesión o regístrate para jugar.</p>
         </div>
 
+        <!-- INVITE BANNER (SI ACCEDIÓ POR LINK DE INVITACIÓN) -->
+        <div id="inviteBannerAlert" class="hidden bg-brand-cyan/20 border border-brand-cyan/50 p-3 rounded-2xl text-xs space-y-1">
+          <div class="font-bold text-brand-cyan flex items-center space-x-1">
+            <span>⚽ ¡Te han invitado a unirte a un equipo!</span>
+          </div>
+          <p class="text-gray-300 text-[11px]">Inicia sesión con tu cuenta o regístrate debajo. Al ingresar, quedarás <strong>automáticamente inscripto en el plantel</strong>.</p>
+        </div>
+
         <!-- AUTH TABS -->
         <div class="flex bg-brand-dark p-1 rounded-2xl border border-brand-border text-xs">
           <button id="tabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-xl font-bold bg-brand-green text-black transition">Ingresar</button>
@@ -852,6 +860,8 @@
         badgeRol.innerText = data.es_capitan ? '👑 Capitán' : '⚽ Jugador';
         badgeRol.classList.remove('hidden');
 
+        const fullInviteUrl = window.location.origin + '/join/' + (eq.invite_token || '');
+
         let html = `
           <div class="bg-brand-dark p-3 rounded-2xl border border-brand-cyan/40 space-y-3">
             <div class="flex justify-between items-center">
@@ -868,8 +878,8 @@
             <div class="bg-black/50 p-2 rounded-xl space-y-1">
               <div class="text-[10px] text-gray-400">Link para invitar compañeros por WhatsApp:</div>
               <div class="flex items-center space-x-1.5">
-                <input type="text" readonly value="${eq.invite_url || ''}" class="bg-transparent text-[10px] font-mono text-brand-cyan flex-1 focus:outline-none truncate">
-                <button onclick="navigator.clipboard.writeText('${eq.invite_url}'); toast('¡Link copiado al portapapeles!')" class="bg-brand-cyan text-black px-2.5 py-1 rounded-lg text-[10px] font-bold flex-shrink-0">
+                <input type="text" readonly value="${fullInviteUrl}" class="bg-transparent text-[10px] font-mono text-brand-cyan flex-1 focus:outline-none truncate">
+                <button onclick="navigator.clipboard.writeText('${fullInviteUrl}'); toast('¡Link copiado al portapapeles!')" class="bg-brand-cyan text-black px-2.5 py-1 rounded-lg text-[10px] font-bold flex-shrink-0">
                   Copiar
                 </button>
               </div>
@@ -1596,10 +1606,55 @@
       }
     }
 
-    function initApp() {
+    async function procesarInviteTokenPostAuth() {
+      const token = localStorage.getItem('canchapro_pending_invite');
+      if (!token || !authToken) return;
+
+      try {
+        const res = await fetch(`/api/equipos/join/${token}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${authToken}`
+          }
+        });
+        const data = await res.json();
+        localStorage.removeItem('canchapro_pending_invite');
+        if (res.ok) {
+          toast(data.mensaje || '¡Te has unido exitosamente al equipo!');
+        } else {
+          toast(data.error || data.message || 'No se pudo unir al equipo', true);
+        }
+      } catch (err) {
+        console.error('Error procesando invitacion:', err);
+      }
+    }
+
+    async function initApp() {
+      // Chequear si se accedió vía link /join/{token}
+      const path = window.location.pathname;
+      if (path.includes('/join/')) {
+        const token = path.split('/join/')[1];
+        if (token) {
+          localStorage.setItem('canchapro_pending_invite', token);
+        }
+      }
+
+      const pendingInvite = localStorage.getItem('canchapro_pending_invite');
+      const bannerAlert = document.getElementById('inviteBannerAlert');
+      if (pendingInvite && bannerAlert) {
+        bannerAlert.classList.remove('hidden');
+      }
+
       if (authToken && currentUser) {
         document.getElementById('authScreen').classList.add('hidden');
         document.getElementById('homeScreen').classList.remove('hidden');
+
+        // Auto-unirse a equipo si venía de un link de invitación
+        if (pendingInvite) {
+          await procesarInviteTokenPostAuth();
+        }
+
         const p = currentUser.persona;
         if (p) {
           document.getElementById('userNombreLabel').innerText = `${p.nombre} ${p.apellido}`;

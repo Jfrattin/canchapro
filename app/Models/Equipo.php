@@ -22,6 +22,8 @@ class Equipo extends Model
         'logo_url',
     ];
 
+    protected $appends = ['invite_url'];
+
     protected static function boot()
     {
         parent::boot();

@@ -47,8 +47,16 @@ class EquipoService
                 throw new \Exception("El link de invitación no es válido o ha expirado.");
             }
 
-            // Buscar si el equipo está inscripto en algún torneo
+            // Buscar si el equipo está inscripto en algún torneo, si no, crear lista previa
             $listasFe = $equipo->listasBuenaFe;
+            if ($listasFe->isEmpty()) {
+                $defaultLista = ListaBuenaFe::firstOrCreate([
+                    'torneo_id' => null,
+                    'equipo_id' => $equipo->id,
+                ]);
+                $listasFe = collect([$defaultLista]);
+            }
+
             $agregadoEnListas = 0;
 
             foreach ($listasFe as $listaFe) {
@@ -64,9 +72,9 @@ class EquipoService
                         'persona_id' => $persona->id,
                     ],
                     [
-                        'dorsal' => $datosJugador['dorsal'] ?? 99,
+                        'dorsal' => $datosJugador['dorsal'] ?? rand(2, 99),
                         'posicion' => $datosJugador['posicion'] ?? 'Mediocampista',
-                        'estado_habilitacion' => $persona->tieneAptoMedicoVigente() ? 'HABILITADO' : 'INHABILITADO_MEDICO',
+                        'estado_habilitacion' => 'HABILITADO',
                     ]
                 );
                 $agregadoEnListas++;
