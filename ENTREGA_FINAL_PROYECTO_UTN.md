@@ -5,15 +5,25 @@
 
 ---
 
-## 🔗 LINKS OBLIGATORIOS (Acceso Directo)
+## 🔗 LINKS OBLIGATORIOS (Acceso Directo y Credenciales)
+
+> 📌 **ACCESO RÁPIDO AL PROYECTO EN VIVO Y CÓDIGO FUENTE**
+> * **Repositorio GitHub Oficial:** [`https://github.com/Jfrattin/canchapro.git`](https://github.com/Jfrattin/canchapro.git) *(Rama principal `main`)*
+> * **Aplicación Web en Producción (Render Cloud):** [`https://canchapro-g56l.onrender.com`](https://canchapro-g56l.onrender.com)
+> * **Infraestructura Cloud:** Laravel 11 + Docker + Supabase (PostgreSQL) desplegado en Render.
+>
+> 🔑 **CUENTAS DEMO PARA EVALUACIÓN EN VIVO:**
+> * 👑 **Super Admin / Organizador:** `admin@canchapro.com` | Contraseña: `password123`
+> * ⚖️ **Árbitro Oficial:** `arbitro@canchapro.com` | Contraseña: `password123`
+> * ⚽ **Jugador / Capitán:** `jugador@canchapro.com` | Contraseña: `password123`
 
 | Recurso | URL / Ubicación de Acceso | Estado / Verificación |
 | :--- | :--- | :--- |
-| **Repositorio GitHub** | `https://github.com/Jfrattin/canchapro.git` | 🟢 Activo con historial de commits y branch `main` |
-| **Aplicación Web en Producción (Render)** | `https://canchapro-g56l.onrender.com` | 🟢 En vivo en Render (Laravel + Docker + Supabase DB) |
+| **Repositorio GitHub** | [`https://github.com/Jfrattin/canchapro.git`](https://github.com/Jfrattin/canchapro.git) | 🟢 Activo con historial de commits y branch `main` |
+| **Aplicación Web en Producción (Render)** | [`https://canchapro-g56l.onrender.com`](https://canchapro-g56l.onrender.com) | 🟢 En vivo en Render (Laravel + Docker + Supabase DB) |
 | **Video de Demostración (3 min)** | `https://youtu.be/canchapro-demo-utn` *(Drive / YouTube)* | 🟢 Video explicativo en HD |
 | **Documentación Funcional (SRS)** | [ANALISIS_FUNCIONAL_CANCHAPRO.md](./ANALISIS_FUNCIONAL_CANCHAPRO.md) | 🟢 13 Reglas de Negocio formalizadas |
-| **Puente Multi-Cloud MCP (Rust)** | `https://github.com/jfrattin/Antigravity_multyMCP` | 🟢 Binario Release compilado |
+| **Puente Multi-Cloud MCP (Rust)** | [`https://github.com/jfrattin/Antigravity_multyMCP`](https://github.com/jfrattin/Antigravity_multyMCP) | 🟢 Binario Release compilado |
 
 ---
 
@@ -433,3 +443,96 @@ Un modelo de lenguaje pequeño (**SLM**, como *Llama 3.2 3B*, *Phi-3 Mini 3.8B* 
    * Mostrar Backoffice Web con publicación de torneos.
 4. **Minuto 7 a 9 — Ciberseguridad, Heurísticas de Nielsen e IA Local:** Explicación de los 5 controles de seguridad y el rol del SLM Edge.
 5. **Minuto 9 a 10 — Conclusión y Cierre:** Resumen del impacto y pase a las preguntas del tribunal docente.
+
+---
+
+# MANUAL DE USO RÁPIDO (GUÍA PASO A PASO)
+
+---
+
+## 📖 Guía de Inicio Rápido para Evaluadores y Usuarios
+
+Esta guía describe en 5 sencillos pasos cómo utilizar todas las funcionalidades del ecosistema **CanchaPro Suite**, tanto en la aplicación móvil PWA como en el panel web de administración.
+
+---
+
+### 1. Acceso a la Plataforma e Inicio de Sesión
+
+* **URL de Producción (Render Live):** [`https://canchapro-g56l.onrender.com`](https://canchapro-g56l.onrender.com)
+* **Código Fuente (GitHub):** [`https://github.com/Jfrattin/canchapro.git`](https://github.com/Jfrattin/canchapro.git)
+
+#### Cuentas Demo Preconfiguradas:
+* **👑 Super Admin / Organizador:** `admin@canchapro.com` | `password123`
+* **⚖️ Árbitro Oficial:** `arbitro@canchapro.com` | `password123`
+* **⚽ Jugador / Capitán:** `jugador@canchapro.com` | `password123`
+
+> *Nota de Registro:* Al crear un nuevo usuario, el sistema aplica automáticamente el **Patrón Trinidad**, generando en un único paso la entidad `Usuario`, su perfil civil `Persona` y su `FichaMedica` inicial.
+
+---
+
+### 2. Módulo de Jugador y Capitán (App Móvil)
+
+#### A. Pantalla Principal y "Tu Próximo Partido"
+1. Al iniciar sesión como Jugador/Capitán, el panel principal muestra el Hero Card destacando **"Tu Próximo Partido del Torneo"**.
+2. Se visualiza la fecha, hora exacta, rival y cancha asignada de forma directa.
+
+#### B. Convocatoria de los 11 Titulares
+1. Ingrese a la pestaña **"Plantel / Convocatoria"**.
+2. El Capitán puede seleccionar de la **Lista de Buena Fe** (hasta 20 jugadores) los **11 titulares** para el próximo partido.
+3. *Validación Médica (RN-02):* Los jugadores con Apto Médico vencido o no aprobado no podrán ser seleccionados y mostrarán un indicador de bloqueo.
+4. Presione **"Confirmar Convocatoria Oficial"** para emitir la planilla.
+
+#### C. Partiditos Casuales & Multi-Deporte (Fútbol, Padel, Tenis, Básquet, Vóley, Hockey)
+1. Diríjase a la sección **"Partiditos Casuales"**.
+2. **Crear Encuentro:** Presione *"Crear Partidito"*, seleccione la disciplina (Fútbol F5/F7/F8/F11, Padel, Tenis, Básquet, Vóley o Hockey), fecha, hora, predio y ubicación.
+3. **Vista Previa de Mapa:** Al cargar la dirección, podrá previsualizar la ubicación exacta mediante la integración interactiva de Google Maps.
+4. **Invitar Jugadores mediante Token:** Copie el token o link público (`/casual/{token}`) generado automáticamente y compártalo por WhatsApp o redes para que otros jugadores se unan directamente al Equipo 1 o Equipo 2.
+5. **Administración de Inscriptos:** Si usted es el creador del encuentro o Super Admin, podrá gestionar el plantel o remover jugadores no deseados mediante el botón de expulsión.
+
+---
+
+### 3. Módulo de Administrador (Backoffice Web / Torneos y Canchas)
+
+1. Inicie sesión con credenciales de **Super Admin** (`admin@canchapro.com`).
+2. **Creación de Sedes y Canchas:** Acceda a *"Administración de Canchas"*, configure el formato de juego (F5, F7, F11, etc.), superficie, precio por hora y enlace de mapa Google Maps.
+3. **Creación de Torneos:** Diríjase a *"Torneos"*, haga clic en *"Nuevo Torneo"*, defina el nombre, categoría, cantidad de equipos, días de juego y canchas asociadas.
+4. **Aprobación de Aptos Médicos:** Acceda a *"Fichas Médicas"* para revisar los certificados adjuntados por los jugadores y otorgar la validación oficial con 1 clic (`apto_fisico_aprobado = true`).
+
+---
+
+### 4. Módulo de Árbitros (Planilla Digital & Consenso Fair Play)
+
+1. Inicie sesión con credenciales de **Árbitro** (`arbitro@canchapro.com`).
+2. Seleccione el partido asignado en la agenda del día.
+3. **Carga del Acta Digital:** Anote los goles oficiales por jugador, tarjetas amarillas/rojas y observaciones del partido.
+4. **Protocolo "Goles Sin Dueño" (RN-10):** Si un gol fue convertido en medio de una jugada confusa y no se identificó al autor en campo, regístrelo como *"Gol Sin Dueño"*.
+5. **Firma y Cierre:** Presione *"Cerrar Acta de Partido"*. El sistema notificará inmediatamente a los capitanes de ambos equipos para iniciar el **Protocolo de Consenso Fair Play** (disponen de 48h para asignar al goleador mediante validación cruzada; vencido el plazo, la IA de CanchaPro asignará automáticamente el gol según el historial).
+
+---
+
+### 5. Ejecución Local mediante Docker y Laravel (Opcional para Desarrolladores)
+
+Si desea ejecutar el entorno completo de forma local en su máquina:
+
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/Jfrattin/canchapro.git
+cd canchapro/src
+
+# 2. Copiar archivo de entorno
+cp .env.example .env
+
+# 3. Levantar contenedores Docker
+docker-compose up -d --build
+
+# 4. Ejecutar migraciones y datos demo (DatabaseSeeder)
+docker-compose exec app php artisan migrate:fresh --seed
+
+# 5. Ejecutar Pruebas Automatizadas PHPUnit
+docker-compose exec app php artisan test --filter=CanchaProFlowTest
+```
+
+* **Acceso Local:** Navegue a `http://localhost:8000` en su explorador web.
+
+---
+538: 

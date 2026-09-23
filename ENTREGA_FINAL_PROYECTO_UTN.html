@@ -2,47 +2,50 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ENTREGA FINAL DE PROYECTO - UTN CanchaPro Suite</title>
     <style>
         @media print {
-            body { font-size: 11pt; line-height: 1.4; }
-            .no-print { display: none; }
-            a { color: #000; text-decoration: none; }
-            pre, code { background: #f4f4f4 !important; border: 1px solid #ddd; word-break: break-all; }
+            body { font-size: 11pt; line-height: 1.4; background: #fff !important; padding: 0 !important; }
+            .no-print { display: none !important; }
+            .container { box-shadow: none !important; border: none !important; padding: 0 !important; width: 100% !important; max-width: 100% !important; }
+            a { color: #000 !important; text-decoration: underline; }
+            pre, code { background: #f4f4f4 !important; color: #000 !important; border: 1px solid #ddd; word-break: break-all; }
             table { page-break-inside: avoid; }
         }
         body {
             font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            max-width: 900px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 40px 20px;
             color: #1e293b;
-            background-color: #f8fafc;
+            background-color: #f1f5f9;
             line-height: 1.6;
         }
         .container {
             background: #ffffff;
             padding: 50px;
             border-radius: 16px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            border: 1px solid #e2e8f0;
+            box-shadow: 0 4px 25px rgba(0,0,0,0.08);
+            border: 1px solid #cbd5e1;
         }
-        h1, h2, h3, h4 { color: #0f172a; font-weight: 700; margin-top: 1.5em; }
+        h1, h2, h3, h4 { color: #0f172a; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.5em; }
         h1 { font-size: 2.2em; border-bottom: 3px solid #2563eb; padding-bottom: 10px; color: #1e3a8a; }
         h2 { font-size: 1.5em; border-bottom: 1px solid #cbd5e1; padding-bottom: 8px; color: #1e40af; }
         h3 { font-size: 1.2em; color: #1d4ed8; }
+        h4 { font-size: 1.05em; color: #2563eb; }
         table { width: 100%; border-collapse: collapse; margin: 20px 0; background: #fff; font-size: 0.9em; }
         th, td { border: 1px solid #cbd5e1; padding: 10px 14px; text-align: left; }
         th { background-color: #f1f5f9; font-weight: 600; color: #0f172a; }
         tr:nth-child(even) { background-color: #f8fafc; }
-        pre { background: #0f172a; color: #f8fafc; padding: 18px; border-radius: 10px; overflow-x: auto; font-family: 'Fira Code', Monaco, monospace; font-size: 0.85em; }
+        pre { background: #0f172a; color: #f8fafc; padding: 18px; border-radius: 10px; overflow-x: auto; font-family: 'Fira Code', Monaco, monospace; font-size: 0.85em; margin: 20px 0; }
         code { background: #e2e8f0; color: #0f172a; padding: 2px 6px; border-radius: 4px; font-family: monospace; font-size: 0.9em; }
         pre code { background: none; color: inherit; padding: 0; }
-        blockquote { border-left: 4px solid #2563eb; background: #eff6ff; margin: 20px 0; padding: 15px 20px; border-radius: 0 8px 8px 0; color: #1e40af; font-style: italic; }
+        blockquote { border-left: 4px solid #2563eb; background: #eff6ff; margin: 20px 0; padding: 15px 20px; border-radius: 0 8px 8px 0; color: #1e40af; font-style: normal; }
         ul, ol { padding-left: 24px; }
         li { margin-bottom: 6px; }
         .btn-print {
-            background: #2563eb; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 20px; font-size: 14px;
+            background: #2563eb; color: #fff; border: none; padding: 12px 24px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-bottom: 20px; font-size: 14px; transition: background 0.2s;
         }
         .btn-print:hover { background: #1d4ed8; }
     </style>
@@ -52,126 +55,113 @@
         <button onclick="window.print()" class="btn-print">🖨️ Imprimir / Guardar como PDF</button>
     </div>
     <div class="container">
-        <pre style="background:none; color:inherit; padding:0;"># 🎓 TRABAJO DE FIN DE CICLO — ENTREGA FINAL DE PROYECTO
-## Inteligencia Artificial Aplicada a Organizaciones
-### Universidad Tecnológica Nacional · Facultad Regional Buenos Aires (UTN.BA)
-**Centro de e-Learning · Curso de Inteligencia Artificial para Programadores**
-
----
-
-## 🔗 LINKS OBLIGATORIOS (Acceso Directo)
-
-| Recurso | URL / Ubicación de Acceso | Estado / Verificación |
-| :--- | :--- | :--- |
-| **Repositorio GitHub** | `https://github.com/Jfrattin/canchapro.git` | 🟢 Activo con historial de commits y branch `main` |
-| **Aplicación Web en Producción (Render)** | `https://canchapro-g56l.onrender.com` | 🟢 En vivo en Render (Laravel + Docker + Supabase DB) |
-| **Video de Demostración (3 min)** | `https://youtu.be/canchapro-demo-utn` *(Drive / YouTube)* | 🟢 Video explicativo en HD |
-| **Documentación Funcional (SRS)** | [ANALISIS_FUNCIONAL_CANCHAPRO.md](./ANALISIS_FUNCIONAL_CANCHAPRO.md) | 🟢 13 Reglas de Negocio formalizadas |
-| **Puente Multi-Cloud MCP (Rust)** | `https://github.com/jfrattin/Antigravity_multyMCP` | 🟢 Binario Release compilado |
-
----
-
-# PARTE 1 — El Proyecto como Aplicación Real
-
----
-
-## Sección 1 · Presentación del Equipo y del Proyecto
-
-### 1.1 Integrantes del Grupo
-* **Joaquín Javier Frattin** (DNI: 39.569.071)
-  * **Rol en el Desarrollo:** *Lead AI Systems Architect & Full-Stack Engineer*.
-  * **Responsabilidades:** Diseño de la arquitectura dual, modelado del Patrón Trinidad, implementación del orquestador Multi-Cloud MCP en Rust, ingeniería de prompts, lógica de frontends (`app_mobile.html` y `backoffice_admin.html`) y análisis funcional de ciberseguridad.
-
-### 1.2 Nombre del Proyecto
-**CanchaPro Suite** — *Plataforma Inteligente de Gestión Deportiva, Automatización de Torneos, Listas de Buena Fe y Arbitraje Digital.*
-
-### 1.3 Problema que Resuelve
-En la gestión deportiva y torneos de fútbol amateur existen 4 problemas operativos críticos:
-1. **Falta de control médico y suplantación de identidad:** Inclusión de jugadores sin apto médico vigente ("jugadores truchos"), exponiendo a los complejos a graves responsabilidades civiles y legales.
-2. **Desarticulación en la comunicación de partidos:** Los jugadores dependen de grupos informales de WhatsApp para conocer sus horarios, canchas asignadas y ternas arbitrales.
-3. **Disputas en actas y tablas de goleadores:** Errores arbitrales en la anotación de goles que generan conflictos de Fair Play entre capitanes de equipos rivales.
-4. **Pérdida de datos históricos:** Torneos anteriores archivados en planillas de papel o archivos Excel sin conexión con las cuentas digitales de los jugadores actuales.
-
-**Solución Implementada:** CanchaPro digitaliza el ciclo completo mediante un ecosistema dual asistido por IA:
-* Registro unificado con **Patrón Trinidad** (1 Usuario ↔ 1 Persona + Ficha Médica ↔ N Roles).
-* **Lista de Buena Fe inviolable** con convocatoria estricta de 11 titulares habilitados.
-* **Protocolo de Consenso Fair Play para "Goles Sin Dueño"** con validación cruzada entre capitanes y timeout de 48h.
-* **Lazy Linking por DNI** para sincronizar datos históricos masivos desde planillas Excel (`Año 2003.xlsx`).
-
-### 1.4 Público Objetivo
-* **Dueños de Complejos Deportivos y Administradores de Torneos:** Necesitan maximizar el uso de sus canchas, cobrar señas preventivas y automatizar fixtures sin solapamientos.
-* **Capitanes y Responsables de Equipo:** Buscan gestionar planteles de hasta 20 jugadores, confirmar convocatorias y defender los goles de su equipo.
-* **Jugadores y Atletas:** Necesitan conocer en 1 segundo *"Tu Próximo Partido"*, su tabla de posiciones y mantener su apto físico validado.
-* **Árbitros Oficiales:** Requieren planillas digitales protegidas para cargar goles, tarjetas y cerrar actas en campo de juego.
-
----
-
-## Sección 2 · Arquitectura Técnica
-
-### 2.1 Diagrama de Arquitectura General del Sistema
-
-```mermaid
-graph TD
-    subgraph Clientes["Capas de Presentación (Frontend)"]
-        A1["📱 App Móvil Android (Play Store)&lt;br/&gt;(Capitanes, Jugadores, Árbitros)"]
-        A2["💻 Backoffice Web Desktop&lt;br/&gt;(Organizadores y Complejos)"]
+<h1>🎓 TRABAJO DE FIN DE CICLO — ENTREGA FINAL DE PROYECTO</h1>
+<h2>Inteligencia Artificial Aplicada a Organizaciones</h2>
+<h3>Universidad Tecnológica Nacional · Facultad Regional Buenos Aires (UTN.BA)</h3>
+<p style="margin:12px 0;"><strong>Centro de e-Learning · Curso de Inteligencia Artificial para Programadores</strong></p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>🔗 LINKS OBLIGATORIOS (Acceso Directo y Credenciales)</h2>
+<blockquote>📌 <strong>ACCESO RÁPIDO AL PROYECTO EN VIVO Y CÓDIGO FUENTE</strong><br/><em> <strong>Repositorio GitHub Oficial:</strong> <a href="https://github.com/Jfrattin/canchapro.git" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://github.com/Jfrattin/canchapro.git</code></a> </em>(Rama principal <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">main</code>)*<br/>* <strong>Aplicación Web en Producción (Render Cloud):</strong> <a href="https://canchapro-g56l.onrender.com" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://canchapro-g56l.onrender.com</code></a><br/>* <strong>Infraestructura Cloud:</strong> Laravel 11 + Docker + Supabase (PostgreSQL) desplegado en Render.<br/>🔑 <strong>CUENTAS DEMO PARA EVALUACIÓN EN VIVO:</strong><br/>* 👑 <strong>Super Admin / Organizador:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">admin@canchapro.com</code> | Contraseña: <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code><br/>* ⚖️ <strong>Árbitro Oficial:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">arbitro@canchapro.com</code> | Contraseña: <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code><br/>* ⚽ <strong>Jugador / Capitán:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">jugador@canchapro.com</code> | Contraseña: <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code></blockquote>
+<table>
+<tr><th>Recurso</th><th>URL / Ubicación de Acceso</th><th>Estado / Verificación</th></tr>
+<tr><td><strong>Repositorio GitHub</strong></td><td><a href="https://github.com/Jfrattin/canchapro.git" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://github.com/Jfrattin/canchapro.git</code></a></td><td>🟢 Activo con historial de commits y branch <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">main</code></td></tr>
+<tr><td><strong>Aplicación Web en Producción (Render)</strong></td><td><a href="https://canchapro-g56l.onrender.com" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://canchapro-g56l.onrender.com</code></a></td><td>🟢 En vivo en Render (Laravel + Docker + Supabase DB)</td></tr>
+<tr><td><strong>Video de Demostración (3 min)</strong></td><td><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://youtu.be/canchapro-demo-utn</code> <em>(Drive / YouTube)</em></td><td>🟢 Video explicativo en HD</td></tr>
+<tr><td><strong>Documentación Funcional (SRS)</strong></td><td><a href="./ANALISIS_FUNCIONAL_CANCHAPRO.md" target="_blank" style="color:#2563eb; text-decoration:underline;">ANALISIS_FUNCIONAL_CANCHAPRO.md</a></td><td>🟢 13 Reglas de Negocio formalizadas</td></tr>
+<tr><td><strong>Puente Multi-Cloud MCP (Rust)</strong></td><td><a href="https://github.com/jfrattin/Antigravity_multyMCP" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://github.com/jfrattin/Antigravity_multyMCP</code></a></td><td>🟢 Binario Release compilado</td></tr>
+</table>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h1>PARTE 1 — El Proyecto como Aplicación Real</h1>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 1 · Presentación del Equipo y del Proyecto</h2>
+<h3>1.1 Integrantes del Grupo</h3>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>Joaquín Javier Frattin</strong> (DNI: 39.569.071)</li>
+<li style="margin-bottom:6px;"><strong>Rol en el Desarrollo:</strong> <em>Lead AI Systems Architect & Full-Stack Engineer</em>.</li>
+<li style="margin-bottom:6px;"><strong>Responsabilidades:</strong> Diseño de la arquitectura dual, modelado del Patrón Trinidad, implementación del orquestador Multi-Cloud MCP en Rust, ingeniería de prompts, lógica de frontends (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">app_mobile.html</code> y <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">backoffice_admin.html</code>) y análisis funcional de ciberseguridad.</li>
+</ul>
+<h3>1.2 Nombre del Proyecto</h3>
+<p style="margin:12px 0;"><strong>CanchaPro Suite</strong> — <em>Plataforma Inteligente de Gestión Deportiva, Automatización de Torneos, Listas de Buena Fe y Arbitraje Digital.</em></p>
+<h3>1.3 Problema que Resuelve</h3>
+<p style="margin:12px 0;">En la gestión deportiva y torneos de fútbol amateur existen 4 problemas operativos críticos:</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Falta de control médico y suplantación de identidad:</strong> Inclusión de jugadores sin apto médico vigente ("jugadores truchos"), exponiendo a los complejos a graves responsabilidades civiles y legales.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Desarticulación en la comunicación de partidos:</strong> Los jugadores dependen de grupos informales de WhatsApp para conocer sus horarios, canchas asignadas y ternas arbitrales.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Disputas en actas y tablas de goleadores:</strong> Errores arbitrales en la anotación de goles que generan conflictos de Fair Play entre capitanes de equipos rivales.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Pérdida de datos históricos:</strong> Torneos anteriores archivados en planillas de papel o archivos Excel sin conexión con las cuentas digitales de los jugadores actuales.</p>
+<p style="margin:12px 0;"><strong>Solución Implementada:</strong> CanchaPro digitaliza el ciclo completo mediante un ecosistema dual asistido por IA:</p>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;">Registro unificado con <strong>Patrón Trinidad</strong> (1 Usuario ↔ 1 Persona + Ficha Médica ↔ N Roles).</li>
+<li style="margin-bottom:6px;"><strong>Lista de Buena Fe inviolable</strong> con convocatoria estricta de 11 titulares habilitados.</li>
+<li style="margin-bottom:6px;"><strong>Protocolo de Consenso Fair Play para "Goles Sin Dueño"</strong> con validación cruzada entre capitanes y timeout de 48h.</li>
+<li style="margin-bottom:6px;"><strong>Lazy Linking por DNI</strong> para sincronizar datos históricos masivos desde planillas Excel (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Año 2003.xlsx</code>).</li>
+</ul>
+<h3>1.4 Público Objetivo</h3>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>Dueños de Complejos Deportivos y Administradores de Torneos:</strong> Necesitan maximizar el uso de sus canchas, cobrar señas preventivas y automatizar fixtures sin solapamientos.</li>
+<li style="margin-bottom:6px;"><strong>Capitanes y Responsables de Equipo:</strong> Buscan gestionar planteles de hasta 20 jugadores, confirmar convocatorias y defender los goles de su equipo.</li>
+<li style="margin-bottom:6px;"><strong>Jugadores y Atletas:</strong> Necesitan conocer en 1 segundo <em>"Tu Próximo Partido"</em>, su tabla de posiciones y mantener su apto físico validado.</li>
+<li style="margin-bottom:6px;"><strong>Árbitros Oficiales:</strong> Requieren planillas digitales protegidas para cargar goles, tarjetas y cerrar actas en campo de juego.</li>
+</ul>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 2 · Arquitectura Técnica</h2>
+<h3>2.1 Diagrama de Arquitectura General del Sistema</h3>
+<pre><code class="mermaid">graph TD
+    subgraph Clientes[&quot;Capas de Presentación (Frontend)&quot;]
+        A1[&quot;📱 App Móvil Android (Play Store)&lt;br/&gt;(Capitanes, Jugadores, Árbitros)&quot;]
+        A2[&quot;💻 Backoffice Web Desktop&lt;br/&gt;(Organizadores y Complejos)&quot;]
     end
 
-    subgraph Gateway["Capa de Integración & Seguridad"]
-        B1["🛡️ Gateway de API & Control de Acceso JWT"]
-        B2["⚙️ Motor de Reglas de Negocio (RN-01 a RN-13)"]
+    subgraph Gateway[&quot;Capa de Integración &amp; Seguridad&quot;]
+        B1[&quot;🛡️ Gateway de API &amp; Control de Acceso JWT&quot;]
+        B2[&quot;⚙️ Motor de Reglas de Negocio (RN-01 a RN-13)&quot;]
     end
 
-    subgraph CoreLogica["Lógica de Negocio Tradicional"]
-        C1["⚽ Servicio de Torneos & Fixtures"]
-        C2["📋 Servicio de Lista de Fe & Convocatorias"]
-        C3["🩺 Servicio de Fichas Médicas (Trinidad)"]
-        C4["⚖️ Servicio de Actas & Consenso Fair Play"]
+    subgraph CoreLogica[&quot;Lógica de Negocio Tradicional&quot;]
+        C1[&quot;⚽ Servicio de Torneos &amp; Fixtures&quot;]
+        C2[&quot;📋 Servicio de Lista de Fe &amp; Convocatorias&quot;]
+        C3[&quot;🩺 Servicio de Fichas Médicas (Trinidad)&quot;]
+        C4[&quot;⚖️ Servicio de Actas &amp; Consenso Fair Play&quot;]
     end
 
-    subgraph OrquestacionIA["Capa de Inteligencia Artificial (Multi-Cloud / Local)"]
-        D1["🦀 Rust Unified MCP Bridge (v2.0)"]
-        D2["⚡ Groq LPU (Qwen 2.5 / Llama 3.3)"]
-        D3["🧠 xAI Grok-2 / Google Gemini 2.0"]
-        D4["💻 Ollama SLM Local (Offline In-Field)"]
+    subgraph OrquestacionIA[&quot;Capa de Inteligencia Artificial (Multi-Cloud / Local)&quot;]
+        D1[&quot;🦀 Rust Unified MCP Bridge (v2.0)&quot;]
+        D2[&quot;⚡ Groq LPU (Qwen 2.5 / Llama 3.3)&quot;]
+        D3[&quot;🧠 xAI Grok-2 / Google Gemini 2.0&quot;]
+        D4[&quot;💻 Ollama SLM Local (Offline In-Field)&quot;]
     end
 
-    subgraph Persistencia["Memoria Persistente del Sistema"]
-        E1[("🗄️ Base de Datos Relacional PostgreSQL / ACID")]
-        E2[("📊 Historial de Torneos Excel JSON (2003)")]
-        E3[("🔒 Storage Cifrado AES-256 (Fichas Médicas)")]
+    subgraph Persistencia[&quot;Memoria Persistente del Sistema&quot;]
+        E1[(&quot;🗄️ Base de Datos Relacional PostgreSQL / ACID&quot;)]
+        E2[(&quot;📊 Historial de Torneos Excel JSON (2003)&quot;)]
+        E3[(&quot;🔒 Storage Cifrado AES-256 (Fichas Médicas)&quot;)]
     end
 
     A1 --&gt; B1
     A2 --&gt; B1
     B1 --&gt; B2
-    B2 --&gt; C1 & C2 & C3 & C4
-    C1 & C2 & C3 & C4 --&gt; E1 & E2 & E3
+    B2 --&gt; C1 &amp; C2 &amp; C3 &amp; C4
+    C1 &amp; C2 &amp; C3 &amp; C4 --&gt; E1 &amp; E2 &amp; E3
     B2 -.-&gt; D1
-    D1 --&gt; D2 & D3 & D4
-```
-
-* **Flujo de datos de entrada a salida:** Las solicitudes de los usuarios entran por la App Móvil o Backoffice Web, pasan por el Gateway de autenticación y validación de reglas (RN-01 a RN-13), interactúan con la lógica transaccional y persisten en PostgreSQL/JSON. Cuando se requiere asistencia analítica o inferencia contextual, el Gateway invoca al puente Rust MCP.
-* **Qué componentes son IA vs. Lógica Tradicional:**
-  * *Lógica Tradicional:* Autenticación, validación estricta de 11 jugadores en Lista de Fe, cálculo matemático de la Tabla de Posiciones (3-1-0 pts) e invariantes de actas arbitrales.
-  * *Componentes IA:* Generación automatizada de fixtures equitativos, resolución analítica de disputas de goles con NLP, procesamiento de planillas históricas no estructuradas y motor multi-agente para sugerencias tácticas.
-* **Dónde vive la memoria persistente:** Base de datos PostgreSQL con integridad referencial estricta para entidades Trinidad, storage cifrado para aptos médicos y almacén de historial de partidos en JSON indexado por DNI.
-
----
-
-### 2.2 Diagrama de Flujo de Agentes (Orquestación Multi-Agente)
-
-```mermaid
-sequenceDiagram
+    D1 --&gt; D2 &amp; D3 &amp; D4</code></pre>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>Flujo de datos de entrada a salida:</strong> Las solicitudes de los usuarios entran por la App Móvil o Backoffice Web, pasan por el Gateway de autenticación y validación de reglas (RN-01 a RN-13), interactúan con la lógica transaccional y persisten en PostgreSQL/JSON. Cuando se requiere asistencia analítica o inferencia contextual, el Gateway invoca al puente Rust MCP.</li>
+<li style="margin-bottom:6px;"><strong>Qué componentes son IA vs. Lógica Tradicional:</strong></li>
+<li style="margin-bottom:6px;"><em>Lógica Tradicional:</em> Autenticación, validación estricta de 11 jugadores en Lista de Fe, cálculo matemático de la Tabla de Posiciones (3-1-0 pts) e invariantes de actas arbitrales.</li>
+<li style="margin-bottom:6px;"><em>Componentes IA:</em> Generación automatizada de fixtures equitativos, resolución analítica de disputas de goles con NLP, procesamiento de planillas históricas no estructuradas y motor multi-agente para sugerencias tácticas.</li>
+<li style="margin-bottom:6px;"><strong>Dónde vive la memoria persistente:</strong> Base de datos PostgreSQL con integridad referencial estricta para entidades Trinidad, storage cifrado para aptos médicos y almacén de historial de partidos en JSON indexado por DNI.</li>
+</ul>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>2.2 Diagrama de Flujo de Agentes (Orquestación Multi-Agente)</h3>
+<pre><code class="mermaid">sequenceDiagram
     autonumber
     actor Admin as Organizador / Árbitro
     participant Router as Agente Enrutador (Rust Bridge)
     participant AgentFixture as Agente Planificador de Fixture
-    participant AgentDispute as Agente Arbitral & Fair Play
+    participant AgentDispute as Agente Arbitral &amp; Fair Play
     participant AgentOCR as Agente Ingesta Excel/OCR
     database DB as Memoria Persistente
 
-    Admin-&gt;&gt;Router: Petición de Negocio (Ej: "Generar fixture sin cruzar horarios")
+    Admin-&gt;&gt;Router: Petición de Negocio (Ej: &quot;Generar fixture sin cruzar horarios&quot;)
     Router-&gt;&gt;AgentFixture: Delegación de Tarea con Restricciones
     AgentFixture-&gt;&gt;DB: Consultar canchas habilitadas y disponibilidad
     AgentFixture--&gt;&gt;Router: Propuesta de Calendario Óptimo
@@ -181,17 +171,11 @@ sequenceDiagram
     Admin-&gt;&gt;Router: Reporte de Acta con Gol Sin Dueño
     Router-&gt;&gt;AgentDispute: Iniciar protocolo de consenso (RN-10)
     AgentDispute-&gt;&gt;DB: Verificar cupo oficial de goles
-    AgentDispute--&gt;&gt;Admin: Notificar capitanes y programar Timeout 48h
-```
-
----
-
-### 2.3 Diagramas UML de Dominio
-
-#### A. Diagrama UML de Clases (Estructura de Datos y Trinidad)
-
-```mermaid
-classDiagram
+    AgentDispute--&gt;&gt;Admin: Notificar capitanes y programar Timeout 48h</code></pre>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>2.3 Diagramas UML de Dominio</h3>
+<h4>A. Diagrama UML de Clases (Estructura de Datos y Trinidad)</h4>
+<pre><code class="mermaid">classDiagram
     class Usuario {
         +UUID id
         +String email
@@ -274,220 +258,247 @@ classDiagram
         +DateTime fechaExpiracionTimeout // 48h
     }
 
-    Usuario "1" -- "1" Persona : autentica
-    Persona "1" *-- "1" FichaMedica : posee
-    Persona "1" o-- "0..1" PerfilJugador : rol
-    Persona "1" o-- "0..1" PerfilArbitro : rol
-    Persona "1" o-- "0..1" PerfilAdmin : rol
+    Usuario &quot;1&quot; -- &quot;1&quot; Persona : autentica
+    Persona &quot;1&quot; *-- &quot;1&quot; FichaMedica : posee
+    Persona &quot;1&quot; o-- &quot;0..1&quot; PerfilJugador : rol
+    Persona &quot;1&quot; o-- &quot;0..1&quot; PerfilArbitro : rol
+    Persona &quot;1&quot; o-- &quot;0..1&quot; PerfilAdmin : rol
 
-    Torneo "1" o-- "2..*" Equipo : inscribe
-    Equipo "1" *-- "1" ListaDeBuenaFe : posee
-    ListaDeBuenaFe "1" o-- "1..20" PerfilJugador : compone
-    Torneo "1" *-- "1..*" Partido : programa
-    Partido "1" *-- "2" ConvocatoriaPartido : convoca
-    ConvocatoriaPartido "1" o-- "11" PerfilJugador : cita titulares
-    Partido "1" *-- "1" ActaPartido : genera
-    ActaPartido "1" o-- "0..*" ReclamoGolSinDueño : disputa
-```
-
----
-
-## Sección 3 · Stack Tecnológico
-
-| Componente | Tecnología / Herramienta | Por qué se eligió esta y no otra |
-| :--- | :--- | :--- |
-| **Frontend Móvil y Web** | **HTML5 + TailwindCSS + JavaScript ES6 + Lucide Icons** | Máxima velocidad de carga sin sobrecostos de frameworks pesados, diseño responsive con estética Dark Mode nativa y compatibilidad garantizada en cualquier navegador o WebView de Android. |
-| **Backend & Orquestación** | **Rust (Actix / Tokio) + FastAPI (Python 3.12)** | *Rust* garantiza concurrencia con cero costo de memoria y seguridad en subprocesos para el puente MCP. *FastAPI* provee endpoints REST asíncronos de ultra-baja latencia (&lt;100ms). |
-| **Base de Datos & Persistencia** | **PostgreSQL (ACID) + JSON Engine** | El manejo de torneos, fixtures y fichas médicas exige consistencia transaccional estricta (ACID) para evitar inscripciones duplicadas o solapamiento de canchas. |
-| **Modelos de IA** | **Groq LPU (Qwen 2.5 / Llama 3.3) + xAI Grok-2 + Google Gemini** | *Groq LPU* brinda inferencia a más de 800 tokens/segundo con costo $0 en su tier gratuito. *Grok-2* y *Gemini* aportan capacidades analíticas complejas para la resolución de disputas de actas. |
-| **Orquestación de Agentes** | **Rust Unified MCP Bridge (Protocolo Model Context)** | Protocolo estándar abierto promovido por la industria para conectar modelos LLM con herramientas locales seguras (archivos, Git, bases de datos). |
-| **Despliegue & Hosting** | **GitHub Pages / Vercel / Render** | Despliegue automatizado mediante CI/CD con HTTPS habilitado, alta disponibilidad y costo operativo $0 para la fase de prototipado y validación académica. |
-
----
-
-## Sección 4 · Evidencia de Funcionamiento
-
-### 4.1 Capturas de Pantalla del Ecosistema CanchaPro
-
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
+    Torneo &quot;1&quot; o-- &quot;2..*&quot; Equipo : inscribe
+    Equipo &quot;1&quot; *-- &quot;1&quot; ListaDeBuenaFe : posee
+    ListaDeBuenaFe &quot;1&quot; o-- &quot;1..20&quot; PerfilJugador : compone
+    Torneo &quot;1&quot; *-- &quot;1..*&quot; Partido : programa
+    Partido &quot;1&quot; *-- &quot;2&quot; ConvocatoriaPartido : convoca
+    ConvocatoriaPartido &quot;1&quot; o-- &quot;11&quot; PerfilJugador : cita titulares
+    Partido &quot;1&quot; *-- &quot;1&quot; ActaPartido : genera
+    ActaPartido &quot;1&quot; o-- &quot;0..*&quot; ReclamoGolSinDueño : disputa</code></pre>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 3 · Stack Tecnológico</h2>
+<table>
+<tr><th>Componente</th><th>Tecnología / Herramienta</th><th>Por qué se eligió esta y no otra</th></tr>
+<tr><td><strong>Frontend Móvil y Web</strong></td><td><strong>HTML5 + TailwindCSS + JavaScript ES6 + Lucide Icons</strong></td><td>Máxima velocidad de carga sin sobrecostos de frameworks pesados, diseño responsive con estética Dark Mode nativa y compatibilidad garantizada en cualquier navegador o WebView de Android.</td></tr>
+<tr><td><strong>Backend & Orquestación</strong></td><td><strong>Rust (Actix / Tokio) + FastAPI (Python 3.12)</strong></td><td><em>Rust</em> garantiza concurrencia con cero costo de memoria y seguridad en subprocesos para el puente MCP. <em>FastAPI</em> provee endpoints REST asíncronos de ultra-baja latencia (<100ms).</td></tr>
+<tr><td><strong>Base de Datos & Persistencia</strong></td><td><strong>PostgreSQL (ACID) + JSON Engine</strong></td><td>El manejo de torneos, fixtures y fichas médicas exige consistencia transaccional estricta (ACID) para evitar inscripciones duplicadas o solapamiento de canchas.</td></tr>
+<tr><td><strong>Modelos de IA</strong></td><td><strong>Groq LPU (Qwen 2.5 / Llama 3.3) + xAI Grok-2 + Google Gemini</strong></td><td><em>Groq LPU</em> brinda inferencia a más de 800 tokens/segundo con costo $0 en su tier gratuito. <em>Grok-2</em> y <em>Gemini</em> aportan capacidades analíticas complejas para la resolución de disputas de actas.</td></tr>
+<tr><td><strong>Orquestación de Agentes</strong></td><td><strong>Rust Unified MCP Bridge (Protocolo Model Context)</strong></td><td>Protocolo estándar abierto promovido por la industria para conectar modelos LLM con herramientas locales seguras (archivos, Git, bases de datos).</td></tr>
+<tr><td><strong>Despliegue & Hosting</strong></td><td><strong>GitHub Pages / Vercel / Render</strong></td><td>Despliegue automatizado mediante CI/CD con HTTPS habilitado, alta disponibilidad y costo operativo $0 para la fase de prototipado y validación académica.</td></tr>
+</table>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 4 · Evidencia de Funcionamiento</h2>
+<h3>4.1 Capturas de Pantalla del Ecosistema CanchaPro</h3>
+<pre><code class="text">┌─────────────────────────────────────────────────────────────────────────────┐
 │ 1. PANTALLA PRINCIPAL / HOME DUAL (index.html)                              │
 │    • Selector central para acceder a la App Móvil o al Backoffice Web.      │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 2. FLUJO DE USO PRINCIPAL (app_mobile.html)                                 │
 │    • Login con Patrón Trinidad y evaluación de Lazy Linking por DNI.        │
-│    • Tarjeta destacada "Tu Próximo Partido": Domingo 19:30 hs · Cancha 2.   │
+│    • Tarjeta destacada &quot;Tu Próximo Partido&quot;: Domingo 19:30 hs · Cancha 2.   │
 │    • Lista de Buena Fe: Selección interactiva de los 11 titulares del dom.  │
 ├─────────────────────────────────────────────────────────────────────────────┤
 │ 3. RESULTADO DE IA Y BACKOFFICE (backoffice_admin.html)                     │
 │    • Panel de creación de torneos, generador de fixture y sincronizador     │
-│      del Excel histórico "Año 2003.xlsx" con 21 jugadores y 23 partidos.   │
-└─────────────────────────────────────────────────────────────────────────────┘
-```
-
-![Mockup de la Interfaz CanchaPro](/home/jfrattin/.gemini/antigravity/brain/417978f1-9882-49d1-8e81-bb51275a94f2/futbol_canchas_torneos_ui_1787433632909.jpg)
-
-### 4.2 Log Real de Ejecución de Datos Históricos (`Año 2003.xlsx`)
-
-```json
-{
-  "liga": "Quintas del Sur",
-  "torneo": "Clausura & Apertura 2003",
-  "total_jugadores_vinculados": 21,
-  "total_partidos_historicos": 23,
-  "ejemplo_jugador_vinculado": {
-    "nro": "1",
-    "nombre": "Ariel Marcelo Rios",
-    "dni": "23619688",
-    "partidos_jugados": 23,
-    "goles_totales": 4,
-    "estado_vinculacion": "VINCULADO_POR_DNI",
-    "primer_partido": {
-      "jornada": "1",
-      "rival": "La Reserva",
-      "resultado": "4 - 2 (Victoria)",
-      "cancha": "Soever"
+│      del Excel histórico &quot;Año 2003.xlsx&quot; con 21 jugadores y 23 partidos.   │
+└─────────────────────────────────────────────────────────────────────────────┘</code></pre>
+<p style="margin:12px 0;"><img src="/home/jfrattin/.gemini/antigravity/brain/417978f1-9882-49d1-8e81-bb51275a94f2/futbol_canchas_torneos_ui_1787433632909.jpg" alt="Mockup de la Interfaz CanchaPro" style="max-width:100%; border-radius:8px; margin:15px 0; border:1px solid #cbd5e1;" /></p>
+<h3>4.2 Log Real de Ejecución de Datos Históricos (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Año 2003.xlsx</code>)</h3>
+<pre><code class="json">{
+  &quot;liga&quot;: &quot;Quintas del Sur&quot;,
+  &quot;torneo&quot;: &quot;Clausura &amp; Apertura 2003&quot;,
+  &quot;total_jugadores_vinculados&quot;: 21,
+  &quot;total_partidos_historicos&quot;: 23,
+  &quot;ejemplo_jugador_vinculado&quot;: {
+    &quot;nro&quot;: &quot;1&quot;,
+    &quot;nombre&quot;: &quot;Ariel Marcelo Rios&quot;,
+    &quot;dni&quot;: &quot;23619688&quot;,
+    &quot;partidos_jugados&quot;: 23,
+    &quot;goles_totales&quot;: 4,
+    &quot;estado_vinculacion&quot;: &quot;VINCULADO_POR_DNI&quot;,
+    &quot;primer_partido&quot;: {
+      &quot;jornada&quot;: &quot;1&quot;,
+      &quot;rival&quot;: &quot;La Reserva&quot;,
+      &quot;resultado&quot;: &quot;4 - 2 (Victoria)&quot;,
+      &quot;cancha&quot;: &quot;Soever&quot;
     }
   }
-}
-```
-
-### 4.3 Módulo de Partiditos Casuales & Arquitectura Multi-Deporte
-El ecosistema CanchaPro fue expandido para soportar **6 disciplinas deportivas complejas**:
-* ⚽ **Fútbol:** Formatos F5 (10 jug.), F7 (14 jug.), F8 (16 jug.) y F11 (22 jug.).
-* 🎾 **Padel:** Formatos Dobles (4 jug.) y Singles (2 jug.).
-* 🎾 **Tenis:** Formatos Singles (2 jug.) y Dobles (4 jug.).
-* 🏀 **Básquet:** Formatos 3x3 (6 jug.) y 5x5 (10 jug.).
-* 🏐 **Vóley:** Formatos 6x6 Pista (12 jug.) y Beach 2x2 (4 jug.).
-* 🏑 **Hockey:** Formatos H7 (14 jug.) y H11 (22 jug.).
-
-#### Funcionalidades Clave del Módulo Partiditos:
-1. **Creación de Encuentro Personalizado:** Permite ingresar nombre de la cancha, selector independiente de fecha (`type="date"`) y hora (`type="time"`), formato dinámico y vista de ubicación con **Google Maps**.
-2. **Link Público de Invitación (`/casual/{token}`):** Generación automática de un token criptográfico único para invitar jugadores a unirse directamente al Equipo 1 o Equipo 2.
-3. **Desafío de Equipos Rivales:** Permite lanzar retos formales a otros equipos registrados.
-4. **Buscador en Tiempo Real:** Filtro reactivo por título, deporte o ubicación.
-5. **Gestión de Permisos & Eliminación:** Solamente el creador del encuentro o el Super Admin poseen facultad para eliminar partiditos.
-
-### 4.4 Suite de Pruebas Automatizadas PHPUnit (`CanchaProFlowTest`)
-Se construyó una suite de tests automatizados de integración en Laravel PHPUnit (`tests/Feature/CanchaProFlowTest.php`):
-
-```text
-   PASS  Tests/Feature/CanchaProFlowTest
+}</code></pre>
+<h3>4.3 Módulo de Partiditos Casuales & Arquitectura Multi-Deporte</h3>
+<p style="margin:12px 0;">El ecosistema CanchaPro fue expandido para soportar <strong>6 disciplinas deportivas complejas</strong>:</p>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;">⚽ <strong>Fútbol:</strong> Formatos F5 (10 jug.), F7 (14 jug.), F8 (16 jug.) y F11 (22 jug.).</li>
+<li style="margin-bottom:6px;">🎾 <strong>Padel:</strong> Formatos Dobles (4 jug.) y Singles (2 jug.).</li>
+<li style="margin-bottom:6px;">🎾 <strong>Tenis:</strong> Formatos Singles (2 jug.) y Dobles (4 jug.).</li>
+<li style="margin-bottom:6px;">🏀 <strong>Básquet:</strong> Formatos 3x3 (6 jug.) y 5x5 (10 jug.).</li>
+<li style="margin-bottom:6px;">🏐 <strong>Vóley:</strong> Formatos 6x6 Pista (12 jug.) y Beach 2x2 (4 jug.).</li>
+<li style="margin-bottom:6px;">🏑 <strong>Hockey:</strong> Formatos H7 (14 jug.) y H11 (22 jug.).</li>
+</ul>
+<h4>Funcionalidades Clave del Módulo Partiditos:</h4>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Creación de Encuentro Personalizado:</strong> Permite ingresar nombre de la cancha, selector independiente de fecha (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">type="date"</code>) y hora (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">type="time"</code>), formato dinámico y vista de ubicación con <strong>Google Maps</strong>.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Link Público de Invitación (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">/casual/{token}</code>):</strong> Generación automática de un token criptográfico único para invitar jugadores a unirse directamente al Equipo 1 o Equipo 2.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Desafío de Equipos Rivales:</strong> Permite lanzar retos formales a otros equipos registrados.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Buscador en Tiempo Real:</strong> Filtro reactivo por título, deporte o ubicación.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Gestión de Permisos & Eliminación:</strong> Solamente el creador del encuentro o el Super Admin poseen facultad para eliminar partiditos.</p>
+<h3>4.4 Suite de Pruebas Automatizadas PHPUnit (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">CanchaProFlowTest</code>)</h3>
+<p style="margin:12px 0;">Se construyó una suite de tests automatizados de integración en Laravel PHPUnit (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">tests/Feature/CanchaProFlowTest.php</code>):</p>
+<pre><code class="text">   PASS  Tests/Feature/CanchaProFlowTest
   ✓ registro usuario e inicio sesion con email valido                    0.18s
   ✓ creacion y listado de partidito casual multi deporte                 0.02s
   ✓ unirse a partidito casual por token                                  0.01s
   ✓ subida y aprobacion de apto medico por super admin                   0.01s
 
   Tests:    4 passed (17 assertions)
-  Duration: 0.39s
-```
-
----
-
-## Sección 5 · Evaluación UX/UI
-
-### 5.1 Heurísticas de Nielsen Aplicadas al Proyecto
-
-| Heurística de Nielsen | Cumple? | Evidencia / Observación Concreta en CanchaPro |
-| :--- | :---: | :--- |
-| **1. Visibilidad del estado del sistema** | **Sí** | El badge de convocatoria muestra en tiempo real `11 / 11 Convocados` con animación de estado, indicando claramente si falta citar jugadores. |
-| **2. Coincidencia con el mundo real** | **Sí** | Se utiliza la terminología natural del fútbol: *"Lista de Buena Fe"*, *"Ficha Médica"*, *"Apto Físico"*, *"Planilla de Partido"* y *"Dorsal"*. |
-| **3. Control y libertad del usuario** | **Sí** | El Capitán puede alternar, agregar o remover jugadores de la convocatoria libremente antes de confirmar la planilla definitiva. |
-| **4. Consistencia y estándares** | **Sí** | Barra de navegación inferior estandarizada para Android (Play Store Guideline) con iconografía Lucide uniforme en todas las pantallas. |
-| **5. Prevención de errores** | **Sí** | Bloqueo preventivo automático que deshabilita el checkbox de convocatoria si el jugador posee el Apto Médico vencido. |
-| **6. Reconocimiento sobre recuerdo** | **Sí** | La tarjeta *"Tu Próximo Partido"* expone en el primer golpe de vista la fecha, hora, cancha y rival sin obligar a buscar en menús profundos. |
-| **7. Flexibilidad y eficiencia de uso** | **Sí** | Switch Trinidad de 1 clic para alternar instantáneamente entre el `Modo Capitán` y el `Modo Árbitro`. |
-| **8. Diseño estético y minimalista** | **Sí** | Estética deportiva Dark Mode con fondo obsidiana y acentos Neón que evitan la sobrecarga visual y ahorran batería. |
-| **9. Ayuda para reconocer errores** | **Sí** | Mensajes de alerta claros: *"Has citado a 10 jugadores. Debes convocar exactamente a 11 para emitir la planilla"*. |
-| **10. Ayuda y documentación** | **Sí** | Carteles contextuales que explican las reglas oficiales del torneo al acceder a cada pantalla. |
-
-### 5.2 Evaluación Orientada al Público Objetivo
-* **¿El diseño es apropiado para el nivel técnico del usuario final?** Sí. Los jugadores y capitanes manejan una interfaz táctil simplificada basada en tarjetas visuales de alto contraste y botones grandes operables con el pulgar (*Thumb Zone*).
-* **¿El lenguaje visual y textual es comprensible?** Totalmente. Se eliminaron tecnicismos de base de datos; la app habla el lenguaje cotidiano de los torneos de fútbol amateur argentinos.
-* **¿Se hizo alguna prueba con un usuario real?** Sí, se realizaron pruebas informales con capitanes de ligas locales. El feedback destacó la conveniencia de ver el horario y la cancha en la pantalla principal sin tener que esperar mensajes en grupos de WhatsApp.
-
----
-
-## Sección 6 · Evaluación de Ciberseguridad
-
-### Log de Consideraciones y Mitigación de Riesgos de Seguridad
-
-| Riesgo Identificado | Tipo (OWASP / Privacidad / Acceso) | Medida Implementada o Decisión Técnica Tomada |
-| :--- | :--- | :--- |
-| **1. Inyección de Prompt en Modelos IA** | OWASP LLM-01 (Prompt Injection) | Se parametrizaron las entradas del usuario utilizando esquemas JSON rígidos con validación de tipos, impidiendo la concatenación directa de texto libre en las instrucciones de sistema. |
-| **2. Exposición de Secretos y API Keys** | OWASP Top 10 (Security Misconfiguration) | Todas las claves de proveedores (`groq_api_key`, `gemini_api_key`, `cerebras_api_key`) se gestionan en archivos `config.json` ignorados estrictamente en `.gitignore` y variables de entorno del servidor. |
-| **3. Privacidad de Fichas Médicas Civiles** | Privacidad de Datos (Habeas Data / GDPR) | Los datos sensibles de salud (grupo sanguíneo, patologías, contactos de emergencia) se almacenan cifrados y solo son accesibles por el propio usuario y auditores médicos autorizados. |
-| **4. Suplantación de Identidad y Accesos Indebidos** | Broken Object Level Authorization (BOLA) | La autenticación se valida mediante tokens JWT firmados criptográficamente. El sistema verifica que solo el Capitán registrado pueda emitir convocatorias de su equipo. |
-| **5. Manipulación Maliciosa del Marcador y Goles** | Integridad de Datos Transaccionales | El acta del partido se bloquea irreversiblemente una vez firmada por el árbitro (`estado: CERRADO`). El protocolo de reclamo de goles tiene como invariante matemática que los reclamos nunca pueden superar los goles oficiales del acta. |
-
----
-
-## Sección 7 · IAs Usadas en el Co-Work de Desarrollo
-
-| Herramienta IA | Para qué se utilizó en el proyecto | Evaluación: Aportó bien / mal / sorprendió |
-| :--- | :--- | :--- |
-| **Google Antigravity (Gemini 2.0 / 2.5)** | Planificación de la arquitectura dual, co-diseño de interfaces frontend (`app_mobile.html` y `backoffice_admin.html`), redacción del SRS y diagramas Mermaid. | **Sorprendió positivamente:** Capacidad de razonar y mantener coherencia entre las reglas de negocio (RN-01 a RN-13) y el código ejecutable. |
-| **Rust Multi-Cloud MCP Bridge** | Conexión ultra-rápida con chips de inferencia LPU (Groq) y Wafer (Cerebras) para responder consultas en submilisegundos. | **Aportó excelente:** Permitió delegar tareas analíticas con costo $0 de tokens. |
-| **Midjourney v6.0 / Figma AI** | Generación de prompts para prototipado visual de alta fidelidad con estética Dark Mode Neón. | **Aportó bien:** Aceleró la conceptualización visual de la paleta de colores y componentes UI. |
-
-### Reflexión Obligatoria (Co-Work con IA):
-&gt; *"El co-diseño con herramientas de IA generativa permitió reducir drásticamente los tiempos de desarrollo de la arquitectura y la documentación formal, permitiendo estructurar un SRS completo bajo norma IEEE 830, implementar diagramas UML interactivos y construir dos aplicaciones funcionales completas en una fracción del tiempo tradicional. La IA demostró una potencia sobresaliente para acelerar la maquetación y el modelado de datos; sin embargo, requirió una estricta supervisión humana para corregir la separación de perfiles y garantizar que las reglas de negocio críticas (como la invariante de que los goles reclamados jamás superen el acta del árbitro) quedaran matemáticamente blindadas en la lógica del sistema."*
-
----
-
-# PARTE 2 — IA Local en tu Proyecto
-
----
-
-### Contexto y Fundamentación de Modelos Locales (LLM/SLM)
-Un modelo de lenguaje pequeño (**SLM**, como *Llama 3.2 3B*, *Phi-3 Mini 3.8B* o *Gemma 2 2B*) ejecutado de forma local mediante **Ollama** corre 100% en el hardware del complejo deportivo o en los dispositivos de campo, sin conexión a internet y sin enviar datos a servidores externos.
-
----
-
-### Respuestas a las Preguntas Obligatorias:
-
-#### 1. ¿Qué papel jugaría un LLM/SLM local en tu proyecto?
-&gt; *En CanchaPro, un SLM local actuaría como un **subagente de soporte perimetral (Edge Agent)** desplegado en el servidor físico del complejo deportivo. Su función primordial sería procesar y auditar la documentación médica sensible de los jugadores y resolver consultas de reglamento en tiempo real en canchas donde la conectividad 4G/5G sea deficiente o inexistente. No reemplazaría a los modelos cloud para análisis masivo de fixtures globales, pero asumiría con costo $0 el procesamiento de lenguaje natural local sin depender de la estabilidad de internet.*
-
-#### 2. ¿Qué le aportaría al usuario de la aplicación?
-&gt; *Aporta tres beneficios directos: **1) Privacidad Absoluta:** La ficha médica y datos civiles del jugador se procesan en el propio predio sin viajar a nubes de terceros. **2) Latencia Cero en Campo de Juego:** El árbitro y los capitanes pueden consultar dudas reglamentarias o validar convocatorias al instante, incluso dentro de vestuarios techados sin señal celular. **3) Resiliencia Operativa:** El torneo continúa operando fluidamente aunque se caiga el enlace de fibra óptica del complejo.*
-
-#### 3. ¿Qué te aportaría a vos como profesional?
-&gt; *Brinda soberanía sobre la infraestructura de datos y cumplimiento estricto de normativas de protección de datos personales de salud (Habeas Data). Profesionalmente, permite analizar patrones de lesiones, bitácoras de partidos y comportamiento de sanciones disciplinarias de manera interna, sin incurrir en costos variables por consumo de tokens en APIs propietarias y garantizando la continuidad del negocio offline.*
-
-#### 4. ¿Qué limitaciones concretas tiene versus una API en la nube?
-&gt; *Las tres limitaciones principales son: **1) Capacidad de Hardware:** Requiere GPUs dedicadas o procesadores modernos para mantener una velocidad de respuesta aceptable (&gt;30 tokens/seg). **2) Capacidad de Razonamiento Complejo:** Un modelo SLM de 3B a 8B parámetros tiene una ventana de contexto más reducida y menor capacidad para resolver razonamientos lógicos altamente sofisticados en comparación con modelos de frontera como GPT-4o o Gemini 2.0 Pro. **3) Mantenimiento y Distribución:** Exige gestionar manualmente la instalación, quantización (GGUF) y actualización de versiones de los modelos en cada sede física.*
-
----
-
-### 🎁 Entregable Opcional: Evidencia de SLM Local con Ollama
-
-```text
-┌─────────────────────────────────────────────────────────────────────────────┐
+  Duration: 0.39s</code></pre>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 5 · Evaluación UX/UI</h2>
+<h3>5.1 Heurísticas de Nielsen Aplicadas al Proyecto</h3>
+<table>
+<tr><th>Heurística de Nielsen</th><th>Cumple?</th><th>Evidencia / Observación Concreta en CanchaPro</th></tr>
+<tr><td><strong>1. Visibilidad del estado del sistema</strong></td><td><strong>Sí</strong></td><td>El badge de convocatoria muestra en tiempo real <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">11 / 11 Convocados</code> con animación de estado, indicando claramente si falta citar jugadores.</td></tr>
+<tr><td><strong>2. Coincidencia con el mundo real</strong></td><td><strong>Sí</strong></td><td>Se utiliza la terminología natural del fútbol: <em>"Lista de Buena Fe"</em>, <em>"Ficha Médica"</em>, <em>"Apto Físico"</em>, <em>"Planilla de Partido"</em> y <em>"Dorsal"</em>.</td></tr>
+<tr><td><strong>3. Control y libertad del usuario</strong></td><td><strong>Sí</strong></td><td>El Capitán puede alternar, agregar o remover jugadores de la convocatoria libremente antes de confirmar la planilla definitiva.</td></tr>
+<tr><td><strong>4. Consistencia y estándares</strong></td><td><strong>Sí</strong></td><td>Barra de navegación inferior estandarizada para Android (Play Store Guideline) con iconografía Lucide uniforme en todas las pantallas.</td></tr>
+<tr><td><strong>5. Prevención de errores</strong></td><td><strong>Sí</strong></td><td>Bloqueo preventivo automático que deshabilita el checkbox de convocatoria si el jugador posee el Apto Médico vencido.</td></tr>
+<tr><td><strong>6. Reconocimiento sobre recuerdo</strong></td><td><strong>Sí</strong></td><td>La tarjeta <em>"Tu Próximo Partido"</em> expone en el primer golpe de vista la fecha, hora, cancha y rival sin obligar a buscar en menús profundos.</td></tr>
+<tr><td><strong>7. Flexibilidad y eficiencia de uso</strong></td><td><strong>Sí</strong></td><td>Switch Trinidad de 1 clic para alternar instantáneamente entre el <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Modo Capitán</code> y el <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Modo Árbitro</code>.</td></tr>
+<tr><td><strong>8. Diseño estético y minimalista</strong></td><td><strong>Sí</strong></td><td>Estética deportiva Dark Mode con fondo obsidiana y acentos Neón que evitan la sobrecarga visual y ahorran batería.</td></tr>
+<tr><td><strong>9. Ayuda para reconocer errores</strong></td><td><strong>Sí</strong></td><td>Mensajes de alerta claros: <em>"Has citado a 10 jugadores. Debes convocar exactamente a 11 para emitir la planilla"</em>.</td></tr>
+<tr><td><strong>10. Ayuda y documentación</strong></td><td><strong>Sí</strong></td><td>Carteles contextuales que explican las reglas oficiales del torneo al acceder a cada pantalla.</td></tr>
+</table>
+<h3>5.2 Evaluación Orientada al Público Objetivo</h3>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>¿El diseño es apropiado para el nivel técnico del usuario final?</strong> Sí. Los jugadores y capitanes manejan una interfaz táctil simplificada basada en tarjetas visuales de alto contraste y botones grandes operables con el pulgar (<em>Thumb Zone</em>).</li>
+<li style="margin-bottom:6px;"><strong>¿El lenguaje visual y textual es comprensible?</strong> Totalmente. Se eliminaron tecnicismos de base de datos; la app habla el lenguaje cotidiano de los torneos de fútbol amateur argentinos.</li>
+<li style="margin-bottom:6px;"><strong>¿Se hizo alguna prueba con un usuario real?</strong> Sí, se realizaron pruebas informales con capitanes de ligas locales. El feedback destacó la conveniencia de ver el horario y la cancha en la pantalla principal sin tener que esperar mensajes en grupos de WhatsApp.</li>
+</ul>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 6 · Evaluación de Ciberseguridad</h2>
+<h3>Log de Consideraciones y Mitigación de Riesgos de Seguridad</h3>
+<table>
+<tr><th>Riesgo Identificado</th><th>Tipo (OWASP / Privacidad / Acceso)</th><th>Medida Implementada o Decisión Técnica Tomada</th></tr>
+<tr><td><strong>1. Inyección de Prompt en Modelos IA</strong></td><td>OWASP LLM-01 (Prompt Injection)</td><td>Se parametrizaron las entradas del usuario utilizando esquemas JSON rígidos con validación de tipos, impidiendo la concatenación directa de texto libre en las instrucciones de sistema.</td></tr>
+<tr><td><strong>2. Exposición de Secretos y API Keys</strong></td><td>OWASP Top 10 (Security Misconfiguration)</td><td>Todas las claves de proveedores (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">groq_api_key</code>, <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">gemini_api_key</code>, <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">cerebras_api_key</code>) se gestionan en archivos <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">config.json</code> ignorados estrictamente en <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">.gitignore</code> y variables de entorno del servidor.</td></tr>
+<tr><td><strong>3. Privacidad de Fichas Médicas Civiles</strong></td><td>Privacidad de Datos (Habeas Data / GDPR)</td><td>Los datos sensibles de salud (grupo sanguíneo, patologías, contactos de emergencia) se almacenan cifrados y solo son accesibles por el propio usuario y auditores médicos autorizados.</td></tr>
+<tr><td><strong>4. Suplantación de Identidad y Accesos Indebidos</strong></td><td>Broken Object Level Authorization (BOLA)</td><td>La autenticación se valida mediante tokens JWT firmados criptográficamente. El sistema verifica que solo el Capitán registrado pueda emitir convocatorias de su equipo.</td></tr>
+<tr><td><strong>5. Manipulación Maliciosa del Marcador y Goles</strong></td><td>Integridad de Datos Transaccionales</td><td>El acta del partido se bloquea irreversiblemente una vez firmada por el árbitro (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">estado: CERRADO</code>). El protocolo de reclamo de goles tiene como invariante matemática que los reclamos nunca pueden superar los goles oficiales del acta.</td></tr>
+</table>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>Sección 7 · IAs Usadas en el Co-Work de Desarrollo</h2>
+<table>
+<tr><th>Herramienta IA</th><th>Para qué se utilizó en el proyecto</th><th>Evaluación: Aportó bien / mal / sorprendió</th></tr>
+<tr><td><strong>Google Antigravity (Gemini 2.0 / 2.5)</strong></td><td>Planificación de la arquitectura dual, co-diseño de interfaces frontend (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">app_mobile.html</code> y <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">backoffice_admin.html</code>), redacción del SRS y diagramas Mermaid.</td><td><strong>Sorprendió positivamente:</strong> Capacidad de razonar y mantener coherencia entre las reglas de negocio (RN-01 a RN-13) y el código ejecutable.</td></tr>
+<tr><td><strong>Rust Multi-Cloud MCP Bridge</strong></td><td>Conexión ultra-rápida con chips de inferencia LPU (Groq) y Wafer (Cerebras) para responder consultas en submilisegundos.</td><td><strong>Aportó excelente:</strong> Permitió delegar tareas analíticas con costo $0 de tokens.</td></tr>
+<tr><td><strong>Midjourney v6.0 / Figma AI</strong></td><td>Generación de prompts para prototipado visual de alta fidelidad con estética Dark Mode Neón.</td><td><strong>Aportó bien:</strong> Aceleró la conceptualización visual de la paleta de colores y componentes UI.</td></tr>
+</table>
+<h3>Reflexión Obligatoria (Co-Work con IA):</h3>
+<blockquote><em>"El co-diseño con herramientas de IA generativa permitió reducir drásticamente los tiempos de desarrollo de la arquitectura y la documentación formal, permitiendo estructurar un SRS completo bajo norma IEEE 830, implementar diagramas UML interactivos y construir dos aplicaciones funcionales completas en una fracción del tiempo tradicional. La IA demostró una potencia sobresaliente para acelerar la maquetación y el modelado de datos; sin embargo, requirió una estricta supervisión humana para corregir la separación de perfiles y garantizar que las reglas de negocio críticas (como la invariante de que los goles reclamados jamás superen el acta del árbitro) quedaran matemáticamente blindadas en la lógica del sistema."</em></blockquote>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h1>PARTE 2 — IA Local en tu Proyecto</h1>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>Contexto y Fundamentación de Modelos Locales (LLM/SLM)</h3>
+<p style="margin:12px 0;">Un modelo de lenguaje pequeño (<strong>SLM</strong>, como <em>Llama 3.2 3B</em>, <em>Phi-3 Mini 3.8B</em> o <em>Gemma 2 2B</em>) ejecutado de forma local mediante <strong>Ollama</strong> corre 100% en el hardware del complejo deportivo o en los dispositivos de campo, sin conexión a internet y sin enviar datos a servidores externos.</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>Respuestas a las Preguntas Obligatorias:</h3>
+<h4>1. ¿Qué papel jugaría un LLM/SLM local en tu proyecto?</h4>
+<blockquote><em>En CanchaPro, un SLM local actuaría como un <strong>subagente de soporte perimetral (Edge Agent)</strong> desplegado en el servidor físico del complejo deportivo. Su función primordial sería procesar y auditar la documentación médica sensible de los jugadores y resolver consultas de reglamento en tiempo real en canchas donde la conectividad 4G/5G sea deficiente o inexistente. No reemplazaría a los modelos cloud para análisis masivo de fixtures globales, pero asumiría con costo $0 el procesamiento de lenguaje natural local sin depender de la estabilidad de internet.</em></blockquote>
+<h4>2. ¿Qué le aportaría al usuario de la aplicación?</h4>
+<blockquote><em>Aporta tres beneficios directos: <strong>1) Privacidad Absoluta:</strong> La ficha médica y datos civiles del jugador se procesan en el propio predio sin viajar a nubes de terceros. <strong>2) Latencia Cero en Campo de Juego:</strong> El árbitro y los capitanes pueden consultar dudas reglamentarias o validar convocatorias al instante, incluso dentro de vestuarios techados sin señal celular. <strong>3) Resiliencia Operativa:</strong> El torneo continúa operando fluidamente aunque se caiga el enlace de fibra óptica del complejo.</em></blockquote>
+<h4>3. ¿Qué te aportaría a vos como profesional?</h4>
+<blockquote><em>Brinda soberanía sobre la infraestructura de datos y cumplimiento estricto de normativas de protección de datos personales de salud (Habeas Data). Profesionalmente, permite analizar patrones de lesiones, bitácoras de partidos y comportamiento de sanciones disciplinarias de manera interna, sin incurrir en costos variables por consumo de tokens en APIs propietarias y garantizando la continuidad del negocio offline.</em></blockquote>
+<h4>4. ¿Qué limitaciones concretas tiene versus una API en la nube?</h4>
+<blockquote><em>Las tres limitaciones principales son: <strong>1) Capacidad de Hardware:</strong> Requiere GPUs dedicadas o procesadores modernos para mantener una velocidad de respuesta aceptable (>30 tokens/seg). <strong>2) Capacidad de Razonamiento Complejo:</strong> Un modelo SLM de 3B a 8B parámetros tiene una ventana de contexto más reducida y menor capacidad para resolver razonamientos lógicos altamente sofisticados en comparación con modelos de frontera como GPT-4o o Gemini 2.0 Pro. <strong>3) Mantenimiento y Distribución:</strong> Exige gestionar manualmente la instalación, quantización (GGUF) y actualización de versiones de los modelos en cada sede física.</em></blockquote>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>🎁 Entregable Opcional: Evidencia de SLM Local con Ollama</h3>
+<pre><code class="text">┌─────────────────────────────────────────────────────────────────────────────┐
 │ TERMINAL EXECUTION: Ollama Local SLM (Llama 3.2 / DeepSeek R1 Local)        │
 ├─────────────────────────────────────────────────────────────────────────────┤
-│ $ ollama run llama3.2:3b "Explica en 1 linea la regla de Lista de Buena Fe" │
+│ $ ollama run llama3.2:3b &quot;Explica en 1 linea la regla de Lista de Buena Fe&quot; │
 │                                                                             │
 │ 🤖 Respuesta Local (0.12s · Offline · Costo $0):                            │
-│ "La Lista de Buena Fe es el padrón oficial inmutable de hasta 20 jugadores  │
-│ inscriptos del cual se deben seleccionar obligatoriamente los 11 titulares."│
-└─────────────────────────────────────────────────────────────────────────────┘
-```
+│ &quot;La Lista de Buena Fe es el padrón oficial inmutable de hasta 20 jugadores  │
+│ inscriptos del cual se deben seleccionar obligatoriamente los 11 titulares.&quot;│
+└─────────────────────────────────────────────────────────────────────────────┘</code></pre>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h1>GUION PARA LA EXPOSICIÓN ORAL (10 Minutos)</h1>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Minuto 0 a 2 — El Problema y la Oportunidad:</strong> Introducción de CanchaPro, el caos de los torneos amateur y la solución del Ecosistema Dual.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Minuto 2 a 4 — Arquitectura Técnica & Patrón Trinidad:</strong> Explicación del modelo de datos (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Usuario</code> ↔ <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Persona</code> ↔ <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Roles</code>) y el puente Multi-Cloud MCP en Rust.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Minuto 4 a 7 — Demostración en Vivo de la App:</strong></p>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;">Mostrar Login con Lazy Linking del Excel 2003.</li>
+<li style="margin-bottom:6px;">Mostrar tarjeta <em>"Tu Próximo Partido"</em> y Convocatoria de los 11 titulares.</li>
+<li style="margin-bottom:6px;">Mostrar Modo Árbitro con Cierre de Acta y Protocolo de <em>"Goles Sin Dueño"</em>.</li>
+<li style="margin-bottom:6px;">Mostrar Backoffice Web con publicación de torneos.</li>
+</ul>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Minuto 7 a 9 — Ciberseguridad, Heurísticas de Nielsen e IA Local:</strong> Explicación de los 5 controles de seguridad y el rol del SLM Edge.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Minuto 9 a 10 — Conclusión y Cierre:</strong> Resumen del impacto y pase a las preguntas del tribunal docente.</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h1>MANUAL DE USO RÁPIDO (GUÍA PASO A PASO)</h1>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h2>📖 Guía de Inicio Rápido para Evaluadores y Usuarios</h2>
+<p style="margin:12px 0;">Esta guía describe en 5 sencillos pasos cómo utilizar todas las funcionalidades del ecosistema <strong>CanchaPro Suite</strong>, tanto en la aplicación móvil PWA como en el panel web de administración.</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>1. Acceso a la Plataforma e Inicio de Sesión</h3>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>URL de Producción (Render Live):</strong> <a href="https://canchapro-g56l.onrender.com" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://canchapro-g56l.onrender.com</code></a></li>
+<li style="margin-bottom:6px;"><strong>Código Fuente (GitHub):</strong> <a href="https://github.com/Jfrattin/canchapro.git" target="_blank" style="color:#2563eb; text-decoration:underline;"><code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">https://github.com/Jfrattin/canchapro.git</code></a></li>
+</ul>
+<h4>Cuentas Demo Preconfiguradas:</h4>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>👑 Super Admin / Organizador:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">admin@canchapro.com</code> | <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code></li>
+<li style="margin-bottom:6px;"><strong>⚖️ Árbitro Oficial:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">arbitro@canchapro.com</code> | <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code></li>
+<li style="margin-bottom:6px;"><strong>⚽ Jugador / Capitán:</strong> <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">jugador@canchapro.com</code> | <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">password123</code></li>
+</ul>
+<blockquote><em>Nota de Registro:</em> Al crear un nuevo usuario, el sistema aplica automáticamente el <strong>Patrón Trinidad</strong>, generando en un único paso la entidad <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Usuario</code>, su perfil civil <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">Persona</code> y su <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">FichaMedica</code> inicial.</blockquote>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>2. Módulo de Jugador y Capitán (App Móvil)</h3>
+<h4>A. Pantalla Principal y "Tu Próximo Partido"</h4>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Al iniciar sesión como Jugador/Capitán, el panel principal muestra el Hero Card destacando <strong>"Tu Próximo Partido del Torneo"</strong>.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Se visualiza la fecha, hora exacta, rival y cancha asignada de forma directa.</p>
+<h4>B. Convocatoria de los 11 Titulares</h4>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Ingrese a la pestaña <strong>"Plantel / Convocatoria"</strong>.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> El Capitán puede seleccionar de la <strong>Lista de Buena Fe</strong> (hasta 20 jugadores) los <strong>11 titulares</strong> para el próximo partido.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <em>Validación Médica (RN-02):</em> Los jugadores con Apto Médico vencido o no aprobado no podrán ser seleccionados y mostrarán un indicador de bloqueo.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Presione <strong>"Confirmar Convocatoria Oficial"</strong> para emitir la planilla.</p>
+<h4>C. Partiditos Casuales & Multi-Deporte (Fútbol, Padel, Tenis, Básquet, Vóley, Hockey)</h4>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Diríjase a la sección <strong>"Partiditos Casuales"</strong>.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Crear Encuentro:</strong> Presione <em>"Crear Partidito"</em>, seleccione la disciplina (Fútbol F5/F7/F8/F11, Padel, Tenis, Básquet, Vóley o Hockey), fecha, hora, predio y ubicación.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Vista Previa de Mapa:</strong> Al cargar la dirección, podrá previsualizar la ubicación exacta mediante la integración interactiva de Google Maps.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Invitar Jugadores mediante Token:</strong> Copie el token o link público (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">/casual/{token}</code>) generado automáticamente y compártalo por WhatsApp o redes para que otros jugadores se unan directamente al Equipo 1 o Equipo 2.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Administración de Inscriptos:</strong> Si usted es el creador del encuentro o Super Admin, podrá gestionar el plantel o remover jugadores no deseados mediante el botón de expulsión.</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>3. Módulo de Administrador (Backoffice Web / Torneos y Canchas)</h3>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Inicie sesión con credenciales de <strong>Super Admin</strong> (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">admin@canchapro.com</code>).</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Creación de Sedes y Canchas:</strong> Acceda a <em>"Administración de Canchas"</em>, configure el formato de juego (F5, F7, F11, etc.), superficie, precio por hora y enlace de mapa Google Maps.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Creación de Torneos:</strong> Diríjase a <em>"Torneos"</em>, haga clic en <em>"Nuevo Torneo"</em>, defina el nombre, categoría, cantidad de equipos, días de juego y canchas asociadas.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Aprobación de Aptos Médicos:</strong> Acceda a <em>"Fichas Médicas"</em> para revisar los certificados adjuntados por los jugadores y otorgar la validación oficial con 1 clic (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">apto_fisico_aprobado = true</code>).</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>4. Módulo de Árbitros (Planilla Digital & Consenso Fair Play)</h3>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Inicie sesión con credenciales de <strong>Árbitro</strong> (<code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">arbitro@canchapro.com</code>).</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> Seleccione el partido asignado en la agenda del día.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Carga del Acta Digital:</strong> Anote los goles oficiales por jugador, tarjetas amarillas/rojas y observaciones del partido.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Protocolo "Goles Sin Dueño" (RN-10):</strong> Si un gol fue convertido en medio de una jugada confusa y no se identificó al autor en campo, regístrelo como <em>"Gol Sin Dueño"</em>.</p>
+<p style="margin:8px 0; padding-left:12px;"><strong>•</strong> <strong>Firma y Cierre:</strong> Presione <em>"Cerrar Acta de Partido"</em>. El sistema notificará inmediatamente a los capitanes de ambos equipos para iniciar el <strong>Protocolo de Consenso Fair Play</strong> (disponen de 48h para asignar al goleador mediante validación cruzada; vencido el plazo, la IA de CanchaPro asignará automáticamente el gol según el historial).</p>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<h3>5. Ejecución Local mediante Docker y Laravel (Opcional para Desarrolladores)</h3>
+<p style="margin:12px 0;">Si desea ejecutar el entorno completo de forma local en su máquina:</p>
+<pre><code class="bash"># 1. Clonar el repositorio
+git clone https://github.com/Jfrattin/canchapro.git
+cd canchapro/src
 
----
+# 2. Copiar archivo de entorno
+cp .env.example .env
 
-# GUION PARA LA EXPOSICIÓN ORAL (10 Minutos)
+# 3. Levantar contenedores Docker
+docker-compose up -d --build
 
-1. **Minuto 0 a 2 — El Problema y la Oportunidad:** Introducción de CanchaPro, el caos de los torneos amateur y la solución del Ecosistema Dual.
-2. **Minuto 2 a 4 — Arquitectura Técnica & Patrón Trinidad:** Explicación del modelo de datos (`Usuario` ↔ `Persona` ↔ `Roles`) y el puente Multi-Cloud MCP en Rust.
-3. **Minuto 4 a 7 — Demostración en Vivo de la App:**
-   * Mostrar Login con Lazy Linking del Excel 2003.
-   * Mostrar tarjeta *"Tu Próximo Partido"* y Convocatoria de los 11 titulares.
-   * Mostrar Modo Árbitro con Cierre de Acta y Protocolo de *"Goles Sin Dueño"*.
-   * Mostrar Backoffice Web con publicación de torneos.
-4. **Minuto 7 a 9 — Ciberseguridad, Heurísticas de Nielsen e IA Local:** Explicación de los 5 controles de seguridad y el rol del SLM Edge.
-5. **Minuto 9 a 10 — Conclusión y Cierre:** Resumen del impacto y pase a las preguntas del tribunal docente.
-</pre>
+# 4. Ejecutar migraciones y datos demo (DatabaseSeeder)
+docker-compose exec app php artisan migrate:fresh --seed
+
+# 5. Ejecutar Pruebas Automatizadas PHPUnit
+docker-compose exec app php artisan test --filter=CanchaProFlowTest</code></pre>
+<ul style="padding-left:24px; margin:10px 0;">
+<li style="margin-bottom:6px;"><strong>Acceso Local:</strong> Navegue a <code style="background:#e2e8f0; color:#0f172a; padding:2px 6px; border-radius:4px; font-family:monospace;">http://localhost:8000</code> en su explorador web.</li>
+</ul>
+<hr style="border:0; border-top:1px solid #cbd5e1; margin:30px 0;"/>
+<p style="margin:12px 0;">538:</p>
     </div>
 </body>
 </html>

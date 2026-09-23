@@ -25,7 +25,7 @@ class AdminTorneoController extends Controller
         $validated = $request->validate([
             'nombre' => 'required|string',
             'deporte' => 'nullable|string',
-            'sede_id' => 'nullable|uuid|exists:sedes,id',
+            'sede_id' => 'nullable',
             'categoria' => 'required|string',
             'descripcion' => 'nullable|string',
             'ubicacion' => 'nullable|string',
