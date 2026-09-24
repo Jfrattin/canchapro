@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESENTACIÓN Y ENTREGABLE FINAL - UTN CanchaPro Suite</title>
+    <style>
+        @media print {
+            body { font-size: 10pt; line-height: 1.4; background: #fff !important; padding: 0 !important; color: #000 !important; }
+            .no-print { display: none !important; }
+            .container { box-shadow: none !important; border: none !important; padding: 0 !important; max-width: 100% !important; }
+            .card-box { background: #f8fafc !important; border: 1px solid #cbd5e1 !important; color: #000 !important; page-break-inside: avoid; }
+            a { color: #000 !important; text-decoration: underline; }
+            pre, code { background: #f4f4f4 !important; color: #000 !important; border: 1px solid #ddd; }
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            line-height: 1.6;
+        }
+        .container {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid #334155;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        h1 { color: #38bdf8; font-size: 2em; border-bottom: 2px solid #0284c7; padding-bottom: 10px; margin-top: 0; }
+        h2 { color: #818cf8; font-size: 1.4em; border-bottom: 1px solid #475569; padding-bottom: 6px; margin-top: 1.8em; }
+        h3 { color: #38bdf8; font-size: 1.15em; margin-top: 1.2em; }
+        .card-box {
+            background-color: #0f172a;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #334155;
+            margin: 20px 0;
+        }
+        .card-highlight {
+            background-color: #1e1b4b;
+            border: 1px solid #6366f1;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .card-credentials {
+            background-color: #311213;
+            border: 1px solid #f43f5e;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .btn-print {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 12px rgba(37,99,235,0.4);
+            margin-bottom: 25px;
+        }
+        .btn-print:hover { background: #1d4ed8; }
+        a { color: #38bdf8; text-decoration: underline; }
+        code { background: #0f172a; color: #f43f5e; padding: 2px 6px; border-radius: 4px; font-family: monospace; }
+        ul, ol { padding-left: 24px; }
+        li { margin-bottom: 6px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; font-size: 0.9em; }
+        th, td { border: 1px solid #334155; padding: 10px 12px; text-align: left; }
+        th { background-color: #0f172a; color: #94a3b8; }
+    </style>
+</head>
+<body>
+
+    <div style="text-align: right;" class="no-print">
+        <button onclick="window.print()" class="btn-print">🖨️ Imprimir / Descargar como PDF</button>
+    </div>
+
+    <div class="container">
+        <h1>🎓 TRABAJO DE FIN DE CICLO — PRESENTACIÓN Y ENTREGABLE FINAL</h1>
+        <p style="color: #94a3b8; font-size: 1.1em; margin-top: -10px;">
+            <strong>Universidad Tecnológica Nacional · UTN.BA (Centro de e-Learning)</strong><br>
+            Curso de Inteligencia Artificial para Programadores
+        </p>
+
+        <div class="card-box">
+            <h3 style="margin-top: 0; color: #38bdf8;">📋 FICHA TÉCNICA DEL PROYECTO Y AUTOR</h3>
+            <ul>
+                <li><strong>Integrante:</strong> Joaquín Javier Frattin</li>
+                <li><strong>Rol en el Desarrollo:</strong> Lead AI Systems Architect & Full-Stack Engineer</li>
+                <li><strong>Nombre del Proyecto:</strong> CanchaPro Suite</li>
+                <li><strong>Subtítulo:</strong> Plataforma Inteligente de Gestión Deportiva, Automatización de Torneos, Listas de Buena Fe y Arbitraje Digital.</li>
+            </ul>
+        </div>
+
+        <div class="card-highlight">
+            <h3 style="margin-top: 0; color: #818cf8;">🔗 ACCESO DIRECTO A ENTREGABLES Y CARPETA DE VIDEOS</h3>
+            <ul>
+                <li>📁 <strong>Google Drive (2 Videos HD + Documentación):</strong> <a href="https://drive.google.com/drive/folders/1e0qJFQRBQJHwC5OCD73y29pzF-_7ENhr?usp=drive_link" target="_blank">Abrir en Google Drive</a></li>
+                <li>🌐 <strong>Aplicación Web en Vivo (Render Cloud):</strong> <a href="https://canchapro-g56l.onrender.com" target="_blank">https://canchapro-g56l.onrender.com</a></li>
+                <li>💻 <strong>Repositorio GitHub Oficial:</strong> <a href="https://github.com/Jfrattin/canchapro.git" target="_blank">https://github.com/Jfrattin/canchapro.git</a> (Branch <code>main</code>)</li>
+            </ul>
+        </div>
+
+        <div class="card-credentials">
+            <h3 style="margin-top: 0; color: #f43f5e;">🔑 CUENTAS DEMO PRECONFIGURADAS PARA EVALUACIÓN EN VIVO</h3>
+            <ul>
+                <li>👑 <strong>Super Admin / Organizador:</strong> <code>admin@canchapro.com</code> | Clave: <code>password123</code></li>
+                <li>⚖️ <strong>Árbitro Oficial:</strong> <code>arbitro@canchapro.com</code> | Clave: <code>password123</code></li>
+                <li>⚽ <strong>Jugador / Capitán:</strong> <code>jugador@canchapro.com</code> | Clave: <code>password123</code></li>
+            </ul>
+        </div>
+
+        <h2>1. Resumen Ejecutivo y Problemática de Negocio</h2>
+        <p>En la gestión de torneos amateur existen 4 vulnerabilidades operativas críticas:</p>
+        <ol>
+            <li><strong>Falta de control médico:</strong> Inclusión de jugadores sin apto físico vigente ("jugadores truchos").</li>
+            <li><strong>Comunicación desarticulada:</strong> Coordinación informal por grupos de WhatsApp.</li>
+            <li><strong>Disputas en actas arbitrales:</strong> Inconsistencias en goles anotados y tablas de posiciones.</li>
+            <li><strong>Pérdida de datos históricos:</strong> Torneos archivados en planillas de papel.</li>
+        </ol>
+        <p><strong>Solución CanchaPro:</strong> Ecosistema dual (App Móvil PWA + Backoffice Web Desktop) asistido por IA con validación de 13 Reglas de Negocio (RN-01 a RN-13), Patrón Trinidad, Lista de Buena Fe inmutable y Consenso Fair Play.</p>
+
+        <h2>2. Arquitectura Técnica y Patrón Trinidad</h2>
+        <p>El sistema utiliza el <strong>Patrón Trinidad</strong> para garantizar integridad referencial estricta: <code>1 Usuario</code> autentica a <code>1 Persona</code> (posesora de Ficha Médica cifrada) y asume <code>N Roles</code> (Jugador, Capitán, Árbitro, Admin).</p>
+        
+        <div class="card-box">
+            <h3 style="margin-top: 0; color: #38bdf8;">⚙️ STACK TECNOLÓGICO</h3>
+            <ul>
+                <li><strong>Frontend:</strong> HTML5 + TailwindCSS + JavaScript ES6 + Lucide Icons (Responsive Dark Mode).</li>
+                <li><strong>Backend:</strong> Laravel 11 (PHP 8.2) + API RESTful asíncrona en contenedores Docker.</li>
+                <li><strong>Persistencia:</strong> PostgreSQL (Supabase / Docker ACID) + Storage cifrado AES-256.</li>
+                <li><strong>Orquestación IA:</strong> Rust Unified MCP Bridge + Groq LPU (Qwen/Llama 3.3) + Google Gemini 2.0.</li>
+            </ul>
+        </div>
+
+        <h2>3. Módulo Multi-Deporte y Partiditos Casuales</h2>
+        <p>CanchaPro expandió su cobertura a <strong>6 disciplinas deportivas complejas</strong>: Fútbol (F5, F7, F8, F11), Padel (Dobles/Singles), Tenis, Básquet (3x3/5x5), Vóley y Hockey.</p>
+        <ul>
+            <li><strong>Integración con Google Maps:</strong> Previsualización interactiva del predio y cancha.</li>
+            <li><strong>Token Público de Invitación (<code>/casual/{token}</code>):</strong> Invitación directa por WhatsApp.</li>
+            <li><strong>Desafío de Equipos Rivales:</strong> Retos formales entre capitanes registrados.</li>
+            <li><strong>Gestión de Plantel:</strong> Expulsión y administración de inscriptos por el creador del encuentro.</li>
+        </ul>
+
+        <h2>4. Módulo de Arbitraje y Protocolo Fair Play (RN-10)</h2>
+        <p>Los árbitros ingresan con su perfil dedicado para cargar tarjetas, goles y observaciones. Al firmar el acta, el partido queda bloqueado irreversiblemente.</p>
+        <div class="card-highlight">
+            <h3 style="margin-top:0; color:#818cf8;">⚖️ PROTOCOLO "GOLES SIN DUEÑO"</h3>
+            <ul>
+                <li>Si un gol no se identifica en cancha, se registra como <em>Gol Sin Dueño</em>.</li>
+                <li>Notificación inmediata a los capitanes de ambos equipos rivales.</li>
+                <li>Plazo de 48 horas para validación cruzada del autor del gol.</li>
+                <li><strong>Invariante Matemática:</strong> Los reclamos jamás pueden superar los goles del acta.</li>
+                <li>Vencido el plazo, la IA de CanchaPro asigna el gol automáticamente según el historial.</li>
+            </ul>
+        </div>
+
+        <h2>5. Pruebas Automatizadas (PHPUnit) y Ciberseguridad</h2>
+        <div class="card-box">
+            <h3 style="margin-top: 0; color: #38bdf8;">🧪 SUITE DE PRUEBAS AUTOMATIZADAS (`CanchaProFlowTest`)</h3>
+            <pre><code>✓ Registro e inicio de sesion con Patron Trinidad .................. PASS (0.18s)
+✓ Creacion y listado de partidito casual multi-deporte ............. PASS (0.02s)
+✓ Unirse a partidito casual mediante token criptografico ........... PASS (0.01s)
+✓ Carga y aprobacion 1-clic de apto medico por admin ............... PASS (0.01s)
+✓ Expulsion de jugador de partidito por creador ................... PASS (0.01s)
+✓ Creacion y publicacion de torneo por administrador .............. PASS (0.02s)
+
+ESTADO DE PRUEBAS: 6 PASS / 24 ASERCIONES VERIFICADAS EN INTEGRACIÓN</code></pre>
+        </div>
+
+        <h2>6. Manual de Uso Rápido (Guía Paso a Paso)</h2>
+        <ol>
+            <li><strong>Inicio de Sesión:</strong> Ingrese a <code>https://canchapro-g56l.onrender.com</code> con las cuentas demo.</li>
+            <li><strong>Modo Jugador:</strong> Vea "Tu Próximo Partido" y arme la Convocatoria de 11 titulares.</li>
+            <li><strong>Partiditos:</strong> Cree un partidito, vea el mapa en Google Maps y comparta el link <code>/casual/{token}</code>.</li>
+            <li><strong>Backoffice Admin:</strong> Cree torneos, sedes y apruebe Aptos Médicos en 1 clic.</li>
+            <li><strong>Modo Árbitro:</strong> Anote goles, firme el acta e inicie el protocolo de Goles Sin Dueño.</li>
+        </ol>
+
+        <h2>7. Evaluación de IA Local (Edge SLM con Ollama)</h2>
+        <p>En canchas o vestuarios sin conectividad 4G/5G, CanchaPro despliega un modelo de lenguaje pequeño (SLM Llama 3.2 3B) ejecutado localmente mediante Ollama, garantizando latencia cero, privacidad absoluta y resiliencia offline a costo $0.</p>
+    </div>
+
+</body>
+</html>
