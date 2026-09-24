@@ -34,7 +34,7 @@
 ## Sección 1 · Presentación del Equipo y del Proyecto
 
 ### 1.1 Integrantes del Grupo
-* **Joaquín Javier Frattin** (DNI: 39.569.071)
+* **Joaquín Javier Frattin**
   * **Rol en el Desarrollo:** *Lead AI Systems Architect & Full-Stack Engineer*.
   * **Responsabilidades:** Diseño de la arquitectura dual, modelado del Patrón Trinidad, implementación del orquestador Multi-Cloud MCP en Rust, ingeniería de prompts, lógica de frontends (`app_mobile.html` y `backoffice_admin.html`) y análisis funcional de ciberseguridad.
 
